@@ -595,7 +595,7 @@ Logo UPT.
  
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-01"
+key "K. He et. al."
 literal "false"
 
 \end_inset
@@ -1522,9 +1522,9 @@ name "chap:Lucrări-conexe"
 \end_layout
 
 \begin_layout Section
-Digging Into Self-Supervised Monocular Depth Estimation (2019) - GEN,
+Digging Into Self-Supervised Monocular Depth Estimation (2019) [MonoDepth2] [GEN,
  CNN,
- U-Net
+ U-Net]
 \end_layout
 
 \begin_layout Standard
@@ -1596,7 +1596,7 @@ față de poziția țintă,
  pe arhitectura U-Net 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-04"
+key "O. Ronneberger et al."
 literal "false"
 
 \end_inset
@@ -1618,7 +1618,7 @@ Validarea modelului se realizează cu ajutorul setului de date KITTI,
  pe baza Eigen Split 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-05"
+key "D. Eigen et al."
 literal "false"
 
 \end_inset
@@ -1640,7 +1640,7 @@ literal "false"
  de epoci folosind estimatorul Adam 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-06"
+key "D. P. Kingma et al."
 literal "false"
 
 \end_inset
@@ -1657,17 +1657,17 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-Transformers in Self-Supervised Monocular Depth Estimation with Unknown Camera Intrinsics (2022) - GEN,
- TF
+Transformers in Self-Supervised Monocular Depth Estimation with Unknown Camera Intrinsics (2022) [???] [GEN,
+ TF]
 \end_layout
 
 \begin_layout Standard
 Cu siguranță,
  eficiența rețelelor de convoluție s-a dovedit a fi esențială în îmbunătățirea modelelor de estimare a adâncimii,
- însă un element inovativ care îl propune MT-SfMLearner este integrarea arhitecturilor de tip transformer 
+ însă un element inovativ care îl propune MT-SfMLearner este integrarea arhitecturilor de tip Transformer 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-07"
+key "A. Dosovitskiy et al."
 literal "false"
 
 \end_inset
@@ -1681,16 +1681,16 @@ literal "false"
  din prisma adâncimii individuale și a mișcării observatorului.
  Modelul matematic al rețelei se bazează pe un proces numit sinteză de vedere,
  care își actualizează parametrii cu ajutorul unei funcții fotometrice de cost de aparență,
- dar și printr-o funcție de regularitate ,
+ dar și printr-o funcție de regularitate,
  aplicată pe estimările de adâncime.
 \end_layout
 
 \begin_layout Standard
 Din punct de vedere arhitectural,
- modelul reprezintă o adaptare a Dense Prediction Trnasformer 
+ modelul reprezintă o adaptare a Dense Prediction Transformer 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-08"
+key "R. Ranftl et al."
 literal "false"
 
 \end_inset
@@ -1698,7 +1698,7 @@ literal "false"
  cu o DeiT-Base 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-09"
+key "H. Touvron et al."
 literal "false"
 
 \end_inset
@@ -1715,11 +1715,11 @@ literal "false"
 \end_inset
 
 ),
- apoi blocul transformator (de asemenea parte din codificator,
+ apoi blocul Transformer (de asemenea parte din codificator,
  conține 12 straturi care prelucrează ieșirea din Embed folosind module de atenție de tip multi-head 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-10"
+key "A. Vaswani et al."
 literal "false"
 
 \end_inset
@@ -1730,7 +1730,7 @@ literal "false"
  patru module de fuziune bazate pe RefineNet 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-11"
+key "G. Lin et al."
 literal "false"
 
 \end_inset
@@ -1741,6 +1741,54 @@ literal "false"
  Totodată,
  problema variației parametrilor intrinseci ai camerei este rezolvată prin introducerea unui modul dedicat.
  Autorii propun modificarea rețelei de detecție a mișcării observatorului prin adăugarea unei subrețele convoluționale în decodificatorul de mișcare pentru a învăța acești parametri intrinseci.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\color orange
+AICI MAI ESTE
+\end_layout
+
+\begin_layout Section
+Toward Practical Monocular Indoor Depth Estimation [DistDepth] [IND,
+ CONV]
+\end_layout
+
+\begin_layout Standard
+Având în vedere limitările metodelor anterioare de a genera scene ample în spații interioare,
+ se propune un estimator de adâncime practic,
+ care învață din modelele predecesoare și produce un rezultat de acuratețe rezultată,
+ cu consum optim de resurse și viteză mare de procesare a datelor.
+ DistDepth învață caracteristicile mediului interior prin auto-supervizare,
+ reușind astfel să se detașeze de caracterisiticile generale ale spațiului:
+ elementele generale componente (cerul,
+ șoseaua,
+ linia perspectiva,
+ linia orizontului),
+ dar și distribuția celorlalte obiecte din jur (dispunerea acestora nu mai respectă un anumit tipar,
+ atât din perspectiva poziției,
+ cât și din perspectiva distanței).
+ Pentru o reprezentare structurată a adâncimii relative,
+ DistDepth utilizează estimatorul DPT 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "R. Ranftl et al.,R. Rantfl et al. b"
+literal "false"
+
+\end_inset
+
+ pentru a spori acuratețea rezultată din antrenarea auto-superivizată.
+ În același timp,
+ pentru a dezvolta domeniul estimării în spațiu interior,
+ autorii prezintă și setul de date SimSIN,
+ care are ca scop studiul diferențelor în antrenarea pe date simulate,
+ comparativ cu datele reale.
+\end_layout
+
+\begin_layout Standard
+Rezultatele practice confirmă performanța modelului.
+ Antrenarea este realizată pe Habitat simulator 
 \end_layout
 
 \begin_layout Chapter
@@ -1769,7 +1817,7 @@ Lorem ipsum dolor sit amet,
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "1()"
-key "key-01"
+key "K. He et. al."
 literal "true"
 
 \end_inset
@@ -1796,7 +1844,7 @@ CVPR
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "2()"
-key "key-02"
+key "C.M. Bishop"
 literal "true"
 
 \end_inset
@@ -1843,7 +1891,7 @@ IEEE Transactions on Neural Networks
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "4()"
-key "key-04"
+key "O. Ronneberger et al."
 literal "true"
 
 \end_inset
@@ -1864,7 +1912,7 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "5()"
-key "key-05"
+key "D. Eigen et al."
 literal "true"
 
 \end_inset
@@ -1883,7 +1931,7 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "6()"
-key "key-06"
+key "D. P. Kingma et al."
 literal "true"
 
 \end_inset
@@ -1903,7 +1951,7 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "7()"
-key "key-07"
+key "A. Dosovitskiy et al."
 literal "true"
 
 \end_inset
@@ -1946,7 +1994,7 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "8()"
-key "key-08"
+key "R. Ranftl et al."
 literal "true"
 
 \end_inset
@@ -1975,7 +2023,7 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "9()"
-key "key-09"
+key "H. Touvron et al."
 literal "true"
 
 \end_inset
@@ -2002,7 +2050,7 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "10()"
-key "key-10"
+key "A. Vaswani et al."
 literal "true"
 
 \end_inset
@@ -2038,7 +2086,7 @@ Advances in neural information processing systems
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "11()"
-key "key-11"
+key "G. Lin et al."
 literal "true"
 
 \end_inset
@@ -2066,12 +2114,20 @@ Proceedings of the IEE/CVF Conference on Computer Vision and Pattern Recognition
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "12()"
-key "key-12"
+key "R. Rantfl et al. b"
 literal "true"
 
 \end_inset
 
-aa
+ R.
+ Rantfl,
+ A.
+ Bochkovskiy,
+ V.
+ Koltun.
+ Vision transformers for dense prediction.
+ ICCV,
+ 2021.
 \end_layout
 
 \begin_layout Bibliography
@@ -2083,7 +2139,24 @@ literal "true"
 
 \end_inset
 
-aa
+ S.
+ Manolis,
+ A.
+ Kadian,
+ Oleksandr Maksymets,
+ Yili Zhao,
+ Erik Wijmans,
+ Bhavana Jain,
+ Julian Straub,
+ Jia Liu,
+ Vladlen Koltun,
+ Jitendra Malik,
+ et al.
+ Habitat:
+ A platform for embodied ai research.
+ In CVPR,
+ 2019.
+ 
 \end_layout
 
 \begin_layout Bibliography

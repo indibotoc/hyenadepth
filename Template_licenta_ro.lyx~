@@ -595,7 +595,7 @@ Logo UPT.
  
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-1"
+key "key-01"
 literal "false"
 
 \end_inset
@@ -1593,10 +1593,10 @@ față de poziția țintă,
 În ceea ce privește rețeaua de estimare a adâncimilor,
  aceasta se bazează,
  în general,
- pe arhitectura U-Net
+ pe arhitectura U-Net 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-4"
+key "key-04"
 literal "false"
 
 \end_inset
@@ -1615,10 +1615,10 @@ literal "false"
 
 \begin_layout Standard
 Validarea modelului se realizează cu ajutorul setului de date KITTI,
- pe baza Eigen Split
+ pe baza Eigen Split 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-5"
+key "key-05"
 literal "false"
 
 \end_inset
@@ -1637,10 +1637,10 @@ literal "false"
 \begin_inset Formula $20$
 \end_inset
 
- de epoci folosind estimatorul Adam
+ de epoci folosind estimatorul Adam 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-6"
+key "key-06"
 literal "false"
 
 \end_inset
@@ -1664,15 +1664,83 @@ Transformers in Self-Supervised Monocular Depth Estimation with Unknown Camera I
 \begin_layout Standard
 Cu siguranță,
  eficiența rețelelor de convoluție s-a dovedit a fi esențială în îmbunătățirea modelelor de estimare a adâncimii,
- însă un element inovativ care îl propune MT-SfMLearner este integrarea arhitecturilor arhitecturilor de tip transformer
+ însă un element inovativ care îl propune MT-SfMLearner este integrarea arhitecturilor de tip transformer 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "key-7"
+key "key-07"
 literal "false"
 
 \end_inset
 
- în 
+ în sistemele de asistență la condus sau în domeniul roboticii.
+ Prin această lucrare,
+ autorii demonstrează adaptatea transformerilor pentru estimarea monoculară și auto-supervizată a adâncimii prin compararea rezultatelor tehnologiei inovate cu modele corespondente bazate pe rețele de convoluție,
+ introducând și o metodă ce prezice simultan distanța focală a camerei și punctul central direct din imagini.
+ De asemenea,
+ este analizat impactul alegerii arhitecturii asupra performanței și a robusteței modelului,
+ din prisma adâncimii individuale și a mișcării observatorului.
+ Modelul matematic al rețelei se bazează pe un proces numit sinteză de vedere,
+ care își actualizează parametrii cu ajutorul unei funcții fotometrice de cost de aparență,
+ dar și printr-o funcție de regularitate ,
+ aplicată pe estimările de adâncime.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere arhitectural,
+ modelul reprezintă o adaptare a Dense Prediction Trnasformer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "key-08"
+literal "false"
+
+\end_inset
+
+ cu o DeiT-Base 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "key-09"
+literal "false"
+
+\end_inset
+
+ folosit drept codificator.
+ Acesta prezintă cinci componente în rețeaua densă:
+ modulul integrat (face parte din codificator,
+ preia o iamgine 
+\begin_inset Formula $I\in\mathbb{R}^{height\times width\times3}$
+\end_inset
+
+ și o transformă folosind convoluții 
+\begin_inset Formula $16\times16$
+\end_inset
+
+),
+ apoi blocul transformator (de asemenea parte din codificator,
+ conține 12 straturi care prelucrează ieșirea din Embed folosind module de atenție de tip multi-head 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "key-10"
+literal "false"
+
+\end_inset
+
+),
+ urmat de patru module de reasamblare (fac parte din decodificator,
+ fiind responsabile de extragerea caracteristicilor),
+ patru module de fuziune bazate pe RefineNet 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "key-11"
+literal "false"
+
+\end_inset
+
+) și patru module head (câte unul în continuarea fiecărui modul fuziune,
+ practic,
+ sunt convoluții care estimează adâncimea prin metodele clasice auto-supervizate).
+ Totodată,
+ problema variației parametrilor intrinseci ai camerei este rezolvată prin introducerea unui modul dedicat.
+ Autorii propun modificarea rețelei de detecție a mișcării observatorului prin adăugarea unei subrețele convoluționale în decodificatorul de mișcare pentru a învăța acești parametri intrinseci.
 \end_layout
 
 \begin_layout Chapter
@@ -1700,13 +1768,13 @@ Lorem ipsum dolor sit amet,
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-label "1"
-key "key-1"
+label "1()"
+key "key-01"
 literal "true"
 
 \end_inset
 
-K.
+ K.
  He,
  X.
  Zhang,
@@ -1728,12 +1796,12 @@ CVPR
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "2()"
-key "key-2"
+key "key-02"
 literal "true"
 
 \end_inset
 
-C.M.
+ C.M.
  Bishop.
  
 \emph on
@@ -1749,12 +1817,12 @@ Neural Networks for Pattern Recognition
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "3()"
-key "key-3"
+key "key-03"
 literal "true"
 
 \end_inset
 
-Y.
+ Y.
  Bengio,
  P.
  Simard,
@@ -1775,12 +1843,12 @@ IEEE Transactions on Neural Networks
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "4()"
-key "key-4"
+key "key-04"
 literal "true"
 
 \end_inset
 
-O.
+ O.
  Ronneberger,
  P.
  Fischer,
@@ -1796,12 +1864,12 @@ O.
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "5()"
-key "key-5"
+key "key-05"
 literal "true"
 
 \end_inset
 
-D.
+ D.
  Eigen,
  R.
  Fergus.
@@ -1815,12 +1883,12 @@ D.
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "6()"
-key "key-6"
+key "key-06"
 literal "true"
 
 \end_inset
 
-D.
+ D.
  P.
  Kingma,
  J.
@@ -1835,12 +1903,12 @@ D.
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "7()"
-key "key-7"
+key "key-07"
 literal "true"
 
 \end_inset
 
-A.
+ A.
  Dosovitskiy,
  L.
  Beyer,
@@ -1878,12 +1946,168 @@ A.
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "8()"
-key "key-8"
+key "key-08"
 literal "true"
 
 \end_inset
 
+ R.
+ Ranftl,
+ K.
+ Lasinger,
+ D.
+ Hafner,
+ K.
+ Schindler,
+ V.
+ Koltun.
+ Towards robust monocular depth estimation:
+ Mixing datasets for zero-shot cross-dataset transfer.
+ IEEE
+\shape italic
+ Transactions on Pattern Analysis and Machine Intelligence
+\shape default
+,
+ 2020.
+\end_layout
 
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "9()"
+key "key-09"
+literal "true"
+
+\end_inset
+
+ H.
+ Touvron,
+ M.
+ Cord,
+ M.
+ Douze,
+ F.
+ Massa,
+ A.
+ Sablayrolles,
+ H.
+ Jégou.
+ Training data-efficient image transformers & distillation through attention.
+ PMLR International Conference on Machine Learning,
+ 10347–10357,
+ 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "10()"
+key "key-10"
+literal "true"
+
+\end_inset
+
+ A.
+ Vaswani,
+ N.
+ Shazeer,
+ N.
+ Parmar,
+ J.
+ Uszkoreit,
+ L.
+ Jones,
+ A.
+ N.
+ Gomez,
+ Ł.
+ Kaiser,
+ I.
+ Polosukhin.
+ Attention is all you need.
+ 
+\shape italic
+Advances in neural information processing systems
+\shape default
+,
+ 5998–6008,
+ 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "11()"
+key "key-11"
+literal "true"
+
+\end_inset
+
+ G.
+ Lin,
+ A.
+ Milan,
+ C.
+ Shen,
+ I.
+ Reid.
+ RefineNet:
+ Multi-path refinement networks for high-resolution semantic segmentation.
+ 
+\shape italic
+Proceedings of the IEE/CVF Conference on Computer Vision and Pattern Recognition
+\shape default
+,
+ 11817–11825,
+ 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "12()"
+key "key-12"
+literal "true"
+
+\end_inset
+
+aa
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "13()"
+key "key-13"
+literal "true"
+
+\end_inset
+
+aa
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "14()"
+key "key-14"
+literal "true"
+
+\end_inset
+
+aa
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "15()"
+key "key-15"
+literal "true"
+
+\end_inset
+
+aa
 \end_layout
 
 \begin_layout Standard
