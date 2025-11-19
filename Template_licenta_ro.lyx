@@ -1781,7 +1781,7 @@ literal "false"
  pentru a spori acuratețea rezultată din antrenarea auto-superivizată.
  În același timp,
  pentru a dezvolta domeniul estimării în spațiu interior,
- autorii prezintă și setul de date SimSIN,
+ autorii prezintă și setul de date UniSIN,
  care are ca scop studiul diferențelor în antrenarea pe date simulate,
  comparativ cu datele reale.
 \end_layout
@@ -1789,6 +1789,67 @@ literal "false"
 \begin_layout Standard
 Rezultatele practice confirmă performanța modelului.
  Antrenarea este realizată pe Habitat simulator 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "S. Manolis,A. Szot"
+literal "false"
+
+\end_inset
+
+,
+ care inițializează preluarea imaginilor tridimensionale.
+ Totodată,
+ pentru crearea setului de date UniSIN se utilizează un sistem stereo de camere ce colectează secvențe de imagini din diferite spații interioare.
+ Pentru evaluare,
+ autorii au ales un apartament virtual atent realizat,
+ din care au captat 
+\begin_inset Formula $3500$
+\end_inset
+
+ de imagini,
+ care surprind obiecte de structuri,
+ particularități și poziții ale surselor de lumină diferite.
+ Din perspectiva metricilor standard (erorii medii,
+ erori pătratice),
+ modelul propus aduce corecții semnificative față de cele antrenate pe un cadru general,
+ oferind rezultate calitative pentru domeniul estimării adâncimii.
+ Prin urmare,
+ ținta a fost atinsă:
+ o arhitectură orientată pe spațiile interioare,
+ auto-antrenată pe simulări,
+ cu o generalitate semnificativă,
+ sensibilă la schimbările în timp real.
+\end_layout
+
+\begin_layout Section
+Multi-Frame Self-Supervised Depth with Transformers [DepthFormer] [GEN,
+ TF]
+\end_layout
+
+\begin_layout Standard
+Estimarea adâncimii pe baza mai multor cadre aduce îmbunătățiri față de abordările tradiționale prin interpretarea relațiilor geometrice cu ajutorul protrivirii caracteristicilor.
+ Totodată,
+ metodele de estimare bazate pe cadru unic utilizează informația vizuală multiplă doar la antrenare,
+ în timp ce modelele cu cadre multiple utilizează informația la inferență,
+ prin construcția volumelor de cost.
+ Din aceast motiv,
+ caracteristicile reprezintă baza acestei lucrări,
+ care propune o arhitectură nouă,
+ de tip Transformer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "A. Dosovitskiy et al."
+literal "false"
+
+\end_inset
+
+,
+ urmărind generarea volumului de cost pe baza corespondenței punctelor pe parcursul a mai multor cadre.
+ Autorii introduc o nouă arhitectură,
+ revoluționară în domeniul estimării adâncimii,
+ care îmbunătățește semnificativ potrivirea caracteristicilor prin două mecanisme de atenție,
+ combinate cu o metodă de prelevare .
+ 
 \end_layout
 
 \begin_layout Chapter
@@ -2134,7 +2195,7 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "13()"
-key "key-13"
+key "S. Manolis"
 literal "true"
 
 \end_inset
@@ -2163,12 +2224,36 @@ literal "true"
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 label "14()"
-key "key-14"
+key "A. Szot"
 literal "true"
 
 \end_inset
 
-aa
+ A.
+ Szot,
+ A.
+ Clegg,
+ E.
+ Undersander,
+ E.
+ Wijmans,
+ Y.
+ Zhao,
+ J.
+ Turner,
+ N.
+ Maestre,
+ M.
+ Mukadam,
+ D.
+ Chaplot,
+ O.
+ Maksymets,
+ et al.
+ Habitat 2.0:
+ Training home assistants to rearrange their habitat.
+ NeurIPS,
+ 2021.
 \end_layout
 
 \begin_layout Bibliography
