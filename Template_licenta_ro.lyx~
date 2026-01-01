@@ -1823,7 +1823,9 @@ literal "false"
 
 \begin_layout Section
 Multi-Frame Self-Supervised Depth with Transformers [DepthFormer] [GEN,
- TF]
+ TF] 
+\color red
+[Concl?]
 \end_layout
 
 \begin_layout Standard
@@ -1848,8 +1850,379 @@ literal "false"
  Autorii introduc o nouă arhitectură,
  revoluționară în domeniul estimării adâncimii,
  care îmbunătățește semnificativ potrivirea caracteristicilor prin două mecanisme de atenție,
- combinate cu o metodă de prelevare .
+ combinate cu o metodă de prelevare discretă în funcție de adâncime.
+ Inovația adusă,
+ la nivel arhitectural,
+ este reprezentată de perechea matriceală de intrare,
  
+\begin_inset Formula $I_{t}\in\mathbb{R}^{height\times width\times3}$
+\end_inset
+
+(numită 
+\shape italic
+intrare țintă
+\shape default
+) și 
+\begin_inset Formula $I_{c}\in\mathbb{R}^{height\times width\times3}$
+\end_inset
+
+(numită 
+\shape italic
+intrare context
+\shape default
+).
+ Cele două matrice sunt codificate pentru a produce caracteristici reduse la o pătrime din dimensiunile inițiale ale intrărilor,
+ de unde rezultă volumul caracteristic 
+\begin_inset Formula $C_{t\rightarrow c}\in\mathbb{R}^{height/4\times width/4\times D\times C}$
+\end_inset
+
+,
+ unde 
+\begin_inset Formula $D$
+\end_inset
+
+ reprezintă numărul de grupări din prelevarea epipolară,
+ iar 
+\begin_inset Formula $C$
+\end_inset
+
+ reprezintă dimensiunea unei caracteristici extrase din datele de la intrare.
+ Ulterior,
+ volumul de cost este procesat printr-un modul Transformer encoder,
+ care propagă informația și formează relații spațiale globale,
+ acțiune imposibil de realizat prin convoluții clasice.
+ Prin agregare și normalizare,
+ rețeaua obține o distribuție din care se extrage harta finală a adâncimilor printr-o funcție de tip soft-argmax.
+\end_layout
+
+\begin_layout Standard
+Antrenarea modelului se realizează folosind pierderi fotometrice între cadrul țintă și cadrele reproiectate,
+ completate cu constrângeri de consistență temporală pentru a stabiliza învățarea.
+ Evaluarea este efectuată pe setul de date KITTI,
+ utilizând Eigen Split.
+ DepthFormer depășește semnificativ performanțele modelelor anterioare,
+ reducând erorile standard,
+ în special în zone cu textură slabă sau suprafețe uniforme,
+ unde potrivirea tradițională devine dificilă.
+\end_layout
+
+\begin_layout Section
+Frequency-Aware Self-Supervised Monocular Depth Estimation (2022) [Auto-Blur] [GEN,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+Lucrarea introduce două mecanisme concepute pentru a corecta limitările fundamentale ale costului fotometric utilizate în antrenarea auto-supervizată:
+ Ambiguity-Masking și Auto-Blur.
+ Auto-Blur este cel mai important modul propus,
+ fiind primul care demonstrează că aplicarea controlată a estompării asupra intrărilor folosite doar în funcția de cost poate crește echitatea și consistența evaluării fotometrice,
+ fără a afecta rețeaua sau arhitectura de bază.
+\end_layout
+
+\begin_layout Standard
+Metoda pleacă de la observația că funcția de cost fotometric 
+\begin_inset Formula $L_{p}$
+\end_inset
+
+ nu este un evaluator optim în zone cu frecvență spațială înaltă,
+ cum ar fi texturile dense sau repetițiile.
+ Din acest motiv,
+ deviații foarte mici ale adâncimii produc erori mari,
+ iar deviații mari pot produce erori mici,
+ din cauza potrivirilor false în regiunile repetitive.
+ Auto-Blur abordează această problemă printr-un filtru Gaussian adaptiv,
+ aplicat exclusiv cadrelor rezultate din costul fotometric,
+ extinzând astfel câmpul receptiv efectiv al fotometricii și atenuând ambiguitățile generate de regiuni cu detalii excesive.
+ Esența metodei constă în identificarea pixelilor cu frecvență ridicată pe baza normei 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ a diferențelor orizontale și verticale.
+\end_layout
+
+\begin_layout Standard
+Pixelii care depășesc un anumit prag 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ sunt marcați ca fiind problematici,
+ iar zonele în care există o concentrație mai mare de astfel de pixeli sunt considerate regiuni de înaltă frecvență.
+ Doar acești pixeli sunt supuși filtrării Gaussiene,
+ care vor defini o imaginea combinată 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+.
+ Prin această strategie,
+ Auto-Blur obține două efecte complementare:
+ pe de o parte,
+ corectează distribuția costului fotometric,
+ transformând-o într-o estimare similară costului 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ supervizat.
+ În acest mod,
+ o eroare mică de adâncime va produce penalizări moderate,
+ determinând costul să crească proporțional cu eroarea;
+ pe de altă parte,
+ expunerea falselor potriviri reprezintă al doilea efect,
+ deoarece radierea cromatică creată de filtrul Gaussian crește contribuția contextului local:
+ pixelii eronați nu pot fi confundați cu ținta,
+ întrucât nu mai împart aceeași distribuție cromatică.
+ Aceasta minimizează cazurile în care un pixel greșit produce un cost mai mic decât modelul de referință.
+\end_layout
+
+\begin_layout Standard
+La nivel arhitectural,
+ metoda prezintă un caracter independent de structura clasică a rețelelor de convoluție,
+ fără a suplimenta numărul de parametri.
+ Auto-Blur operează doar în cadrul funcției de cost,
+ oferind îmbunătățiri consistente într-o varietate largă de modele,
+ cu minimizări substanțiale ale metricilor standard de de eroare.
+ Conform analizelor autorilor,
+ aproximativ 
+\begin_inset Formula $20\%$
+\end_inset
+
+ din costul total se datorează pixelilor problematici,
+ deși aceștia reprezintă,
+ în medie,
+ 
+\begin_inset Formula $10\%$
+\end_inset
+
+ din imagine,
+ ceea ce justifică impactul major al filtrării adaptative.
+\end_layout
+
+\begin_layout Standard
+Auto-Blur demonstrează,
+ printr-o analiză interpretabilă a spațiului frecvențial,
+ că limitările mecanismelor fotometrice pot fi compensate fără modificări de arhitectură și fără supraveghere suplimentară.
+ Prin estompare adaptivă,
+ modulul asigură o convergență mai robustă și o abatere redusă în zone dificil de reconstruit,
+ consolidând performanța generală a modelelor auto-supervizate de estimare a adâncimii.
+\end_layout
+
+\begin_layout Section
+Exploiting Pseudo Labels in a Self-Supervised Learning Framework for Improved Monocular Depth Estimation (2022) [SD-SSMDE] [GEN,
+ CNN,
+ SELF-DISTILL]
+\end_layout
+
+\begin_layout Standard
+În această lucrare este prezentat SD-SSMDE,
+ un cadru de antrenare în două etape,
+ fundamentat pe auto-distilare,
+ conceput pentru a atenua limitările structurale ale metodelor auto-supervizate clasice,
+ în special din perspectiva instabilității semnalului fotometric și a ambiguității de scară inerentă a predicției monoculare.
+ Abordările anterioare au vizat fie optimizări arhitecturale,
+ fie ale funcției de cost,
+ însă au păstrat dependența strictă față de costul fotometric,
+ un parametru puternic,
+ dar neregulat,
+ afectat de suprafețe non-Lambertiene,
+ regiuni nedefinite din perspectiva texturii,
+ repetiții periodice și zone dinamice.
+ SD-SSMDE propune o soluție alternativă prin construcția unei supervizări robuste (de tip profesor-elev),
+ obținute prin generarea și filtrarea unor pseudo-etichete,
+ din care se poate deriva ulterior un model elev stabil și scalabil.
+\end_layout
+
+\begin_layout Standard
+În prima etapă,
+ rețeaua profesor este antrenată auto-supervizat pe imagini de rezoluție ridicată,
+ utilizând un decodificator nou propus,
+ derivat din arhitectura Panoptic-DeepLab,
+ care integrează un modul Atrous Spatial Pyramid Pooling și convoluții separabile pe adâncime pentru captarea contextului multi-scară.
+ Predicția disparității <dt> este obținută printr-o arhitectură codificator-decodificator cu <upsampling> progresiv și fuziune de caracteristici la rezoluții intermediare.
+\end_layout
+
+\begin_layout Standard
+Ulterior,
+ rețeaua profesor este utilizată pentru a genera pseudo-etichete pentru întregul set de antrenare.
+ Deoarece adâncimea auto-supervizată este definită doar până la un factor de scară,
+ autorii introduc un modul automat de recuperare a scalei,
+ bazat pe analiza normelelor locale ale punctelor 3D și identificarea planului solului.
+ Din estimarea repetată a înălțimii camerei se obține un factor de scalare λ,
+ aplicat pseudo-adâncimilor relative,
+ rezultând hărți de adâncime absolute,
+ coerente între cadre și comparabile cu valorile reale.
+\end_layout
+
+\begin_layout Standard
+Calitatea pseudo-etichetelor este îmbunătățită printr-un mecanism de filtrare bazat pe consistența geometrică 3D.
+ Fiecare punct este reproiectat între cadrele adiacente,
+ iar un pixel este păstrat doar dacă pozițiile 3D asociate sunt congruente.
+\end_layout
+
+\begin_layout Standard
+În etapa a doua,
+ rețeaua elev este antrenată în regim supervizat folosind pseudo-etichetele filtrate.
+ Predicția adâncimii absolute se realizează printr-un cap de regresie,
+ iar funcția de cost adoptată este scale-invariant logarithmic loss.
+\end_layout
+
+\begin_layout Standard
+Evaluările pe KITTI și Cityscapes demonstrează o reducere consistentă a erorilor AbsRel,
+ SqRel și RMSE,
+ precum și o creștere a acurateței δ,
+ depășind atât modelul profesor,
+ cât și metodele canonice precum Monodepth2,
+ chiar și în condițiile antrenării exclusive pe secvențe monoculare,
+ fără date LiDAR sau modele semantice auxiliare.
+ Totodată,
+ SD-SSMDE prezervă eficiența la inferență,
+ întrucât complexitatea suplimentară este asociată doar procesului de antrenare în două etape.
+\end_layout
+
+\begin_layout Standard
+Prin formalizarea unui mecanism robust de auto-distilare,
+ integrarea scalării absolute și filtrarea geometrică strictă,
+ SD-SSMDE redefinește paradigma auto-supervizării în estimarea monoculară a adâncimii,
+ oferind un model conceptual și operațional superior pentru generarea de adâncimi dense,
+ fiabile și invariabile față de scară pe date reale.
+\end_layout
+
+\begin_layout Section
+Self-supervised Monocular Depth Estimation:
+ Let’s Talk About The Weather (2023) [Robust-Depth] [GEN,
+ CNN/TF,
+ AUG,
+ CONSISTENCY]
+\end_layout
+
+\begin_layout Standard
+Lucrarea introduce Robust-Depth,
+ o arhitectură auto-supervizată care revoluționează mecanismele clasice de antrenare pentru estimarea monoculară a adâncimii,
+ în vederea obținerii robusteței față de condiții meteorologice nefavorabile,
+ lumină variabilă și degradări vizuale severe.
+ În timp ce metodele anterioare ating performanțe competitive pe seturi idealizate,
+ dependente de iluminare uniformă și scene statice,
+ acestea suferă pierderi majore de acuratețe atunci când se confruntă cu date afectate de ceață,
+ ploaie,
+ noapte sau lipsă de claritate.
+\end_layout
+
+\begin_layout Standard
+Pentru a contracara această problemă,
+ metoda propune o reconstrucție formală a costului auto-supervizat,
+ fundamentată pe un mecanism de pseudo-supervizare bi-direcțională.
+ Premisa este că,
+ pentru fiecare imagine augmentată <~It> ,
+ structura geometrică a scenei rămâne neschimbată,
+ astfel încât predicția de adâncime a versiunii neaugmentate ::Dt::
+ poate acționa drept supervizor pentru estimarea ::tilda Dt::,
+ și invers,
+ ori de câte ori unul dintre cele două conduce la o reproiecție fotometrică superioară.
+ Această idee este formalizată prin construirea unor măști per-pixel,
+ bazate pe minimizarea erorii fotometrice.
+\end_layout
+
+\begin_layout Standard
+Un principiu analog este introdus și în estimarea poziției camerei,
+ însă experimentele indică un câștig marginal,
+ astfel încât se păstrează doar o pseudo-supervizare unidirecțională,
+ în care estimările pozționale ale imaginilor neaugmentate servesc drept referință pentru versiunile augmentate.
+ Funcția finală de cost este compusă din costul fotometric clasic ::Lp::,
+ costul pseudo-supervizat ::LPS::,
+ costul de consistență pozțional și componenta de netezire.
+\end_layout
+
+\begin_layout Standard
+𝐿=𝜇𝐿𝑝+𝜔𝐿𝑃𝑆+𝛽(𝐿𝑅+𝐿𝑡)+𝛾𝐿𝑠.
+\end_layout
+
+\begin_layout Standard
+L=μLp+ωLPS+β(LR+Lt)+γLs.
+\end_layout
+
+\begin_layout Standard
+Un element central al contribuției este utilizarea unei game extinse de augmentări meteorologice și fotometrice controlate,
+ generate printr-o combinație de tehnici de simulare fizică (producerea ploii și a ceții),
+ introducerea modelului generativ CoMoGAN pentru noapte,
+ amurg,
+ tranziții de iluminare și coruperi fotometrice standard (lipsa clarității,
+ zgomot gaussian,
+ defocalizare,
+ îngheț).
+ Aceste augmentări sunt aplicate în perechi (imagine curată / imagine degradată),
+ permițând construcția costului pseudo-supervizat și reducând dependența modelului de parametri statici,
+ precum poziția verticală a pixelului sau regularitatea texturilor.
+ Metoda introduce și două proceduri sintetice adiționale:
+ vertical cropping (o permutare controlată a porțiunilor superioare ale imaginii pentru a reduce biasul față de poziția pixelului),
+ și tile augmentation (o permutare a blocurilor imaginii,
+ destinată să sporească echivarianța rețelei față de aranjamente spațiale neobișnuite).
+\end_layout
+
+\begin_layout Standard
+Evaluările pe KITTI,
+ DrivingStereo,
+ Foggy Cityscapes și NuScenes-Night confirmă robustețea metodei:
+ Robust-Depth atinge performanțe similare sau superioare față de modelele anterioare pe date curate,
+ dar depășește semnificativ metodele de ultimă generație în condiții adverse,
+ cu îmbunătățiri notabile ale metricilor AbsRel,
+ RMSE și δ-accuracy.
+ Prin integrarea coerentă a pseudo-supervizării bidirecționale cu un cadru complet de augmentare fizic,
+ Robust-Depth extinde considerabil capacitatea modelelor auto-supervizate de a opera în scenarii meteorologice complexe,
+ depășind limitele impuse de antrenarea tradițională pe seturi idealizate.
+\end_layout
+
+\begin_layout Section
+3D Distillation:
+ Improving Self-Supervised Monocular Depth Estimation on Reflective Surfaces [IND,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+Modelul propus abordează dificultatea modelelor de estimare monoculară a adâncimii de a procesa corect suprafețele reflectorizante,
+ precum podelele lucioase sau ecranele.
+ În mod tradițional,
+ aceste modele se bazează pe ipoteza constanței fotometrice,
+ care presupune că un punct din spațiu își păstrează aspectul indiferent de unghiul din care este privit.
+ Totuși,
+ suprafețele reflectorizante încalcă acest principiu deoarece aspectul lor depinde critic de punctul de vedere,
+ generând adesea imagini virtuale ale surselor de lumină care par a fi la o distanță mult mai mare decât suprafața reală.
+ Această eroare face ca rețelele neuronale să prezică o adâncime exagerată pentru zonele cu reflexii speculare,
+ compromițând reconstrucția scenelor din mediul interior.
+ Pentru a rezolva această deficiență,
+ autorii propun un cadru de antrenare inovator numit 3D Distillation.
+ Ideea centrală pleacă de la observația că reflexiile speculare sunt dependente de vedere și că,
+ într-un set de date video,
+ există de obicei cadre în care aceleași suprafețe sunt vizibile fără a fi contaminate de reflexii puternice.
+ Prin agregarea informațiilor din mai multe perspective,
+ suprafețele reflectorizante pot fi reconstruite corect.
+ Metodologia propusă utilizează un model supervizat pre-antrenat pentru a genera hărți de adâncime inițiale,
+ care sunt apoi integrate într-o reprezentare 3D a scenei folosind tehnica TSDF-fusion pentru a crea un model de tip mesh.
+ Din acest model se extrage o așa-numită „adâncime proiectată”,
+ care este mai precisă pe suprafețele lucioase,
+ dar tinde să piardă detalii fine din cauza medierii volumetrice.
+\end_layout
+
+\begin_layout Standard
+Contribuția majoră a lucrării este schema de fuziune a adâncimii ghidată de incertitudine.
+ Autorii folosesc un ansamblu de modele pentru a calcula o hartă de incertitudine,
+ identificând zonele unde previziunile rețelei variază semnificativ,
+ cum este cazul reflexiilor.
+ Pseudo-etichetele pentru antrenare sunt create prin combinarea adâncimii prezise (pentru detalii de înaltă frecvență) cu adâncimea proiectată (pentru corectitudinea suprafețelor reflectorizante),
+ pe baza incertitudinii.
+ Această abordare este independentă de arhitectura rețelei,
+ fiind testată cu succes pe modele precum Monodepth2,
+ HR-Depth și MonoViT.
+ Din punct de vedere al evaluării,
+ studiul introduce seturi de date specializate,
+ precum ScanNet-Reflection și ScanNet-NoReflection,
+ pentru a măsura performanța strict pe zonele problematice.
+ Rezultatele demonstrează că modelele antrenate prin distilare 3D ating performanțe de tip state-of-the-art,
+ depășind metodele anterioare de auto-învățare pe toate metricile standard de eroare și acuratețe.
+ Un avantaj important al acestei tehnici este dat de îmbunătățirea preciziei fără a adăuga costuri computaționale sau parametri suplimentari în faza de inferență,
+ deoarece procesul complex de distilare 3D are loc doar în timpul antrenării.
+ Mai mult,
+ s-a demonstrat că metoda are o capacitate excelentă de generalizare,
+ oferind rezultate superioare și pe seturi de date noi,
+ precum 7-Scenes,
+ fără a fi nevoie de o reantrenare specifică pe acestea.
 \end_layout
 
 \begin_layout Chapter

@@ -2169,6 +2169,255 @@ Evaluările pe KITTI,
  depășind limitele impuse de antrenarea tradițională pe seturi idealizate.
 \end_layout
 
+\begin_layout Section
+3D Distillation:
+ Improving Self-Supervised Monocular Depth Estimation on Reflective Surfaces [IND,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+Modelul propus abordează dificultatea modelelor de estimare monoculară a adâncimii de a procesa corect suprafețele reflectorizante,
+ precum podelele lucioase sau ecranele.
+ În mod tradițional,
+ aceste modele se bazează pe ipoteza constanței fotometrice,
+ care presupune că un punct din spațiu își păstrează aspectul indiferent de unghiul din care este privit.
+ Totuși,
+ suprafețele reflectorizante încalcă acest principiu deoarece aspectul lor depinde critic de punctul de vedere,
+ generând adesea imagini virtuale ale surselor de lumină care par a fi la o distanță mult mai mare decât suprafața reală.
+ Această eroare face ca rețelele neuronale să prezică o adâncime exagerată pentru zonele cu reflexii speculare,
+ compromițând reconstrucția scenelor din mediul interior.
+ Pentru a rezolva această deficiență,
+ autorii propun un cadru de antrenare inovator numit 3D Distillation.
+ Ideea centrală pleacă de la observația că reflexiile speculare sunt dependente de vedere și că,
+ într-un set de date video,
+ există de obicei cadre în care aceleași suprafețe sunt vizibile fără a fi contaminate de reflexii puternice.
+ Prin agregarea informațiilor din mai multe perspective,
+ suprafețele reflectorizante pot fi reconstruite corect.
+ Metodologia propusă utilizează un model supervizat pre-antrenat pentru a genera hărți de adâncime inițiale,
+ care sunt apoi integrate într-o reprezentare 3D a scenei folosind tehnica TSDF-fusion pentru a crea un model de tip mesh.
+ Din acest model se extrage o așa-numită „adâncime proiectată”,
+ care este mai precisă pe suprafețele lucioase,
+ dar tinde să piardă detalii fine din cauza medierii volumetrice.
+\end_layout
+
+\begin_layout Standard
+Contribuția majoră a lucrării este schema de fuziune a adâncimii ghidată de incertitudine.
+ Autorii folosesc un ansamblu de modele pentru a calcula o hartă de incertitudine,
+ identificând zonele unde previziunile rețelei variază semnificativ,
+ cum este cazul reflexiilor.
+ Pseudo-etichetele pentru antrenare sunt create prin combinarea adâncimii prezise (pentru detalii de înaltă frecvență) cu adâncimea proiectată (pentru corectitudinea suprafețelor reflectorizante),
+ pe baza incertitudinii.
+ Această abordare este independentă de arhitectura rețelei,
+ fiind testată cu succes pe modele precum Monodepth2,
+ HR-Depth și MonoViT.
+ Din punct de vedere al evaluării,
+ studiul introduce seturi de date specializate,
+ precum ScanNet-Reflection și ScanNet-NoReflection,
+ pentru a măsura performanța strict pe zonele problematice.
+ Rezultatele demonstrează că modelele antrenate prin distilare 3D ating performanțe de tip state-of-the-art,
+ depășind metodele anterioare de auto-învățare pe toate metricile standard de eroare și acuratețe.
+ Un avantaj important al acestei tehnici este dat de îmbunătățirea preciziei fără a adăuga costuri computaționale sau parametri suplimentari în faza de inferență,
+ deoarece procesul complex de distilare 3D are loc doar în timpul antrenării.
+ Mai mult,
+ s-a demonstrat că metoda are o capacitate excelentă de generalizare,
+ oferind rezultate superioare și pe seturi de date noi,
+ precum 7-Scenes,
+ fără a fi nevoie de o reantrenare specifică pe acestea.
+\end_layout
+
+\begin_layout Section
+Self-Supervised Monocular Depth Estimation by Direction-aware Cumulative Convolution Network [GEN,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+Dacă problematica suprafețelor reflectorizante a fost anterior remediată,
+ această lucrare evidențiază importanța particularităților geometrice ale estimărilor.
+ Autorii pornesc de la observația că estimarea adâncimii este o problemă puternic dependentă de contextul ambiental,
+ iar reprezentările de tip convoluțional standard nu reușesc să exploateze eficient informația direcțională din imagine.
+ Concret,
+ aceștia demonstrează că predicția adâncimii este sensibilă la direcție.
+ Datele pe direcția verticală,
+ asociate variațiilor de adâncime și regiunilor de contact cu solul,
+ joacă un rol diferit față de cele de pe direcția orizontală,
+ care tind să conserve uniformitatea între obiecte.
+ Această asimetrie direcțională este minimizată de convoluțiile clasice,
+ care tratează echivalent toate direcțiile din câmpul receptiv,
+ ducând la pierderea unor parametri geometrici semnificativi și la erori în unele cazuri particulare.
+\end_layout
+
+\begin_layout Standard
+Pentru a rezolva această problemă,
+ lucrarea propune un nou cadru arhitectural,
+ Direction-aware Cumulative Convolution Network (DaCCN),
+ care introduce două contribuții metodologice majore la nivelul reprezentării caracteristicilor.
+ Prima este legată de modulul direction-aware,
+ care permite rețelei să învețe automat cum să ajusteze extracția de caracteristici în funcție de direcție.
+ Acest lucru se realizează printr-o transformare afină care modifică densitatea de eșantionare și câmpul receptiv pe axele orizontală și verticală,
+ permițând modelului să capteze mai multă informație acolo unde variațiile de adâncime sunt critice,
+ favorizând astfel informația globală acolo unde este necesară consistența.
+ A doua contribuție o reprezintă introducerea convoluției cumulative,
+ o operație nouă de agregare a caracteristicilor care vizează explicit corelația dintre cameră și obiecte,
+ adică acele zone din imagine care corespund spațiului fizic dintre punctul de vedere și obiectele din scenă.
+ Spre deosebire de convoluțiile clasice,
+ care agregă informația local într-un mod simetric,
+ convoluția cumulativă acumulează informația pe o direcție dominantă,
+ reflectând structura geometrică a scenei și permițând corectarea unor erori mari de estimare în cazuri dificile.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere al antrenării,
+ metoda este una auto-supervizată,
+ bazată pe eroarea fotometrică de reproiecție,
+ fără a introduce pierderi sau metrici noi în sens formal.
+ Evaluările experimentale pe benchmark-uri consacrate precum KITTI,
+ Cityscapes și Make3D arată că DaCCN obține îmbunătățiri semnificative față de metodele anterioare,
+ în special pe metrici sensibile la erori mari,
+ ceea ce indică o capacitate crescută de a gestiona cazurile dificile și structurile geometrice complexe.
+\end_layout
+
+\begin_layout Section
+Two-in-One Depth:
+ Bridging the Gap Between Monocular and Binocular Self-supervised Depth Estimation [GEN,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+Lucrarea își propune să îmbunătățească modul în care este aplicată estimarea auto-supervizată a adâncimii,
+ atât monocular cât și binocular,
+ pornind de la faptul că,
+ deși cele două metode urmăresc același obiectiv,
+ ele sunt abordate prin modele separate.
+ Această diferență conduce la o utilizare ineficientă a informației disponibile:
+ modelele binoculare exploatează eficient constrângerile geometrice oferite de perechile stereo,
+ dar își pierd complet utilitatea atunci când una dintre camere lipsește sau este indisponibilă,
+ în timp ce modelele monoculare oferă flexibilitate sporită,
+ însă cu acuratețe mai redusă.
+ În plus,
+ observații empirice arată că modelele monoculare pot depăși performanța celor binoculare în anumite zone restrânse,
+ precum oculuziile,
+ sugerând astfel existența unei complementarități nevalorificate între cele două paradigme.
+\end_layout
+
+\begin_layout Standard
+Pornind de la această motivație,
+ autorii introduc TiO-Depth,
+ un cadru unificat care integrează estimarea monoculară și binoculară într-o singură arhitectură coerentă.
+ Modelul este construit sub forma unei arhitecturi de tip Siamese,
+ în care fiecare ramură este capabilă să funcționeze independent ca estimator monocular de adâncime.
+ În acest fel,
+ estimarea adâncimii dintr-o singură imagine devine un caz particular al arhitecturii generale,
+ nu o sarcină separată.
+ Pentru a permite utilizarea informației stereo atunci când aceasta este disponibilă,
+ rețeaua conține un mecanism de corelare a caracteristicilor monoculare extrase din cele două vederi.
+ Acest mecanism,
+ denumit Monocular Feature Matching,
+ realizează o aliniere a caracteristicilor prin intermediul unui proces de tip 
+\series bold
+\color red
+atenție????
+\series default
+\color inherit
+,
+ evitând construirea explicită a volumelor de cost dense și reducând astfel complexitatea computațională.
+\end_layout
+
+\begin_layout Standard
+Un element esențial al modelului îl reprezintă strategia de antrenare propusă,
+ care nu se limitează la o optimizare simultană a celor două sarcini,
+ ci urmează o schemă atent controlată,
+ pe mai multe etape.
+ Într-o primă fază,
+ modelul este constrâns să învețe reprezentări monoculare stabile,
+ apoi este ghidat să integreze informația binoculară,
+ iar în etapa finală se aplică un mecanism de distilare a cunoștințelor,
+ prin care predicțiile stereo,
+ considerate mai fiabile din punct de vedere geometric,
+ sunt utilizate pentru a rafina rezultatele monoculare.
+ Această distilare este realizată adaptiv,
+ ținând cont de structura scenei și de regiuni în care una dintre estimări este mai sigură decât cealaltă,
+ ceea ce conduce la o îmbinare eficientă ale celor două perspective.
+ Evaluările experimentale realizate pe seturi de date consacrate demonstrează că TiO-Depth reușește nu doar să unifice cele două tipuri de estimare,
+ ci și să depășească performanțele modelelor specializate,
+ atât în regim monocular,
+ cât și binocular.
+ Îmbunătățirile obținute sunt consistente și indică o capacitate sporită de generalizare,
+ inclusiv în scenarii cross-dataset.
+\end_layout
+
+\begin_layout Section
+Self-Supervised Learning based Depth Estimation from Monocular Images [GEN,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+Problema estimării adâncimii monoculare se află la intersecția dintre percepția geometrică și învățarea vizuală,
+ fiind caracterizată de ambiguități structurale și lipsa constrângerilor explicite.
+ În acest context,
+ lucrarea de față investighează îmbunătățiri ale modelelor auto-supervizate moderne pentru a depăși aceste limitări,
+ abordând una dintre problemele centrale ale viziunii computerizate moderne,
+ și anume estimarea adâncimii scenei pornind de la o singură imagine RGB,
+ în absența etichetelor de tip ground truth.
+ Motivația este construită pe limitările majore ale metodelor clasice și supervizate,
+ care depind fie de senzori costisitori precum LiDAR,
+ fie de seturi de date dificil de obținut și etichetat.
+\end_layout
+
+\begin_layout Standard
+Pentru a aborda această problemă,
+ lucrarea are ca punct de plecare modelul MonoDepth2,
+ unul dintre principalele repere în estimarea auto-supervizată a adâncimii.
+ Pe acest fundament,
+ autorii propun o serie de îmbunătățiri arhitecturale și metodologice menite să sporească atât coerența geometrică,
+ cât și capacitatea de generalizare a predicțiilor.
+ Soluția se bazează pe o arhitectură de tip codificator-decodificator,
+ în care un codificator convoluțional extrage caracteristici din imagine,
+ iar un decodificator de tip U-Net generează harta de adâncime inversă.
+ Antrenarea se realizează auto-supervizat,
+ prin estimarea simultană a adâncimii și a mișcării camerei,
+ folosind erori de reproiecție fotometrică și regularizări de tip smoothness ghidate de muchii.
+\end_layout
+
+\begin_layout Standard
+Noutatea lucrării constă în integrarea unor module suplimentare,
+ care adresează limitări specifice modelului de bază.
+ În primul rând,
+ informația semantică provenită dintr-un model de segmentare de tip Mask R-CNN este introdusă pentru a rafina harta de 
+\series bold
+\color red
+disparitate????
+
+\series default
+\color inherit
+ în regiunile corespunzătoare obiectelor semnificative.
+ Această strategie urmărește reducerea distorsiunilor semantice și creșterea coerenței globale a hărții de adâncime,
+ în special în jurul contururilor obiectelor.
+ În al doilea rând,
+ autorii propun înlocuirea interpolării biliniare clasice din decodificator cu o tehnică de eșantionare bazată pe convoluții la nivel de pixel,
+ inspirată din augmentarea imaginilor.
+ Această alegere permite o propagare mai eficientă a caracteristicilor în timpul reconstrucției la rezoluție înaltă,
+ reducând pierderea de detalii fine.
+ O altă contribuție importantă este eliminarea dependenței de parametrii intrinseci cunoscuți ai camerei,
+ prin introducerea unei rețele dedicate care învață acești parametri direct din date,
+ făcând modelul aplicabil în scenarii realiste.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere al evaluării,
+ lucrarea utilizează aceleași metrici consacrate din literatura de specialitate,
+ precum erorile relative,
+ RMSE și indicatorii de acuratețe pe praguri,
+ fără a introduce metrici noi,
+ dar demonstrând îmbunătățiri consistente ale acestora prin combinația propusă de tehnici.
+ Rezultatele experimentale arată că extensiile aduse modelului de bază conduc la predicții mai stabile,
+ mai coerente semantic și mai robuste la variații de condiții,
+ inclusiv prin utilizarea augmentărilor de tip weather pentru generalizare.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
 \begin_layout Chapter
 Concluzii
 \begin_inset CommandInset label
