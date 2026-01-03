@@ -2273,7 +2273,7 @@ Din punct de vedere al antrenării,
  Evaluările experimentale pe benchmark-uri consacrate precum KITTI,
  Cityscapes și Make3D arată că DaCCN obține îmbunătățiri semnificative față de metodele anterioare,
  în special pe metrici sensibile la erori mari,
- ceea ce indică o capacitate crescută de a gestiona cazurile dificile și structurile geometrice complexe.
+ ceea ce indică o capacitate crescută de a gestiona cazurile dificile și structurile geometrice complexe.DistD
 \end_layout
 
 \begin_layout Section
@@ -2319,7 +2319,7 @@ atenție????
 \series default
 \color inherit
 ,
- evitând construirea explicită a volumelor de cost dense și reducând astfel complexitatea computațională.
+ evitând construirea explicită a volumelor de cost dense și reducâDistDnd astfel complexitatea computațională.
 \end_layout
 
 \begin_layout Standard
@@ -2418,6 +2418,525 @@ Din punct de vedere al evaluării,
 MonoDiffusion:
  Self-Supervised Monocular Depth Estimation Using Diffusion Model [GEN,
  Diff]
+\end_layout
+
+\begin_layout Standard
+Articolul propune o abordare inovativă pentru estimarea adâncimii din imagini monoculare,
+ pornind de la ideea că procesul de predicție poate fi formulat mai eficient ca o rafinare iterativă decât ca o estimare directă într-un singur pas.
+ Autorii argumentează că majoritatea metodelor auto-supervizate existente tratează adâncimea ca pe o ieșire deterministă,
+ ceea ce limitează capacitatea modelelor de a corecta erorile progresiv și de a exploata structura probabilistică a soluțiilor posibile.
+\end_layout
+
+\begin_layout Standard
+În acest context,
+ lucrarea introduce MonoDiffusion,
+ un cadru care integrează modele de difuzie în estimarea adâncimii monoculare,
+ explorând în mod sistematic potențialul proceselor de reducere iterativă a zgomotelor într-un scenariu în care adâncimea reală nu este disponibilă în timpul antrenării.
+ Ideea centrală este de a porni de la o distribuție aleatoare de adâncime și de a rafina progresiv această estimare prin pași succesivi de eliminare a zgomotului,
+ pe baza informației vizuale.
+ Principala dificultate în aplicarea modelelor de difuzie în acest context este lipsa adâncimii reale,
+ necesară în definirea procesului de difuzie.
+ Pentru a depăși această limitare,
+ autorii introduc un mecanism original de pseudo difuzie,
+ în care un model profesor,
+ antrenat anterior în regim auto-superivizat,
+ generează hărți de adâncime aproximative care sunt utilizate ca referință în procesul de adăugare controlată a zgomotului.
+\end_layout
+
+\begin_layout Standard
+Mai mult decât atât,
+ cadrul MonoDiffusion integrează și o strategie de distilare a cunoștințelor,
+ prin care predicțiile modelului profesor sunt folosite pentru a ghida învățarea modelului elev în timpul etapelor de reducere a zgomotelor.
+ Pentru a minimiza impactul erorilor inerente,
+ este aplicat un filtru de verificare care elimină regiunile nesigure din supervizarea utilizată.
+ O altă tehnică nou introdusă este mecanismul de mascare vizuală,
+ inspirat din modelarea mascată a imaginilor,
+ care constă în ascunderea aleatorie a unor părți din caracteristicile vizuale,
+ cu scopul de a forța modelul să reconstruiască adâncimea corectă folosind informațiile rămase.
+ Această strategie îmbunătățește capacitatea de generalizare și robustețea procesului de reducere a zgomotelor,
+ în special în regiunile îndepărtate sau slab texturate.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere arhitectural,
+ metoda păstrează un cadru de tip codificator-decodificator,
+ iar complexitatea suplimentară este concentrată în procesul de antrenare,
+ nu în inferență,
+ similar abordărilor auto-supervizate clasice.
+ Nu sunt introduse metrici de evaluare noi,
+ însă performanța este analizată folosind indicatorii standard din literatură,
+ demonstrând îmbunătățiri consistente față de metodele existente.
+ Rezultatele experimentale arată că MonoDiffusion prezintă îmbunătățiri semnificative,
+ atât din punct de vedere cantitativ,
+ cât și calitativ,
+ producând hărți de adâncime mai detaliate,
+ cu contururi bine definite și structuri 3D coerente.
+\end_layout
+
+\begin_layout Section
+MonoProb:
+ Self-Supervised Monocular Depth Estimation with Interpretable Uncertainty
+\end_layout
+
+\begin_layout Standard
+MonoProb se concentrează pe o problemă esențială pentru aplicarea practică a estimării adâncimii monoculare în sisteme critice,
+ precum conducerea autonomă,
+ și anume lipsa unei estimări explicite și interpretabile a incertitudinii asociate predicțiilor de adâncime.
+ Deși metodele self-supervised au redus semnificativ dependența de date 
+\series bold
+\color red
+etichetate???
+\series default
+\color inherit
+,
+ acestea furnizează în mod obișnuit doar hărți de adâncime deterministe,
+ fără a indica gradul de acuratețe a modelului în propriile predicții.
+ Această limitare este problematică în scenarii reale,
+ unde deciziile ulterioare trebuie să țină cont nu doar de valoarea adâncimii,
+ ci și de fiabilitatea acesteia.
+ Autorii pornesc de la observația că multe metode existente de estimare a incertitudinii fie sunt costisitoare computațional,
+ necesitând mai multe inferențe,
+ fie produc măsuri dificil de interpretat,
+ care nu reflectă direct eroarea așteptată asupra adâncimii.
+\end_layout
+
+\begin_layout Standard
+Pentru a rezolva această problemă,
+ lucrarea propune o arhitectură auto-supervizată care reformulează estimarea adâncimii într-un cadru probabilistic.
+ În loc să prezică o singură valoare scalară pentru fiecare pixel,
+ modelul estimează parametrii unei distribuții de probabilitate a adâncimii,
+ unde media este utilizată ca predicție de adâncime,
+ iar deviația standard reprezintă incertitudinea asociată.
+ Noutatea constă în modul în care această distribuție este integrată în costul de reconstrucție,
+ folosind legea probabilității totale.
+ Astfel,
+ incertitudinea estimată depinde direct de eroarea așteptată de adâncime,
+ fiind utilizabilă,
+ practic,
+ într-o singură inferență.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere metodologic,
+ MonoProb introduce mai multe tehnici noi.
+ Una dintre acestea este utilizarea unei strategii de eșantionare controlată de distribuția de adâncime,
+ pentru a aproxima eficient așteptarea necesară în calculul pierderii probabilistice,
+ fără a compromite posibilitatea de antrenare prin propagare în spate.
+ De asemenea,
+ autorii propun o schemă originală de auto-distilare,
+ în care un model profesor furnizează nu doar hărți de adâncime pseudo ground truth,
+ ci distribuții complete de adâncime,
+ iar modelul elev este antrenat să tindă spre acestea folosind divergența Kullback-Leibler.
+ Această abordare îmbunătățește atât calitatea predicțiilor de adâncime,
+ cât și acuratețea estimării incertitudinii.
+\end_layout
+
+\begin_layout Standard
+Rezultatele experimentale pe seturi de date standard demonstrează că MonoProb atinge sau depășește modelele actuale,
+ atât în ceea ce privește estimarea adâncimii,
+ cât și în ceea ce privește calitatea incertitudinii estimate.
+\end_layout
+
+\begin_layout Section
+SPIdepth:
+ Strengthened Pose Information for Self-supervised Monocular Depth Estimation
+\end_layout
+
+\begin_layout Standard
+Articolul se axează pe problema utilizării insuficiente și ineficiente a informației de poziție și orientare a camerei,
+ cunoscută sub denumirea de pose.
+ Deși majoritatea abordărilor existente tratează estimarea poziției ca pe o componentă auxiliară necesară doar pentru calculul costului fotometric,
+ autorii susțin că această informație joacă un rol mai profund în înțelegerea structurii scenei și,
+ implicit,
+ în calitatea predicției adâncimii.
+ Plecând de la această observație,
+ lucrarea propune o schimbare de abordare:
+ în loc să rafineze exclusiv rețeaua de adâncime,
+ se concentrează pe întărirea rețelei de estimare a pose-ului ca mijloc principal de îmbunătățire a estimării adâncimii.
+\end_layout
+
+\begin_layout Standard
+Pentru a concretiza această idee,
+ autorii introduc SPIdepth,
+ un cadru self-supervised care extinde și îmbunătățește abordările bazate pe Self Query Layer (SQL),
+ punând accent pe o rețea de pose mai expresivă și puternică.
+ Arhitectura include două componente principale:
+ o rețea de adâncime care extrage reprezentări vizuale multi-scară dintr-o singură imagine RGB și o rețea de pose îmbunătățită,
+ utilizată în timpul antrenării pentru a estima cu acuratețe transformările relative dintre cadre.
+ Spre deosebire de metodele clasice,
+ care folosesc rețele de pose relativ simple,
+ SPIdepth integrează modele pre-antrenate mai performante,
+ capabile să surprindă relații geometrice complexe.
+\end_layout
+
+\begin_layout Standard
+Tehnica centrală utilizată de SPIdepth este combinarea informației de pose îmbunătățite cu SQL,
+ un mecanism care construiește volume de cost interne pentru a surprinde relații de distanță relativă între pixeli și regiuni ale imaginii.
+ Prin consolidarea informației de mișcare și a celei structurale,
+ modelul reușește să estimeze distribuții mai precise ale adâncimii,
+ în special în zonele dificile,
+ precum cele cu obiecte dinamice sau diferențe mari de scară.
+ Antrenarea se realizează folosind costuri fotometrice consacrate,
+ combinate cu regularizări de tip smoothness ghidate de muchii și strategii de auto-mascare.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere al evaluării,
+ moidelul demonstrează îmbunătățiri consistente pe metricile standard utilizate în estimarea adâncimii,
+ evidențiind atât o creștere a acurateții,
+ cât și o generalizare superioară.
+ Rezultatele experimentale arată că SPIdepth atinge și depășește modelele anterioare pe benchmark-uri consacrate,
+ precum KITTI,
+ Cityscapes și Make3D,
+ inclusiv în scenariile de tip zero-shot.
+ Un aspect remarcabil este faptul că performanțele ridicate sunt obținute folosind o singură imagine la inferență,
+ fără a apela la secvențe video sau măști de mișcare,
+ ceea ce subliniază eficiența și aplicabilitatea practică a metodei.
+\end_layout
+
+\begin_layout Section
+MonoIndoor++:Towards Better Practice of Self-Supervised Monocular Depth Estimation for Indoor Environments [IND,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+MonoIndoor++ se concentrează pe dificultățile specifice estimării adâncimii monoculare self-supervised în medii interioare.
+ Autorii pornesc de la observația că metodele auto-supervizate existente,
+ deși performante pe seturi de date precum KITTI,
+ își pierd semnificativ din eficiență în interior,
+ unde scenele prezintă variații mari ale intervalului de adâncime,
+ mișcări accentuate de rotație ale camerei și structuri geometrice mult mai aglomerate.
+ Aceste caracteristici fac dificilă atât învățarea unor indicii de adâncime consistente,
+ cât și estimarea corectă a poziției relative a camerei,
+ element esențial pentru supervizarea fotometrică.
+ Problematica abordată este,
+ așadar,
+ identificarea și tratarea sistematică a cauzelor care limitează performanța estimării monoculare auto-supervizate în medii interioare,
+ cu scopul de a obține predicții mai stabile,
+ mai coerente și mai apropiate de cele furnizate de metodele supervizate.
+\end_layout
+
+\begin_layout Standard
+Pentru a rezolva aceste limitări,
+ autorii propun MonoIndoor++,
+ un model auto-supervizat conceput explicit pentru scene interioare,
+ care introduce trei contribuții arhitecturale și metodologice majore.
+ Prima este un modul de factorizare a adâncimii,
+ care separă predicția adâncimii într-o componentă de adâncime relativă și un factor global de scară.
+ Spre deosebire de abordările clasice,
+ care impun implicit un interval fix de adâncime,
+ acest modul permite modelului să se adapteze dinamic la variațiile mari de scară caracteristice mediilor interioare.
+ Factorul global de scară este estimat printr-o rețea dedicată bazată pe transformere,
+ capabilă să capteze informații globale din scenă și să indice valoarea maximă a adâncimii într-un mod explicit și flexibil.
+\end_layout
+
+\begin_layout Standard
+A doua contribuție constă în introducerea unui modul de estimare reziduală a poziției.
+ În locul unei predicții directe într-o singură etapă a mișcării relative a camerei,
+ MonoIndoor++ adoptă o strategie iterativă,
+ în care o estimare inițială este rafinată prin estimări succesive ale unor corecții reziduale.
+ Prin rafinarea progresivă a poziției se obțin transformări mai corecte între cadre,
+ ceea ce conduce la o supervizare fotometrică mai fiabilă și,
+ implicit,
+ la o estimare a adâncimii mai precisă.
+\end_layout
+
+\begin_layout Standard
+Cea de-a treia contribuție este legată de integrarea explicită a informației de coordonate prin convoluții de tip CoordConv în rețeaua de estimare a poziției.
+ Prin adăugarea coordonatelor spațiale ca intrări suplimentare,
+ modelul surprinde indicii geometrice explicite care completează informația fotometrică,
+ îmbunătățind capacitatea de inferență a relațiilor spațiale dintre cadre.
+ Această tehnică se dovedește deosebit de utilă în scene indoor,
+ unde structura geometrică este complexă și ambiguă.
+\end_layout
+
+\begin_layout Standard
+În ceea ce privește evaluarea,
+ modelul demonstrează îmbunătățiri consistente și robuste pe multiple seturi de date indoor consacrate.
+ Rezultatele arată că MonoIndoor++ reduce semnificativ diferența față de metodele supervizate și prezintă o capacitate superioară de generalizare.
+\end_layout
+
+\begin_layout Section
+FS-Depth:
+ Focal-and-Scale Depth Estimation from a Single Image in Unseen Indoor Scene
+\end_layout
+
+\begin_layout Standard
+Autorii articolului pornesc de la observația că dificultatea estimării monoculare nu este cauzată exclusiv de ambiguitatea de scară,
+ ci și de o ambiguitate suplimentară,
+ legată de distanța focală a camerei.
+ În practică,
+ imaginile din mediul interior pot fi captate cu camere având configurații optice diferite și distanțe focale variabile,
+ iar această diversitate perturbă relația dintre proiecția 2D și structura 3D a scenei.
+ Modelele existente,
+ antrenate de regulă pe seturi de date cu distanță focală fixă sau aproape constantă,
+ ajung astfel să supraînvețe aceste condiții și să eșueze atunci când sunt aplicate pe scene noi,
+ captate cu alte camere sau în contexte diferite.
+\end_layout
+
+\begin_layout Standard
+Pentru a rezolva această problemă,
+ autorii propun FS-Depth,
+ un model de estimare a adâncimii care integrează explicit atât informația de scară a scenei,
+ cât și informația de distanță focală,
+ într-un cadru unificat.
+ Abordarea se bazează pe separarea clară a rolurilor dintre estimarea adâncimii relative și estimarea adâncimii absolute.
+ Într-o primă etapă,
+ este utilizată o rețea de estimare a adâncimii relative,
+ pre-antrenată pe seturi de date multiple,
+ cu scări și semantici variate,
+ capabilă să surprindă structura geometrică a scenei într-o manieră independentă de variațiile de scară.
+ Această rețea furnizează atât hărți de adâncime relativă,
+ cât și caracteristici intermediare multi-scară,
+ care descriu scenele la diferite niveluri de rezoluție.
+\end_layout
+
+\begin_layout Standard
+Noutatea modelului constă în modul de integrare a distanței focale în procesul de estimare.
+ Deoarece distanța focală este o valoare scalară care nu poate fi introdusă direct ca intrare într-o rețea CNN standard,
+ autorii propun un mecanism de codificare a acesteia sub forma unor caracteristici de distanță focală învățabile.
+ Aceste caracteristici sunt generate printr-o matrice de codificare și apoi eșantionate la mai multe rezoluții,
+ pentru a fi concatenate cu caracteristicile intermediare provenite din rețeaua de adâncime relativă.
+ Prin această fuziune multi-scară,
+ influența distanței focale este propagată în mod explicit în mai multe straturi ale rețelei,
+ prevenind disiparea treptată a informației optice pe măsură ce datele avansează în arhitectură.
+ Caracteristicile combinate sunt ulterior utilizate de o rețea de estimare a adâncimii absolute,
+ care produce valori metrice de adâncime coerente.
+\end_layout
+
+\begin_layout Standard
+Pe lângă contribuțiile arhitecturale,
+ articolul introduce și o tehnică nouă de augmentare a datelor,
+ menită să compenseze lipsa diversității distanțelor focale din seturile de date publice.
+ Această strategie se bazează pe proprietățile geometrice ale proiecției camerei și permite generarea de perechi corespunzătoare unor distanțe focale diferite,
+ fără a altera consistența geometrică a scenei.
+ Astfel,
+ modelul este expus,
+ în timpul antrenării,
+ la o varietate mult mai largă de configurații optice,
+ ceea ce îi îmbunătățește semnificativ capacitatea de generalizare.
+\end_layout
+
+\begin_layout Standard
+Evaluarea experimentală,
+ realizată pe mai multe seturi de date din mediul interior,
+ arată că FS-Depth obține îmbunătățiri consistente față de metodele de referință,
+ atât din punct de vedere al acurateții adâncimii absolute,
+ cât și al calității reconstrucției 3D,
+ reducând deformările geometrice frecvent întâlnite la alte modele.
+ În același timp,
+ performanța pe setul de date de antrenare este menținută,
+ demonstrând că integrarea distanței focale nu compromite acuratețea în scenarii cunoscute.
+\end_layout
+
+\begin_layout Section
+Fully Self-Supervised Depth Estimation from Defocus Clue [IND,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+Articolul propune o abordare complet auto-supervizată pentru estimarea adâncimii folosind exclusiv indicii de defocalizare dintr-un set redus de imagini captate la distanțe diferite de focalizare,
+ numite focal stacks.
+ Lucrarea pornește de la o problemă semnificativă a metodelor existente de tip depth-from-defocus,
+ și anume dependența acestora de informații greu de obținut în scenarii reale,
+ precum hărțile de adâncime ground truth sau imaginile all-in-focus.
+ Deși defocalizarea este un indiciu fizic direct legat de geometria scenei și de parametrii camerei,
+ majoritatea lucrărilor anterioare fie folosesc supervizare explicită,
+ fie presupun existența unei imagini ideal focalizate,
+ care în practică nu poate fi capturată fidel cu sisteme optice reale.
+ Această discrepanță între ipotezele teoretice și condițiile din lumea reală limitează aplicabilitatea metodelor DFD în contexte practice.
+\end_layout
+
+\begin_layout Standard
+Pentru a elimina aceste limitări,
+ autorii introduc un cadru complet auto-supervizat care utilizează doar focal stacks,
+ fără acces la adâncime sau imagini all-in-focus în timpul antrenării.
+ Soluția propusă se bazează pe combinarea unei rețele neuronale cu un model optic realist,
+ inspirat din ecuația lentilei subțiri.
+ Componenta neuronală,
+ denumită DAIF-Net,
+ este concepută pentru a estima simultan două ieșiri:
+ harta de adâncime și imaginea all-in-focus latentă,
+ pornind de la un focal stack cu un număr arbitrar de imagini.
+ Această rețea este construită pe o arhitectură de tip codificator-decodificator,
+ iar fuziunea informației din mai multe planuri de focalizare se realizează prin mecanisme de pooling global care evidențiază regiunile cele mai clare din fiecare imagine.
+\end_layout
+
+\begin_layout Standard
+Inovația metodei constă în modul de supervizare.
+ În loc să compare direct predicțiile cu valori de referință inexistente,
+ cadrul utilizează un model optic fizic pentru a reconstrui focal stack-ul inițial din adâncimea și imaginea all-in-focus estimate.
+ Acest model optic simulează procesul de formare a defocalizării prin calculul cercului de confuzie și prin convoluții PSF dependente de adâncime,
+ permițând generarea unor imagini defocalizate consistente fizic.
+ Ideea centrală este că o reconstrucție fidelă a focal stack-ului este posibilă doar dacă adâncimea și imaginea all-in-focus estimate sunt corecte,
+ ceea ce transformă problema într-una bine constrânsă din punct de vedere fizic.
+ Pentru a stabiliza antrenarea,
+ autorii introduc tehnici suplimentare precum regularizarea clarității imaginilor all-in-focus,
+ obținută prin măsuri de tip Laplacian,
+ și o regularizare de netezire a adâncimii ghidată de muchii,
+ care aliniază discontinuitățile de adâncime cu structura imaginii.
+\end_layout
+
+\begin_layout Standard
+Metoda nu introduce metrici noi de evaluare,
+ dar utilizează indicatorii standard pentru a demonstra eficiența abordării.
+ Rezultatele experimentale pe seturi de date precum DefocusNet,
+ sau nyuV2 arată că metoda propusă este comparabilă,
+ iar în anumite scenarii apropiată,
+ chiar competitivă cu metodele supervizate sau parțial supervizate de tip state of the art,
+ în ciuda faptului că nu folosește nicio formă de ground truth.
+ În special,
+ performanța este solidă pentru obiecte apropiate și regiuni cu textură variată,
+ unde indiciile de defocalizare sunt mai pronunțate.
+\end_layout
+
+\begin_layout Section
+Mining Supervision for Dynamic Regions in Self-Supervised Monocular Depth Estimation [OUT,
+ CNN]
+\end_layout
+
+\begin_layout Standard
+„Mining Supervision” face referire la problema predicției eronate a adâncimii în regiuni dinamice.
+ Metodele clasice auto-supervizate se bazează pe reconstrucția fotometrică dintre cadre consecutive și presupun implicit o scenă rigidă,
+ ipoteză care este încălcată în prezența obiectelor mobile.
+ Această încălcare conduce la ambiguități fundamentale între adâncime și mișcare,
+ permițând multiple combinații de adâncime și mișcare care minimizează costul de reconstrucție,
+ dar care nu corespund realității geometrice.
+ Ca rezultat,
+ majoritatea abordărilor existente oferă estimări acceptabile pentru fundalul static,
+ însă eșuează sistematic în regiunile dinamice,
+ unde apar erori mari și inconsistențe de scară.
+\end_layout
+
+\begin_layout Standard
+Din acest motiv,
+ autorii propun un cadru auto-supervizat care separă explicit estimarea adâncimii pentru regiunile statice de cele dinamice,
+ în loc să încerce rezolvarea lor simultană într-un singur model.
+ Abordarea pornește de la o etapă inițială de estimare auto-supervizată,
+ care furnizează hărți de adâncime fiabile pentru zonele statice și informații de mișcare la nivel de pixel pentru identificarea obiectelor mobile.
+ Pe baza acestor indicii,
+ sunt extrase măști de obiecte la nivel de instanță,
+ permițând tratarea separată a fiecărui obiect aflat în mișcare.
+ Pentru aceste regiuni dinamice,
+ este introdusă o rețea dedicată,
+ care estimează adâncimea obiectelor folosind reconstrucția fotometrică doar pe regiunea corpului respectiv.
+\end_layout
+
+\begin_layout Standard
+Rezolvarea ambiguității de scară dintre adâncimea estimată pentru obiectele dinamice și cea a fundalului static reprezintă noutatea cercetării.
+ În timp ce adâncimea fundalului este consistentă la nivel global,
+ adâncimea obiectelor mobile poate avea scări arbitrare și diferite chiar în interiorul aceluiași obiect.
+ De aceea,
+ autorii introduc un modul nou de aliniere a scării,
+ denumit Depth Scale Alignment,
+ care învață să estimeze un factor de scalare pentru fiecare obiect,
+ folosind drept referință regiunile statice din vecinătatea acestuia.
+ Modulul este antrenat exclusiv pe obiecte statice,
+ unde relația dintre cele două estimări de adâncime este cunoscută,
+ și apoi este generalizat pentru obiecte dinamice.
+ Prin această aliniere,
+ se obțin pseudo-etichete de adâncimi consistente la nivelul întregii imagini,
+ care combină adâncimea fundalului static cu adâncimea obiectelor dinamice corect scalată.
+\end_layout
+
+\begin_layout Standard
+Aceste pseudo-etichete sunt ulterior utilizate pentru a antrena un model final de estimare a adâncimii,
+ într-un cadru închis,
+ contribuind semnificativ la calitatea predicțiilor în regiunile dinamice.
+ Metoda nu introduce metrici noi de evaluare,
+ dar demonstrează îmbunătățiri substanțiale pe metricile standard utilizate în literatura de specialitate,
+ în special pentru obiectele aflate în mișcare.
+ Rezultatele experimentale pe seturile de date Cityscapes și KITTI arată că abordarea propusă atinge un nou nivel de performanță în estimarea adâncimii pentru regiuni dinamice,
+ depășind în mod consistent metodele anterioare auto-supervizate și reducând semnificativ decalajul dintre predicțiile pentru fundal și cele pentru obiectele mobile.
+\end_layout
+
+\begin_layout Section
+From-Ground-To-Objects:
+ Coarse-to-Fine Self-supervised Monocular Depth Estimation of Dynamic Objects with Ground Contact Prior
+\end_layout
+
+\begin_layout Standard
+În lucrare,
+ este prezentat un cadru riguros pentru estimarea adâncimii,
+ concentrându-se în mod explicit asupra dificultăților introduse de obiectele dinamice din scenele de exterior.
+ Autorii pornesc de la principiul clasic al estimării adâncimii supervizate,
+ în care rețelele neuronale sunt antrenate să minimizeze erorile fotometrice dintre un cadru țintă și cadrele reproiectate din imagini stereo sau din secvențe video monoculare consecutive.
+ Această abordare presupune implicit că scena este rigidă,
+ adică toate elementele se mișcă exclusiv datorită mișcării camerei.
+ În practică,
+ această ipoteză este încălcată frecvent de obiecte precum automobilele,
+ bicicletele sau pietonii,
+ care se deplasează independent.
+ Lucrarea arată că,
+ în astfel de situații,
+ pierderea de reproiecție poate fi minimizată chiar și atunci când adâncimea obiectelor este estimată greșit,
+ ceea ce conduce la artefacte geometrice evidente,
+ precum obiecte care par să plutească deasupra solului sau să fie scufundate în acesta în reconstrucțiile 3D.
+\end_layout
+
+\begin_layout Standard
+Pentru a aborda această problemă,
+ autorii introduc un principiu geometric simplu,
+ dar puternic,
+ denumit ground contacting prior.
+ Acesta se bazează pe observația că majoritatea obiectelor clasificate ca dinamice în scenele de exterior sunt în contact cu solul și,
+ prin urmare,
+ au o adâncime similară cu cea a punctelor de sol pe care se sprijină.
+ Această observație este exploatată pentru a furniza o formă de supervizare precisă,
+ fără a apela la adnotări externe sau la estimarea explicită a mișcării obiectelor.
+ Pe baza acestui aspect,
+ lucrarea propune o strategie de antrenare de la general la particular,
+ structurată în două etape distincte,
+ fiecare având un rol bine definit în procesul de învățare a adâncimii.
+\end_layout
+
+\begin_layout Standard
+În etapa de antrenare grosieră,
+ rețeaua este antrenată separat pe regiuni statice și cele aparținând obiectelor dinamice.
+ Regiunile corespunzătoare claselor dinamice sunt complet excluse din calculul costului de reproiecție,
+ pentru a evita învățarea unor relații eronate între adâncime și mișcare.
+ În schimb,
+ adâncimea acestor obiecte este ghidată printr-o funcție de cost nou introdusă,
+ denumită Ground-contacting-prior Disparity Smoothness Loss (GDS-Loss).
+ Această funcție de cost este o extensie a regularizării clasice de netezire a disparității,
+ dar este adaptată pentru a impune consistență verticală între obiectele dinamice și punctele de sol cu care acestea intră în contact.
+ Concret,
+ GDS-Loss acordă o pondere mult mai mare gradientului vertical al disparității în regiunile obiectelor dinamice,
+ forțând astfel alinierea adâncimii acestora cu adâncimea solului.
+ În același timp,
+ influența marginilor de culoare este redusă în interiorul obiectelor,
+ pentru a preveni introducerea unor discontinuități artificiale ale adâncimii cauzate de textură.
+\end_layout
+
+\begin_layout Standard
+După finalizarea etapei grosiere,
+ rețeaua rezultată oferă estimări de adâncime consistente din punct de vedere geometric pentru obiectele dinamice,
+ dar poate produce predicții destul de uniforme pe suprafețele acestora.
+ Pentru a rezolva această limitare,
+ autorii introduc o etapă de antrenare fină,
+ în care rețeaua este rafinată pentru a surprinde detaliile de adâncime ale obiectelor.
+ În această fază,
+ pierderea de reproiecție este reintrodusă pe întreaga imagine,
+ însă este controlată printr-un mecanism de regularizare suplimentar.
+ Acest mecanism utilizează o funcție de regularizare care constrânge noile predicții de adâncime să rămână consistente cu predicțiile fiabile obținute în etapa grosieră.
+ Regularizarea este ponderată adaptiv printr-un factor derivat dintr-un cost de volum,
+ care indică regiunile în care reproiecția este nesigură,
+ cum ar fi zonele corespunzătoare obiectelor aflate în mișcare.
+ Astfel,
+ rețeaua este liberă să învețe detalii fine în regiunile statice,
+ dar este penalizată atunci când deviază excesiv în zonele dinamice.
+\end_layout
+
+\begin_layout Standard
+Lucrarea descrie în detaliu implementarea acestei strategii și arată că ea poate fi integrată fără modificări arhitecturale în modele existente de estimare a adâncimii,
+ precum Monodepth2,
+ HR-Depth,
+ CADepth sau MonoViT.
+ Evaluările experimentale realizate pe seturile de date Cityscapes și KITTI demonstrează că strategia de la general la particular bazată pe ground contacting prior îmbunătățește semnificativ calitatea estimării adâncimii,
+ în special în regiunile corespunzătoare obiectelor dinamice.
+ Analizele calitative evidențiază reconstrucții 3D coerente,
+ în care obiectele sunt corect poziționate pe sol,
+ iar studiile de ablație confirmă contribuția fiecărei componente propuse.
 \end_layout
 
 \begin_layout Chapter
