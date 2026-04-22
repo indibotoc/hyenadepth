@@ -94,8 +94,18 @@ class Trainer:
                 self.models["pose"] = networks.PoseCNN(
                     self.num_input_frames if self.opt.pose_model_input == "all" else 2)
 
+            elif self.opt.pose_model_type == "vggt":
+                assert self.opt.pose_model_input == "pairs", \
+                    "VGGT pose model requires --pose_model_input pairs"
+                self.models["pose"] = networks.VGGTPoseNet(
+                    pretrained=(self.opt.weights_init == "pretrained"),
+                    freeze=(not self.opt.vggt_finetune),
+                    img_size=self.opt.vggt_img_size)
+
             self.models["pose"].to(self.device)
-            self.parameters_to_train += list(self.models["pose"].parameters())
+            self.parameters_to_train += [
+                p for p in self.models["pose"].parameters() if p.requires_grad
+            ]
 
         if self.opt.predictive_mask:
             assert self.opt.disable_automasking, \
@@ -186,8 +196,11 @@ class Trainer:
                 config=vars(self.opt),
                 resume="allow",
             )
-            wandb.watch(self.models["encoder"], log="gradients", log_freq=500)
+            for name, model in self.models.items():
+                if any(p.requires_grad for p in model.parameters()):
+                    wandb.watch(model, log="gradients", log_freq=500, log_graph=False)
         self.use_wandb = bool(self.opt.wandb_project)
+        self._epoch_losses = []
 
     def set_train(self):
         """Convert all models to training mode
@@ -218,6 +231,7 @@ class Trainer:
         """Run a single epoch of training and validation
         """
         self.model_lr_scheduler.step()
+        self._epoch_losses = []
 
         print("Training")
         self.set_train()
@@ -233,6 +247,7 @@ class Trainer:
             self.model_optimizer.step()
 
             duration = time.time() - before_op_time
+            self._epoch_losses.append(losses["loss"].item())
 
             # log less frequently after the first 2000 steps to save time & disk space
             early_phase = batch_idx % self.opt.log_frequency == 0 and self.step < 2000
@@ -244,10 +259,22 @@ class Trainer:
                 if "depth_gt" in inputs:
                     self.compute_depth_losses(inputs, outputs, losses)
 
-                self.log("train", inputs, outputs, losses)
+                self.log("train", inputs, outputs, losses, duration)
                 self.val()
 
             self.step += 1
+
+        if self.use_wandb and self._epoch_losses:
+            epoch_metrics = {
+                "epoch": self.epoch,
+                "epoch/train_loss": np.mean(self._epoch_losses),
+                "epoch/learning_rate": self.model_optimizer.param_groups[0]["lr"],
+            }
+            if torch.cuda.is_available():
+                epoch_metrics["epoch/gpu_peak_memory_gb"] = \
+                    torch.cuda.max_memory_allocated() / 1e9
+                torch.cuda.reset_peak_memory_stats()
+            wandb.log(epoch_metrics, step=self.step)
 
     def process_batch(self, inputs):
         """Pass a minibatch through the network and generate images and losses
@@ -315,6 +342,7 @@ class Trainer:
                         pose_inputs = [self.models["pose_encoder"](torch.cat(pose_inputs, 1))]
                     elif self.opt.pose_model_type == "posecnn":
                         pose_inputs = torch.cat(pose_inputs, 1)
+                    # "vggt": pose_inputs stays as list of 2 raw image tensors
 
                     axisangle, translation = self.models["pose"](pose_inputs)
                     outputs[("axisangle", 0, f_i)] = axisangle
@@ -567,8 +595,8 @@ class Trainer:
         print(print_string.format(self.epoch, batch_idx, samples_per_sec, loss,
                                   sec_to_hm_str(time_sofar), sec_to_hm_str(training_time_left)))
 
-    def log(self, mode, inputs, outputs, losses):
-        """Write an event to the tensorboard events file
+    def log(self, mode, inputs, outputs, losses, duration=None):
+        """Write an event to the tensorboard events file and wandb.
         """
         writer = self.writers[mode]
         for l, v in losses.items():
@@ -576,11 +604,32 @@ class Trainer:
 
         # --- wandb scalars ---
         if self.use_wandb:
-            wandb.log({"{}/{}".format(mode, l): v for l, v in losses.items()},
-                      step=self.step)
+            wandb_scalars = {"{}/{}".format(mode, l): v for l, v in losses.items()}
 
+            if mode == "train":
+                wandb_scalars["train/learning_rate"] = \
+                    self.model_optimizer.param_groups[0]["lr"]
+                if duration is not None:
+                    wandb_scalars["train/samples_per_sec"] = \
+                        self.opt.batch_size / duration
+                if torch.cuda.is_available():
+                    wandb_scalars["train/gpu_memory_gb"] = \
+                        torch.cuda.memory_allocated() / 1e9
+
+            # Pose magnitudes — rotation (deg) and translation magnitude per frame pair
+            for f_i in self.opt.frame_ids[1:]:
+                if f_i != "s" and ("axisangle", 0, f_i) in outputs:
+                    rot_deg = (outputs[("axisangle", 0, f_i)].norm(dim=-1).mean()
+                               * (180.0 / np.pi)).item()
+                    trans_m = outputs[("translation", 0, f_i)].norm(dim=-1).mean().item()
+                    wandb_scalars["{}/pose_rot_deg_{}".format(mode, f_i)] = rot_deg
+                    wandb_scalars["{}/pose_trans_m_{}".format(mode, f_i)] = trans_m
+
+            wandb.log(wandb_scalars, step=self.step)
+
+        # --- images (TensorBoard for all; wandb for first sample only) ---
         wandb_images = {}
-        for j in range(min(4, self.opt.batch_size)):  # write a maxmimum of four images
+        for j in range(min(4, self.opt.batch_size)):
             for s in self.opt.scales:
                 for frame_id in self.opt.frame_ids:
                     writer.add_image(
@@ -595,9 +644,6 @@ class Trainer:
                 writer.add_image(
                     "disp_{}/{}".format(s, j),
                     disp_img, self.step)
-                if self.use_wandb and j == 0 and s == 0:
-                    wandb_images["{}/disp".format(mode)] = wandb.Image(
-                        disp_img.detach().permute(1, 2, 0).cpu().numpy())
 
                 if self.opt.predictive_mask:
                     for f_idx, frame_id in enumerate(self.opt.frame_ids[1:]):
@@ -610,6 +656,26 @@ class Trainer:
                     writer.add_image(
                         "automask_{}/{}".format(s, j),
                         outputs["identity_selection/{}".format(s)][j][None, ...], self.step)
+
+            # wandb images — first sample, scale 0 only (keep bandwidth reasonable)
+            if self.use_wandb and j == 0:
+                disp_img = normalize_image(outputs[("disp", 0)][0])
+                wandb_images["{}/disp".format(mode)] = wandb.Image(
+                    disp_img.detach().permute(1, 2, 0).cpu().numpy())
+
+                for frame_id in self.opt.frame_ids:
+                    img = inputs[("color", frame_id, 0)][0].data
+                    wandb_images["{}/color_{}".format(mode, frame_id)] = \
+                        wandb.Image(img.permute(1, 2, 0).cpu().numpy())
+                    if frame_id != 0:
+                        pred = outputs[("color", frame_id, 0)][0].data
+                        wandb_images["{}/color_pred_{}".format(mode, frame_id)] = \
+                            wandb.Image(pred.permute(1, 2, 0).cpu().numpy())
+
+                if not self.opt.disable_automasking:
+                    mask = outputs["identity_selection/0"][0][None, ...].float()
+                    wandb_images["{}/automask".format(mode)] = \
+                        wandb.Image(mask.permute(1, 2, 0).cpu().numpy())
 
         if self.use_wandb and wandb_images:
             wandb.log(wandb_images, step=self.step)

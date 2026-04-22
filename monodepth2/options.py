@@ -140,7 +140,17 @@ class MonodepthOptions:
                                  type=str,
                                  help="normal or shared",
                                  default="separate_resnet",
-                                 choices=["posecnn", "separate_resnet", "shared"])
+                                 choices=["posecnn", "separate_resnet", "shared", "vggt"])
+        self.parser.add_argument("--vggt_finetune",
+                                 help="if set, unfreeze VGGT weights for end-to-end fine-tuning "
+                                      "(expensive; ~1B params). Default: VGGT weights are frozen.",
+                                 action="store_true")
+        self.parser.add_argument("--vggt_img_size",
+                                 type=int,
+                                 help="image size fed to VGGT (will be rounded to a multiple of 14). "
+                                      "Native=518 (best quality); smaller values are faster. "
+                                      "E.g. 224 is ~6x faster than 518 with modest quality drop.",
+                                 default=224)
 
         # SYSTEM options
         self.parser.add_argument("--no_cuda",
