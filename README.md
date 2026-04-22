@@ -25,3 +25,8 @@ evaluate_depth.py \
 --png \
 --num_workers 4 \
 --wandb_project hyenapixel-depth
+
+SOTA la 22.04.2026
+   abs_rel |   sq_rel |     rmse | rmse_log |       a1 |       a2 |       a3 | 
+&   0.115  &   0.990  &   4.885  &   0.196  &   0.879  &   0.958  &   0.979  \\
+
