@@ -595,7 +595,7 @@ Logo UPT.
  
 \begin_inset CommandInset citation
 LatexCommand citep
-key "K. He et. al."
+key "__blank_cit"
 literal "false"
 
 \end_inset
@@ -1522,13 +1522,94 @@ name "chap:Lucrări-conexe"
 \end_layout
 
 \begin_layout Section
-Digging Into Self-Supervised Monocular Depth Estimation (2019) [MonoDepth2] [GEN,
- CNN,
- U-Net]
+Direcții fundamentale în estimarea monoculară auto-supervizată
+\end_layout
+
+\begin_layout Subsection*
+Sinteză
 \end_layout
 
 \begin_layout Standard
-Modelul dezvoltat în această lucrare este MonoDepth2,
+Fundamentele estimării monoculare auto-supervizate a adâncimii au fost conturate în contextul exploatării constrângerilor geometrice dintre cadre consecutive din secvențe video,
+ în absența adnotărilor explicite de adâncime.
+ Aceste lucrări pornesc de la problema reconstrucției fotometrice,
+ în care adâncimea scenei și mișcarea relativă a camerei sunt estimate simultan prin minimizarea erorii dintre un cadru țintă și cadrele reproiectate.
+ Ipoteza centrală care stă la baza acestor metode este aceea a rigidității scenei,
+ conform căreia toate variațiile observate în secvență sunt explicate exclusiv prin mișcarea camerei.
+ În acest cadru,
+ adâncimea monoculară devine identificabilă doar până la o transformare de scară globală,
+ iar consistența geometrică este asigurată prin utilizarea modelelor de proiecție și a constrângerilor epipolare.
+\end_layout
+
+\begin_layout Standard
+Deși aceste abordări au demonstrat fezabilitatea estimării adâncimii fără supervizare directă,
+ ele au evidențiat totodată limitări structurale importante,
+ legate de ambiguitatea de scară,
+ sensibilitatea la încălcarea ipotezei de rigiditate și dependența de condiții fotometrice favorabile,
+ aspecte care au motivat dezvoltarea acestui vast domeniu de cercetare.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename src/img/monodepth-schema_suprapusa.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Digging Into Self-Supervised Monocular Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Modelul dezvoltat în această lucrare este MonoDepth2 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
  care a revoluționat domeniul estimării auto-supervizate a adâncimii.
  Cercetările anterioare se bazau pe arhitecturi complexe,
  funcții ample de cost și modele complet supervizate.
@@ -1596,7 +1677,7 @@ față de poziția țintă,
  pe arhitectura U-Net 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "O. Ronneberger et al."
+key "ronneberger2015unetconvolutionalnetworksbiomedical"
 literal "false"
 
 \end_inset
@@ -1618,7 +1699,7 @@ Validarea modelului se realizează cu ajutorul setului de date KITTI,
  pe baza Eigen Split 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "D. Eigen et al."
+key "eigen2015predictingdepthsurfacenormals"
 literal "false"
 
 \end_inset
@@ -1640,7 +1721,7 @@ literal "false"
  de epoci folosind estimatorul Adam 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "D. P. Kingma et al."
+key "kingma2017adammethodstochasticoptimization"
 literal "false"
 
 \end_inset
@@ -1656,176 +1737,16 @@ literal "false"
  însă oferind rezultate maxime în acuratețe relativă.
 \end_layout
 
-\begin_layout Section
-Transformers in Self-Supervised Monocular Depth Estimation with Unknown Camera Intrinsics (2022) [???] [GEN,
- TF]
-\end_layout
-
-\begin_layout Standard
-Cu siguranță,
- eficiența rețelelor de convoluție s-a dovedit a fi esențială în îmbunătățirea modelelor de estimare a adâncimii,
- însă un element inovativ care îl propune MT-SfMLearner este integrarea arhitecturilor de tip Transformer 
+\begin_layout Subsection
+Multi-Frame Self-Supervised Depth with Transformers 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "A. Dosovitskiy et al."
+key "guizilini2022multiframeselfsuperviseddepthtransformers"
 literal "false"
 
 \end_inset
 
- în sistemele de asistență la condus sau în domeniul roboticii.
- Prin această lucrare,
- autorii demonstrează adaptatea transformerilor pentru estimarea monoculară și auto-supervizată a adâncimii prin compararea rezultatelor tehnologiei inovate cu modele corespondente bazate pe rețele de convoluție,
- introducând și o metodă ce prezice simultan distanța focală a camerei și punctul central direct din imagini.
- De asemenea,
- este analizat impactul alegerii arhitecturii asupra performanței și a robusteței modelului,
- din prisma adâncimii individuale și a mișcării observatorului.
- Modelul matematic al rețelei se bazează pe un proces numit sinteză de vedere,
- care își actualizează parametrii cu ajutorul unei funcții fotometrice de cost de aparență,
- dar și printr-o funcție de regularitate,
- aplicată pe estimările de adâncime.
-\end_layout
 
-\begin_layout Standard
-Din punct de vedere arhitectural,
- modelul reprezintă o adaptare a Dense Prediction Transformer 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "R. Ranftl et al."
-literal "false"
-
-\end_inset
-
- cu o DeiT-Base 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "H. Touvron et al."
-literal "false"
-
-\end_inset
-
- folosit drept codificator.
- Acesta prezintă cinci componente în rețeaua densă:
- modulul integrat (face parte din codificator,
- preia o iamgine 
-\begin_inset Formula $I\in\mathbb{R}^{height\times width\times3}$
-\end_inset
-
- și o transformă folosind convoluții 
-\begin_inset Formula $16\times16$
-\end_inset
-
-),
- apoi blocul Transformer (de asemenea parte din codificator,
- conține 12 straturi care prelucrează ieșirea din Embed folosind module de atenție de tip multi-head 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "A. Vaswani et al."
-literal "false"
-
-\end_inset
-
-),
- urmat de patru module de reasamblare (fac parte din decodificator,
- fiind responsabile de extragerea caracteristicilor),
- patru module de fuziune bazate pe RefineNet 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "G. Lin et al."
-literal "false"
-
-\end_inset
-
-) și patru module head (câte unul în continuarea fiecărui modul fuziune,
- practic,
- sunt convoluții care estimează adâncimea prin metodele clasice auto-supervizate).
- Totodată,
- problema variației parametrilor intrinseci ai camerei este rezolvată prin introducerea unui modul dedicat.
- Autorii propun modificarea rețelei de detecție a mișcării observatorului prin adăugarea unei subrețele convoluționale în decodificatorul de mișcare pentru a învăța acești parametri intrinseci.
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-\color orange
-AICI MAI ESTE
-\end_layout
-
-\begin_layout Section
-Toward Practical Monocular Indoor Depth Estimation [DistDepth] [IND,
- CONV]
-\end_layout
-
-\begin_layout Standard
-Având în vedere limitările metodelor anterioare de a genera scene ample în spații interioare,
- se propune un estimator de adâncime practic,
- care învață din modelele predecesoare și produce un rezultat de acuratețe rezultată,
- cu consum optim de resurse și viteză mare de procesare a datelor.
- DistDepth învață caracteristicile mediului interior prin auto-supervizare,
- reușind astfel să se detașeze de caracterisiticile generale ale spațiului:
- elementele generale componente (cerul,
- șoseaua,
- linia perspectiva,
- linia orizontului),
- dar și distribuția celorlalte obiecte din jur (dispunerea acestora nu mai respectă un anumit tipar,
- atât din perspectiva poziției,
- cât și din perspectiva distanței).
- Pentru o reprezentare structurată a adâncimii relative,
- DistDepth utilizează estimatorul DPT 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "R. Ranftl et al.,R. Rantfl et al. b"
-literal "false"
-
-\end_inset
-
- pentru a spori acuratețea rezultată din antrenarea auto-superivizată.
- În același timp,
- pentru a dezvolta domeniul estimării în spațiu interior,
- autorii prezintă și setul de date UniSIN,
- care are ca scop studiul diferențelor în antrenarea pe date simulate,
- comparativ cu datele reale.
-\end_layout
-
-\begin_layout Standard
-Rezultatele practice confirmă performanța modelului.
- Antrenarea este realizată pe Habitat simulator 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "S. Manolis,A. Szot"
-literal "false"
-
-\end_inset
-
-,
- care inițializează preluarea imaginilor tridimensionale.
- Totodată,
- pentru crearea setului de date UniSIN se utilizează un sistem stereo de camere ce colectează secvențe de imagini din diferite spații interioare.
- Pentru evaluare,
- autorii au ales un apartament virtual atent realizat,
- din care au captat 
-\begin_inset Formula $3500$
-\end_inset
-
- de imagini,
- care surprind obiecte de structuri,
- particularități și poziții ale surselor de lumină diferite.
- Din perspectiva metricilor standard (erorii medii,
- erori pătratice),
- modelul propus aduce corecții semnificative față de cele antrenate pe un cadru general,
- oferind rezultate calitative pentru domeniul estimării adâncimii.
- Prin urmare,
- ținta a fost atinsă:
- o arhitectură orientată pe spațiile interioare,
- auto-antrenată pe simulări,
- cu o generalitate semnificativă,
- sensibilă la schimbările în timp real.
-\end_layout
-
-\begin_layout Section
-Multi-Frame Self-Supervised Depth with Transformers [DepthFormer] [GEN,
- TF] 
-\color red
-[Concl?]
 \end_layout
 
 \begin_layout Standard
@@ -1840,15 +1761,23 @@ Estimarea adâncimii pe baza mai multor cadre aduce îmbunătățiri față de a
  de tip Transformer 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "A. Dosovitskiy et al."
+key "dosovitskiy2021imageworth16x16words"
 literal "false"
 
 \end_inset
 
 ,
  urmărind generarea volumului de cost pe baza corespondenței punctelor pe parcursul a mai multor cadre.
- Autorii introduc o nouă arhitectură,
- revoluționară în domeniul estimării adâncimii,
+ Autorii introduc o nouă arhitectură revoluționară în domeniul estimării adâncimii,
+ DedpthFormer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "guizilini2022multiframeselfsuperviseddepthtransformers"
+literal "false"
+
+\end_inset
+
+,
  care îmbunătățește semnificativ potrivirea caracteristicilor prin două mecanisme de atenție,
  combinate cu o metodă de prelevare discretă în funcție de adâncime.
  Inovația adusă,
@@ -1899,21 +1828,1192 @@ intrare context
 Antrenarea modelului se realizează folosind pierderi fotometrice între cadrul țintă și cadrele reproiectate,
  completate cu constrângeri de consistență temporală pentru a stabiliza învățarea.
  Evaluarea este efectuată pe setul de date KITTI,
- utilizând Eigen Split.
+ utilizând Eigen Split 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "eigen2015predictingdepthsurfacenormals"
+literal "false"
+
+\end_inset
+
+.
  DepthFormer depășește semnificativ performanțele modelelor anterioare,
  reducând erorile standard,
  în special în zone cu textură slabă sau suprafețe uniforme,
  unde potrivirea tradițională devine dificilă.
 \end_layout
 
+\begin_layout Subsection
+Self-Supervised Monocular Depth Estimation by Direction-aware Cumulative Convolution Network 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "han2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dacă problematica suprafețelor reflectorizante a fost anterior remediată,
+ această lucrare evidențiază importanța particularităților geometrice ale estimărilor.
+ Autorii pornesc de la observația că estimarea adâncimii este o problemă puternic dependentă de contextul ambiental,
+ iar reprezentările de tip convoluțional standard nu reușesc să exploateze eficient informația direcțională din imagine 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Concret,
+ aceștia demonstrează că predicția adâncimii este sensibilă la direcție;
+ datele pe direcția verticală,
+ asociate variațiilor de adâncime și regiunilor de contact cu solul,
+ joacă un rol diferit față de cele de pe direcția orizontală,
+ care tind să conserve uniformitatea între obiecte 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "han2023selfsupervisedmonoculardepthestimation,eigen2014depthmappredictionsingle"
+literal "false"
+
+\end_inset
+
+.
+ Această asimetrie direcțională este minimizată de convoluțiile clasice,
+ care tratează echivalent toate direcțiile din câmpul receptiv,
+ ducând la pierderea unor parametri geometrici semnificativi și la erori în unele cazuri particulare 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "han2023selfsupervisedmonoculardepthestimation,zhou2017unsupervisedlearningdepthegomotion"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Pentru a rezolva această problemă,
+ lucrarea propune un nou cadru arhitectural,
+ 
+\shape italic
+Direction-aware Cumulative Convolution Network
+\shape default
+ (DaCCN) 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "han2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+,
+ care introduce două contribuții metodologice majore la nivelul reprezentării caracteristicilor.
+ Prima este legată de modulul 
+\shape italic
+direction-aware
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "han2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+,
+ care permite rețelei să învețe automat cum să ajusteze extracția de caracteristici în funcție de direcție.
+ Acest lucru se realizează printr-o transformare afină care modifică densitatea de eșantionare și câmpul receptiv pe axele orizontală și verticală,
+ permițând modelului să capteze mai multă informație acolo unde variațiile de adâncime sunt critice,
+ favorizând astfel informația globală acolo unde este necesară consistența.
+ A doua contribuție o reprezintă introducerea convoluției cumulative,
+ o operație nouă de agregare a caracteristicilor care vizează explicit corelația dintre cameră și obiecte,
+ adică acele zone din imagine care corespund spațiului fizic dintre punctul de vedere și obiectele din scenă.
+ Spre deosebire de convoluțiile clasice,
+ care agregă informația local într-un mod simetric,
+ convoluția cumulativă acumulează informația pe o direcție dominantă,
+ reflectând structura geometrică a scenei și permițând corectarea unor erori mari de estimare în cazuri dificile 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "han2023selfsupervisedmonoculardepthestimation,eigen2014depthmappredictionsingle"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere al antrenării,
+ metoda este una auto-supervizată,
+ bazată pe eroarea fotometrică de reproiecție,
+ fără a introduce pierderi sau metrici noi în sens formal 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Evaluările experimentale pe benchmark-uri consacrate precum KITTI 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "geiger2013kittidataset"
+literal "false"
+
+\end_inset
+
+,
+ Cityscapes 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "cordts2016cityscapesdatasetsemanticurban"
+literal "false"
+
+\end_inset
+
+ și Make3D 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ji2019semisupervisedadversarialmonoculardepth"
+literal "false"
+
+\end_inset
+
+ arată că DaCCN obține îmbunătățiri semnificative față de metodele anterioare,
+ în special pe metrici sensibile la erori mari,
+ ceea ce indică o capacitate crescută de a gestiona cazurile dificile și structurile geometrice complexe 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "han2023selfsupervisedmonoculardepthestimation,geiger2013kittidataset,cordts2016cityscapesdatasetsemanticurban"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Self-Supervised Learning based Depth Estimation from Monocular Images 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "poddar2023selfsupervisedlearningbaseddepth"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Problema estimării adâncimii monoculare se află la intersecția dintre percepția geometrică și învățarea vizuală,
+ fiind caracterizată de ambiguități structurale și lipsa constrângerilor explicite 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "poddar2023selfsupervisedlearningbaseddepth"
+literal "false"
+
+\end_inset
+
+.
+ În acest context,
+ lucrarea de față descoperă îmbunătățiri ale modelelor auto-supervizate moderne pentru a depăși aceste limitări,
+ abordând una dintre problemele centrale ale viziunii computerizate moderne,
+ și anume estimarea adâncimii scenei pornind de la o singură imagine color,
+ în absența etichetelor de tip ground truth 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Motivația este construită pe limitările majore ale metodelor clasice și supervizate,
+ care depind fie de senzori costisitori precum LiDAR,
+ fie de seturi de date dificil de obținut și etichetat 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "geiger2013kittidataset"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Pentru a aborda această problemă,
+ lucrarea are ca punct de plecare modelul MonoDepth2,
+ unul dintre principalele repere în estimarea auto-supervizată a adâncimii 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Pe acest fundament,
+ autorii propun o serie de îmbunătățiri arhitecturale și metodologice menite să sporească atât coerența geometrică,
+ cât și capacitatea de generalizare a predicțiilor.
+ Soluția se bazează pe o arhitectură de tip codificator-decodificator,
+ în care un codificator convoluțional extrage caracteristici din imagine,
+ iar un decodificator de tip U-Net generează harta de adâncime inversă 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ronneberger2015unetconvolutionalnetworksbiomedical"
+literal "false"
+
+\end_inset
+
+.
+ Antrenarea se realizează auto-supervizat,
+ prin estimarea simultană a adâncimii și a mișcării camerei,
+ folosind erori de reproiecție fotometrică și regularizări de tip smoothness ghidate de muchii 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Noutatea lucrării constă în integrarea unor module suplimentare,
+ care adresează limitări specifice modelului de bază.
+ În primul rând,
+ informația semantică provenită dintr-un model de segmentare de tip 
+\shape italic
+Mask R-CNN
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "he2018maskrcnn"
+literal "false"
+
+\end_inset
+
+ este introdusă pentru a rafina harta de disimilitudine în regiunile corespunzătoare obiectelor semnificative.
+ Această strategie urmărește reducerea distorsiunilor semantice și creșterea coerenței globale a hărții de adâncime,
+ în special în jurul contururilor obiectelor.
+ În al doilea rând,
+ autorii propun înlocuirea interpolării biliniare clasice din decodificator cu o tehnică de eșantionare bazată pe convoluții la nivel de pixel,
+ inspirată din augmentarea imaginilor 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shi2016realtimesingleimagevideo"
+literal "false"
+
+\end_inset
+
+.
+ Această alegere permite o propagare mai eficientă a caracteristicilor în timpul reconstrucției la rezoluție înaltă,
+ reducând pierderea de detalii fine.
+ O altă contribuție importantă este eliminarea dependenței de parametrii intrinseci cunoscuți ai camerei,
+ prin introducerea unei rețele dedicate care învață acești parametri direct din date,
+ făcând modelul aplicabil în scenarii realiste 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "casser2018depthpredictionsensorsleveraging"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere al evaluării,
+ lucrarea utilizează aceleași metrici consacrate din literatura de specialitate,
+ precum erorile relative,
+ RMSE și indicatorii de acuratețe pe praguri 
+\begin_inset Formula $\delta$
+\end_inset
+
+,
+ fără a introduce metrici noi 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth,eigen2015predictingdepthsurfacenormals"
+literal "false"
+
+\end_inset
+
+,
+ dar demonstrând îmbunătățiri consistente ale acestora prin combinația propusă de tehnici.
+ Rezultatele experimentale arată că extensiile aduse modelului de bază conduc la predicții mai stabile,
+ mai coerente semantic și mai robuste la variații de condiții,
+ inclusiv prin utilizarea augmentărilor de tip 
+\shape italic
+weather
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+ pentru generalizare.
+\end_layout
+
+\begin_layout Subsection
+MonoDiffusion:
+ Self-Supervised Monocular Depth Estimation Using Diffusion Model 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shao2023monodiffusionselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Articolul propune o abordare inovativă pentru estimarea adâncimii din imagini monoculare,
+ pornind de la ideea că procesul de predicție poate fi formulat mai eficient ca o rafinare iterativă decât ca o estimare directă într-un singur pas 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shao2023monodiffusionselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Autorii argumentează că majoritatea metodelor auto-supervizate existente tratează adâncimea ca pe o ieșire deterministă,
+ ceea ce limitează capacitatea modelelor de a corecta erorile progresiv și de a exploata structura probabilistică a soluțiilor posibile 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+În acest context,
+ lucrarea introduce 
+\shape italic
+MonoDiffusion
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shao2023monodiffusionselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ un cadru care integrează modele de difuzie în estimarea adâncimii monoculare,
+ explorând în mod sistematic potențialul proceselor de reducere iterativă a zgomotelor într-un scenariu în care adâncimea reală nu este disponibilă în timpul antrenării.
+ Ideea centrală este de a porni de la o distribuție aleatoare de adâncime și de a rafina progresiv această estimare prin pași succesivi de eliminare a zgomotului,
+ pe baza informației vizuale.
+ Principala dificultate în aplicarea modelelor de difuzie în acest context este lipsa adâncimii reale,
+ necesară în definirea procesului de difuzie 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ho2020denoisingdiffusionprobabilisticmodels"
+literal "false"
+
+\end_inset
+
+.
+ Pentru a depăși această limitare,
+ autorii introduc un mecanism original de
+\shape italic
+ pseudo difuzie
+\shape default
+,
+ în care un model profesor,
+ antrenat anterior în regim auto-superivizat,
+ generează hărți de adâncime aproximative care sunt utilizate ca referință în procesul de adăugare controlată a zgomotului 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shao2023monodiffusionselfsupervisedmonoculardepth,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Mai mult decât atât,
+ cadrul 
+\shape italic
+MonoDiffusion
+\shape default
+ integrează și o strategie de 
+\shape italic
+distilare a cunoștințelor
+\shape default
+,
+ prin care predicțiile modelului profesor sunt folosite pentru a ghida învățarea modelului elev în timpul etapelor de reducere a zgomotului 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "hinton2015distillingknowledgeneuralnetwork"
+literal "false"
+
+\end_inset
+
+.
+ Pentru a minimiza impactul erorilor inerente,
+ este aplicat un filtru de verificare care elimină regiunile nesigure din supervizarea utilizată 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shao2023monodiffusionselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ O altă tehnică nou introdusă este mecanismul de 
+\shape italic
+mascare vizuală
+\shape default
+,
+ inspirat din modelarea mascată a imaginilor 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "he2021maskedautoencodersscalablevision"
+literal "false"
+
+\end_inset
+
+,
+ care constă în ascunderea aleatorie a unor părți din caracteristicile vizuale,
+ cu scopul de a forța modelul să reconstruiască adâncimea corectă folosind informațiile rămase.
+ Această strategie îmbunătățește capacitatea de generalizare și robustețea procesului de reducere a zgomotelor,
+ în special în regiunile îndepărtate sau slab texturate 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shao2023monodiffusionselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere arhitectural,
+ metoda păstrează un cadru de tip 
+\shape italic
+codificator-decodificator
+\shape default
+,
+ iar complexitatea suplimentară este concentrată în procesul de antrenare,
+ nu în inferență,
+ similar abordărilor auto-supervizate clasice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Nu sunt introduse metrici de evaluare noi,
+ însă performanța este analizată folosind indicatorii standard din literatură,
+ demonstrând îmbunătățiri consistente față de metodele existente.
+ Rezultatele experimentale arată că MonoDiffusion prezintă îmbunătățiri semnificative,
+ atât din punct de vedere cantitativ,
+ cât și calitativ,
+ producând hărți de adâncime mai detaliate,
+ cu contururi bine definite și structuri 3D coerente.
+\end_layout
+
 \begin_layout Section
-Frequency-Aware Self-Supervised Monocular Depth Estimation (2022) [Auto-Blur] [GEN,
- CNN]
+Metode bazate pe geometria proiectivă clasică
+\end_layout
+
+\begin_layout Subsection*
+Sinteză
+\end_layout
+
+\begin_layout Standard
+Metodele bazate pe geometria proiectivă clasică reprezintă baza pentru majoritatea direcțiilor ulterioare din domeniu.
+ Relațiile geometrice bine stabilite dintre punctele 3D ale scenei și proiecțiile lor 2D în imagini consecutive sau în perechi stereo contruiesc fundamentul teoretic al acestui sub-domeniu.
+ Ideea centrală constă în formularea estimării adâncimii ca o problemă de optimizare a erorii de reproiecție fotometrică,
+ unde o hartă de adâncime prezisă și o estimare a mișcării camerei sunt utilizate pentru a reconstrui o imagine țintă dintr-una sursă.
+\end_layout
+
+\begin_layout Standard
+În cadrul acestor metode,
+ adâncimea și poziția camerei sunt învățate simultan într-un cadru închis,
+ iar constrângerile epipolare și relațiile specifice cadrelor rigide sunt implicit respectate prin mecanismul de reproiecție.
+ Variantele monoculare se bazează pe secvențe video,
+ unde mișcarea camerei furnizează indici direcționali și poziționali,
+ în timp ce metodele stereo exploatează direct geometria epipolară dintre cele două vederi.
+ Numeroase lucrări au extins acest cadru de bază prin utilizarea mai multor cadre temporale,
+ prin rafinări iterative ale adâncimii și a poziției sau prin integrarea mecanismelor de atenție și a arhitecturilor de tip transformer,
+ păstrând însă neschimbată ipoteza geometrică fundamentală.
+\end_layout
+
+\begin_layout Subsection
+Transformers in Self-Supervised Monocular Depth Estimation with Unknown Camera Intrinsics 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Varma_2022"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cu siguranță,
+ eficiența rețelelor de convoluție s-a dovedit a fi esențială în îmbunătățirea modelelor de estimare a adâncimii,
+ însă un element inovativ care îl propune MT-SfMLearner 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Varma_2022"
+literal "false"
+
+\end_inset
+
+ este integrarea arhitecturilor de tip Transformer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "dosovitskiy2021imageworth16x16words"
+literal "false"
+
+\end_inset
+
+ în sistemele de asistență la condus sau în domeniul roboticii.
+ Prin această lucrare,
+ autorii demonstrează adaptatea transformerilor pentru estimarea monoculară și auto-supervizată a adâncimii prin compararea rezultatelor tehnologiei inovate cu modele corespondente bazate pe rețele de convoluție,
+ introducând și o metodă ce prezice simultan distanța focală a camerei și punctul central direct din imagini.
+ De asemenea,
+ este analizat impactul alegerii arhitecturii asupra performanței și a robusteței modelului,
+ din prisma adâncimii individuale și a mișcării observatorului.
+ Modelul matematic al rețelei se bazează pe un proces numit sinteză de vedere,
+ care își actualizează parametrii cu ajutorul unei funcții fotometrice de cost de aparență,
+ dar și printr-o funcție de regularitate,
+ aplicată pe estimările de adâncime.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere arhitectural,
+ modelul reprezintă o adaptare a Dense Prediction Transformer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ranftl2020robustmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+ cu o DeiT-Base 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "touvron2021trainingdataefficientimagetransformers"
+literal "false"
+
+\end_inset
+
+ folosit drept codificator.
+ Acesta prezintă cinci componente în rețeaua densă:
+ modulul integrat (face parte din codificator,
+ preia o iamgine 
+\begin_inset Formula $I\in\mathbb{R}^{height\times width\times3}$
+\end_inset
+
+ și o transformă folosind convoluții 
+\begin_inset Formula $16\times16$
+\end_inset
+
+),
+ apoi blocul Transformer (de asemenea parte din codificator,
+ conține 12 straturi care prelucrează ieșirea din Embed folosind module de atenție de tip multi-head 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "vaswani2023attentionneed"
+literal "false"
+
+\end_inset
+
+),
+ urmat de patru module de reasamblare (fac parte din decodificator,
+ fiind responsabile de extragerea caracteristicilor),
+ patru module de fuziune bazate pe RefineNet 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lin2016refinenetmultipathrefinementnetworks"
+literal "false"
+
+\end_inset
+
+) și patru module head (câte unul în continuarea fiecărui modul fuziune,
+ practic,
+ sunt convoluții care estimează adâncimea prin metodele clasice auto-supervizate).
+ Totodată,
+ problema variației parametrilor intrinseci ai camerei este rezolvată prin introducerea unui modul dedicat.
+ Autorii propun modificarea rețelei de detecție a mișcării observatorului prin adăugarea unei subrețele convoluționale în decodificatorul de mișcare pentru a învăța acești parametri intrinseci.
+\end_layout
+
+\begin_layout Standard
+Rezultatele experimentale arată că metoda obține performanțe competitive și stabile pe seturi de date standard pentru estimarea adâncimii monoculare,
+ chiar și în condiții în care parametrii camerei variază semnificativ sau sunt complet necunoscuți.
+ Comparativ cu metodele convoluționale clasice,
+ modelul bazat pe Transformer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "dosovitskiy2021imageworth16x16words"
+literal "false"
+
+\end_inset
+
+ prezintă o mai bună generalizare cross-dataset și o sensibilitate redusă la erorile de calibrare,
+ în special pe metrici precum AbsRel și RMSE.
+ Analizele calitative evidențiază hărți de adâncime coerente la nivel global,
+ cu mai puține distorsiuni de scară și o structură geometrică mai consistentă în zonele îndepărtate.
+\end_layout
+
+\begin_layout Subsection
+SPIdepth:
+ Strengthened Pose Information for Self-supervised Monocular Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lavreniuk2024spidepthstrengthenedposeinformation"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Articolul se axează pe problema utilizării insuficiente și ineficiente a informației de poziție și orientare a camerei,
+ cunoscută sub denumirea de 
+\shape italic
+pose
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lavreniuk2024spidepthstrengthenedposeinformation"
+literal "false"
+
+\end_inset
+
+.
+ Deși majoritatea abordărilor existente tratează estimarea poziției ca pe o componentă auxiliară necesară doar pentru calculul costului fotometric 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ autorii susțin că această informație joacă un rol mai profund în înțelegerea structurii scenei și,
+ implicit,
+ în calitatea predicției adâncimii.
+ Plecând de la această observație,
+ lucrarea propune o schimbare de abordare:
+ în loc să rafineze exclusiv rețeaua de adâncime,
+ se concentrează pe întărirea rețelei de estimare a pose-ului ca mijloc principal de îmbunătățire a estimării adâncimii.
+\end_layout
+
+\begin_layout Standard
+Pentru a concretiza această idee,
+ autorii introduc 
+\shape italic
+SPIdepth
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lavreniuk2024spidepthstrengthenedposeinformation"
+literal "false"
+
+\end_inset
+
+,
+ un cadru auto-supervizat care extinde și îmbunătățește abordările bazate pe Self Query Layer (SQL) 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "guizilini2022multiframeselfsuperviseddepthtransformers"
+literal "false"
+
+\end_inset
+
+,
+ punând accent pe o rețea de 
+\shape italic
+pose
+\shape default
+ mai expresivă și puternică.
+ Arhitectura include două componente principale:
+ o rețea de adâncime care extrage reprezentări vizuale multi-scară dintr-o singură imagine color și o rețea de 
+\shape italic
+pose
+\shape default
+ îmbunătățită,
+ utilizată în timpul antrenării pentru a estima cu acuratețe transformările relative dintre cadre.
+ Spre deosebire de metodele clasice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ care folosesc rețele de poziționale relativ simple,
+ SPIdepth integrează modele pre-antrenate mai performante,
+ capabile să surprindă relații geometrice complexe.
+\end_layout
+
+\begin_layout Standard
+Tehnica centrală utilizată de SPIdepth este combinarea informației de 
+\shape italic
+pose
+\shape default
+ îmbunătățite cu SQL 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "guizilini2022multiframeselfsuperviseddepthtransformers"
+literal "false"
+
+\end_inset
+
+,
+ un mecanism care construiește volume de cost interne pentru a surprinde relații de distanță relativă între pixeli și regiuni ale imaginii.
+ Prin consolidarea informației de mișcare și a celei structurale,
+ modelul reușește să estimeze distribuții mai precise ale adâncimii,
+ în special în zonele dificile,
+ precum cele cu obiecte dinamice sau diferențe mari de scară.
+ Antrenarea se realizează folosind costuri fotometrice consacrate,
+ combinate cu regularizări de tip smoothness ghidate de muchii și strategii de auto-mascare.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere al evaluării,
+ moidelul demonstrează îmbunătățiri consistente pe metricile standard utilizate în estimarea adâncimii,
+ evidențiind atât o creștere a acurateții,
+ cât și o generalizare superioară.
+ Rezultatele experimentale arată că SPIdepth atinge și depășește modelele anterioare pe benchmark-uri consacrate,
+ precum KITTI,
+ Cityscapes și Make3D,
+ inclusiv în scenariile de tip 
+\shape italic
+zero-shot
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lavreniuk2024spidepthstrengthenedposeinformation,geiger2013kittidataset,cordts2016cityscapesdatasetsemanticurban"
+literal "false"
+
+\end_inset
+
+.
+ Un aspect remarcabil este faptul că performanțele ridicate sunt obținute folosind o singură imagine la inferență,
+ fără a apela la secvențe video sau măști de mișcare,
+ ceea ce subliniază eficiența și aplicabilitatea practică a metodei.
+\end_layout
+
+\begin_layout Subsection
+Two-in-One Depth:
+ Bridging the Gap Between Monocular and Binocular Self-supervised Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lucrarea își propune să îmbunătățească modul în care este aplicată estimarea auto-supervizată a adâncimii,
+ atât monocular cât și binocular,
+ pornind de la faptul că,
+ deși cele două metode urmăresc același obiectiv,
+ ele sunt abordate prin modele separate 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap"
+literal "false"
+
+\end_inset
+
+.
+ Această diferență conduce la o utilizare ineficientă a informației disponibile:
+ modelele binoculare exploatează eficient constrângerile geometrice oferite de perechile stereo,
+ dar își pierd complet utilitatea atunci când una dintre camere lipsește sau este indisponibilă 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "geiger2013kittidataset"
+literal "false"
+
+\end_inset
+
+,
+ în timp ce modelele monoculare oferă flexibilitate sporită,
+ însă cu acuratețe mai redusă 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion"
+literal "false"
+
+\end_inset
+
+.
+ În plus,
+ observații empirice arată că modelele monoculare pot depăși performanța celor binoculare în anumite zone restrânse,
+ precum oculuziile,
+ sugerând astfel existența unei complementarități nevalorificate între cele două paradigme 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Pornind de la această motivație,
+ autorii introduc 
+\shape italic
+TiO-Depth
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap"
+literal "false"
+
+\end_inset
+
+,
+ un cadru unificat care integrează estimarea monoculară și binoculară într-o singură arhitectură coerentă.
+ Modelul este construit sub forma unei arhitecturi de tip 
+\shape italic
+Siamese
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2020exploringsimplesiameserepresentation"
+literal "false"
+
+\end_inset
+
+,
+ în care fiecare ramură este capabilă să funcționeze independent ca estimator monocular de adâncime.
+ În acest fel,
+ estimarea adâncimii dintr-o singură imagine devine un caz particular al arhitecturii generale,
+ nu o sarcină separată.
+ Pentru a permite utilizarea informației stereo atunci când aceasta este disponibilă,
+ rețeaua conține un mecanism de corelare a caracteristicilor monoculare extrase din cele două vederi.
+ Acest mecanism,
+ denumit 
+\shape italic
+Monocular Feature Matching
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap"
+literal "false"
+
+\end_inset
+
+,
+ realizează o aliniere a caracteristicilor prin intermediul unui mecanism de atenție 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "vaswani2023attentionneed"
+literal "false"
+
+\end_inset
+
+,
+ evitând construirea explicită a volumelor de cost dense și reducând astfel complexitatea computațională.
+\end_layout
+
+\begin_layout Standard
+Un element esențial al modelului îl reprezintă strategia de antrenare propusă,
+ care nu se limitează la o optimizare simultană a celor două sarcini,
+ ci urmează o schemă atent controlată,
+ pe mai multe etape 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap"
+literal "false"
+
+\end_inset
+
+.
+ Într-o primă fază,
+ modelul este constrâns să învețe reprezentări monoculare stabile,
+ apoi este ghidat să integreze informația binoculară,
+ iar în etapa finală se aplică un mecanism de 
+\shape italic
+distilare a cunoștințelor
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "hinton2015distillingknowledgeneuralnetwork"
+literal "false"
+
+\end_inset
+
+,
+ prin care predicțiile stereo,
+ considerate mai fiabile din punct de vedere geometric,
+ sunt utilizate pentru a rafina rezultatele monoculare.
+ Această distilare este realizată adaptiv,
+ ținând cont de structura scenei și de regiuni în care una dintre estimări este mai sigură decât cealaltă,
+ ceea ce conduce la o îmbinare eficientă ale celor două perspective.
+ Evaluările experimentale realizate pe seturi de date consacrate demonstrează că TiO-Depth reușește nu doar să unifice cele două tipuri de estimare,
+ ci și să depășească performanțele modelelor specializate,
+ atât în regim monocular,
+ cât și binocular.
+ Îmbunătățirile obținute sunt consistente și indică o capacitate sporită de generalizare,
+ inclusiv în scenarii cross-dataset 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2023twoinonedepthbridginggap,geiger2013kittidataset,zhou2017unsupervisedlearningdepthegomotion"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+MonoIndoor++:
+ Towards Better Practice of Self-Supervised Monocular Depth Estimation for Indoor Environments 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "li2022monoindoortowardsbetterpracticeselfsupervised"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+MonoIndoor++
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "li2022monoindoortowardsbetterpracticeselfsupervised"
+literal "false"
+
+\end_inset
+
+ se concentrează pe dificultățile specifice estimării adâncimii monoculare auto-superviate în medii interioare.
+ Autorii pornesc de la observația că metodele auto-supervizate existente,
+ deși performante pe seturi de date,
+ își pierd semnificativ din eficiență în interior,
+ unde scenele prezintă variații mari ale intervalului de adâncime,
+ mișcări accentuate de rotație ale camerei și structuri geometrice mult mai aglomerate 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Aceste caracteristici fac dificilă atât învățarea unor indicii de adâncime consistente,
+ cât și estimarea corectă a poziției relative a camerei,
+ element esențial pentru supervizarea fotometrică 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "casser2018depthpredictionsensorsleveraging"
+literal "false"
+
+\end_inset
+
+.
+ Problematica abordată este,
+ așadar,
+ identificarea și tratarea sistematică a cauzelor care limitează performanța estimării monoculare auto-supervizate în medii interioare,
+ cu scopul de a obține predicții mai stabile,
+ mai coerente și mai apropiate de cele furnizate de metodele supervizate.
+\end_layout
+
+\begin_layout Standard
+Pentru a rezolva aceste limitări,
+ autorii propun MonoIndoor++,
+ un model auto-supervizat conceput explicit pentru scene interioare,
+ care introduce trei contribuții arhitecturale și metodologice majore.
+ Prima este un modul de factorizare a adâncimii,
+ care separă predicția adâncimii într-o componentă de adâncime relativă și un factor global de scară.
+ Spre deosebire de abordările clasice,
+ care impun implicit un interval fix de adâncime,
+ acest modul permite modelului să se adapteze dinamic la variațiile mari de scară caracteristice mediilor interioare.
+ Factorul global de scară este estimat printr-o rețea dedicată bazată pe transformere 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "dosovitskiy2021imageworth16x16words"
+literal "false"
+
+\end_inset
+
+,
+ capabilă să capteze informații globale din scenă și să indice valoarea maximă a adâncimii într-un mod explicit și flexibil.
+\end_layout
+
+\begin_layout Standard
+A doua contribuție constă în introducerea unui modul de estimare reziduală a poziției.
+ În locul unei predicții directe într-o singură etapă a mișcării relative a camerei,
+ 
+\shape italic
+MonoIndoor++
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "li2022monoindoortowardsbetterpracticeselfsupervised"
+literal "false"
+
+\end_inset
+
+ adoptă o strategie iterativă,
+ în care o estimare inițială este rafinată prin estimări succesive ale unor corecții reziduale.
+ Prin rafinarea progresivă a poziției se obțin transformări mai corecte între cadre,
+ ceea ce conduce la o supervizare fotometrică mai fiabilă și,
+ implicit,
+ la o estimare a adâncimii mai precisă 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "casser2018depthpredictionsensorsleveraging"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Cea de-a treia contribuție este legată de integrarea explicită a informației de coordonate prin convoluții de tip 
+\shape italic
+CoordConv
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "liu2018intriguingfailingconvolutionalneural"
+literal "false"
+
+\end_inset
+
+ în rețeaua de estimare a poziției.
+ Prin adăugarea coordonatelor spațiale ca intrări suplimentare,
+ modelul surprinde caracteristici geometrice explicite care completează informația fotometrică,
+ îmbunătățind capacitatea de inferență a relațiilor spațiale dintre cadre.
+ Această tehnică se dovedește deosebit de utilă în scene indoor,
+ unde structura geometrică este complexă și ambiguă.
+\end_layout
+
+\begin_layout Standard
+În ceea ce privește evaluarea,
+ modelul demonstrează îmbunătățiri consistente și robuste pe multiple seturi de date indoor consacrate.
+ Rezultatele arată că 
+\shape italic
+MonoIndoor++
+\shape default
+ reduce semnificativ diferența față de metodele supervizate și prezintă o capacitate superioară de generalizare 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "li2022monoindoortowardsbetterpracticeselfsupervised,dai2017scannetrichlyannotated3dreconstructions"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Metode care corectează sau relaxează ipoteza fotometrică
+\end_layout
+
+\begin_layout Subsection*
+Sinteză
+\end_layout
+
+\begin_layout Standard
+Ipoteza constanței fotometrice presupune că intensitatea unui punct din scenă rămâne invariantă între cadre consecutive,
+ în afara efectelor induse de mișcarea camerei.
+ În practică,
+ această ipoteză este frecvent încălcată din cauza variațiilor luminii,
+ a condițiilor meteorologice nefavorabile,
+ a reflexiilor,
+ a suprafețelor non-Lambertiene sau a limitărilor senzorilor.
+ Metodele care corectează sau relaxează ipoteza fotometrică au apărut ca răspuns direct la aceste limitări,
+ având ca obiectiv principal creșterea robusteții semnalului de supervizare utilizat în antrenarea modelelor.
+\end_layout
+
+\begin_layout Standard
+O primă abordare constă în modificarea explicită a funcției de cost fotometric.
+ Strategii precum mascarea pixelilor problematici,
+ adaptarea funcție de frecvența spațială sau integrarea unor parametri de incertitudine permit transformarea costului fotometric într-un estimator echitabil al erorii de adâncime,
+ reducând sensibilitatea la texturi repetitive sau discrepanțe locale de culoare.
+ Un al doilea scop urmărește introducerea unor mecanisme de supervizare complementară care vor suplini deficiențele semnalului fotometric.
+ Acestea includ pseudo-etichete,
+ distilare de cunoștințe sau supervizare bidirecțională.
+ Prin exploatarea consistenței structurale a scenei sau a predicțiilor obținute din mai multe perspective,
+ modelele pot învăța relații de adâncime mai stabile,
+ chiar și atunci când eroarea fotometrică este ambiguă sau înșelătoare.
+\end_layout
+
+\begin_layout Standard
+Pe baza celor două direcții,
+ metodele ce întăresc ipoteza fotometrică demonstrează că performanța modelelor poate fi îmbunătățită semnificativ fără modificări majore ale arhitecturii,
+ prin reformularea atentă a semnalului de supervizare și prin integrarea unor constrângeri mai apropiate de realitatea fizică a scenelor.
+\end_layout
+
+\begin_layout Subsection
+Frequency-Aware Self-Supervised Monocular Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2022frequencyawareselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 Lucrarea introduce două mecanisme concepute pentru a corecta limitările fundamentale ale costului fotometric utilizate în antrenarea auto-supervizată:
- Ambiguity-Masking și Auto-Blur.
+ Ambiguity-Masking și Auto-Blur 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2022frequencyawareselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
  Auto-Blur este cel mai important modul propus,
  fiind primul care demonstrează că aplicarea controlată a estompării asupra intrărilor folosite doar în funcția de cost poate crește echitatea și consistența evaluării fotometrice,
  fără a afecta rețeaua sau arhitectura de bază.
@@ -1924,6 +3024,14 @@ Metoda pleacă de la observația că funcția de cost fotometric
 \begin_inset Formula $L_{p}$
 \end_inset
 
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
  nu este un evaluator optim în zone cu frecvență spațială înaltă,
  cum ar fi texturile dense sau repetițiile.
  Din acest motiv,
@@ -1931,7 +3039,15 @@ Metoda pleacă de la observația că funcția de cost fotometric
  iar deviații mari pot produce erori mici,
  din cauza potrivirilor false în regiunile repetitive.
  Auto-Blur abordează această problemă printr-un filtru Gaussian adaptiv,
- aplicat exclusiv cadrelor rezultate din costul fotometric,
+ aplicat exclusiv cadrelor rezultate din costul fotometric 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2022frequencyawareselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
  extinzând astfel câmpul receptiv efectiv al fotometricii și atenuând ambiguitățile generate de regiuni cu detalii excesive.
  Esența metodei constă în identificarea pixelilor cu frecvență ridicată pe baza normei 
 \begin_inset Formula $L_{2}$
@@ -1952,6 +3068,14 @@ Pixelii care depășesc un anumit prag
 \begin_inset Formula $I_{t}$
 \end_inset
 
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2022frequencyawareselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
 .
  Prin această strategie,
  Auto-Blur obține două efecte complementare:
@@ -1961,16 +3085,32 @@ Pixelii care depășesc un anumit prag
 \begin_inset Formula $L_{1}$
 \end_inset
 
- supervizat.
- În acest mod,
+ supervizat;
+ în acest mod,
  o eroare mică de adâncime va produce penalizări moderate,
- determinând costul să crească proporțional cu eroarea;
- pe de altă parte,
+ determinând costul să crească proporțional cu eroarea 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "black1996therobustestimationofmultiplemotions"
+literal "false"
+
+\end_inset
+
+.
+ Pe de altă parte,
  expunerea falselor potriviri reprezintă al doilea efect,
  deoarece radierea cromatică creată de filtrul Gaussian crește contribuția contextului local:
  pixelii eronați nu pot fi confundați cu ținta,
  întrucât nu mai împart aceeași distribuție cromatică.
- Aceasta minimizează cazurile în care un pixel greșit produce un cost mai mic decât modelul de referință.
+ Aceasta minimizează cazurile în care un pixel greșit produce un cost mai mic decât modelul de referință 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2022frequencyawareselfsupervisedmonoculardepth,marr1976cooperativecomputationofstereodisparity"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1993,7 +3133,15 @@ La nivel arhitectural,
 \end_inset
 
  din imagine,
- ceea ce justifică impactul major al filtrării adaptative.
+ ceea ce justifică impactul major al filtrării adaptative 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2022frequencyawareselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2005,96 +3153,29 @@ Auto-Blur demonstrează,
  consolidând performanța generală a modelelor auto-supervizate de estimare a adâncimii.
 \end_layout
 
-\begin_layout Section
-Exploiting Pseudo Labels in a Self-Supervised Learning Framework for Improved Monocular Depth Estimation (2022) [SD-SSMDE] [GEN,
- CNN,
- SELF-DISTILL]
-\end_layout
-
-\begin_layout Standard
-În această lucrare este prezentat SD-SSMDE,
- un cadru de antrenare în două etape,
- fundamentat pe auto-distilare,
- conceput pentru a atenua limitările structurale ale metodelor auto-supervizate clasice,
- în special din perspectiva instabilității semnalului fotometric și a ambiguității de scară inerentă a predicției monoculare.
- Abordările anterioare au vizat fie optimizări arhitecturale,
- fie ale funcției de cost,
- însă au păstrat dependența strictă față de costul fotometric,
- un parametru puternic,
- dar neregulat,
- afectat de suprafețe non-Lambertiene,
- regiuni nedefinite din perspectiva texturii,
- repetiții periodice și zone dinamice.
- SD-SSMDE propune o soluție alternativă prin construcția unei supervizări robuste (de tip profesor-elev),
- obținute prin generarea și filtrarea unor pseudo-etichete,
- din care se poate deriva ulterior un model elev stabil și scalabil.
-\end_layout
-
-\begin_layout Standard
-În prima etapă,
- rețeaua profesor este antrenată auto-supervizat pe imagini de rezoluție ridicată,
- utilizând un decodificator nou propus,
- derivat din arhitectura Panoptic-DeepLab,
- care integrează un modul Atrous Spatial Pyramid Pooling și convoluții separabile pe adâncime pentru captarea contextului multi-scară.
- Predicția disparității <dt> este obținută printr-o arhitectură codificator-decodificator cu <upsampling> progresiv și fuziune de caracteristici la rezoluții intermediare.
-\end_layout
-
-\begin_layout Standard
-Ulterior,
- rețeaua profesor este utilizată pentru a genera pseudo-etichete pentru întregul set de antrenare.
- Deoarece adâncimea auto-supervizată este definită doar până la un factor de scară,
- autorii introduc un modul automat de recuperare a scalei,
- bazat pe analiza normelelor locale ale punctelor 3D și identificarea planului solului.
- Din estimarea repetată a înălțimii camerei se obține un factor de scalare λ,
- aplicat pseudo-adâncimilor relative,
- rezultând hărți de adâncime absolute,
- coerente între cadre și comparabile cu valorile reale.
-\end_layout
-
-\begin_layout Standard
-Calitatea pseudo-etichetelor este îmbunătățită printr-un mecanism de filtrare bazat pe consistența geometrică 3D.
- Fiecare punct este reproiectat între cadrele adiacente,
- iar un pixel este păstrat doar dacă pozițiile 3D asociate sunt congruente.
-\end_layout
-
-\begin_layout Standard
-În etapa a doua,
- rețeaua elev este antrenată în regim supervizat folosind pseudo-etichetele filtrate.
- Predicția adâncimii absolute se realizează printr-un cap de regresie,
- iar funcția de cost adoptată este scale-invariant logarithmic loss.
-\end_layout
-
-\begin_layout Standard
-Evaluările pe KITTI și Cityscapes demonstrează o reducere consistentă a erorilor AbsRel,
- SqRel și RMSE,
- precum și o creștere a acurateței δ,
- depășind atât modelul profesor,
- cât și metodele canonice precum Monodepth2,
- chiar și în condițiile antrenării exclusive pe secvențe monoculare,
- fără date LiDAR sau modele semantice auxiliare.
- Totodată,
- SD-SSMDE prezervă eficiența la inferență,
- întrucât complexitatea suplimentară este asociată doar procesului de antrenare în două etape.
-\end_layout
-
-\begin_layout Standard
-Prin formalizarea unui mecanism robust de auto-distilare,
- integrarea scalării absolute și filtrarea geometrică strictă,
- SD-SSMDE redefinește paradigma auto-supervizării în estimarea monoculară a adâncimii,
- oferind un model conceptual și operațional superior pentru generarea de adâncimi dense,
- fiabile și invariabile față de scară pe date reale.
-\end_layout
-
-\begin_layout Section
+\begin_layout Subsection
 Self-supervised Monocular Depth Estimation:
- Let’s Talk About The Weather (2023) [Robust-Depth] [GEN,
- CNN/TF,
- AUG,
- CONSISTENCY]
+ Let’s Talk About The Weather 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Lucrarea introduce Robust-Depth,
+Lucrarea introduce Robust-Depth 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+,
  o arhitectură auto-supervizată care revoluționează mecanismele clasice de antrenare pentru estimarea monoculară a adâncimii,
  în vederea obținerii robusteței față de condiții meteorologice nefavorabile,
  lumină variabilă și degradări vizuale severe.
@@ -2102,22 +3183,57 @@ Lucrarea introduce Robust-Depth,
  dependente de iluminare uniformă și scene statice,
  acestea suferă pierderi majore de acuratețe atunci când se confruntă cu date afectate de ceață,
  ploaie,
- noapte sau lipsă de claritate.
+ noapte sau lipsă de claritate 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 Pentru a contracara această problemă,
  metoda propune o reconstrucție formală a costului auto-supervizat,
- fundamentată pe un mecanism de pseudo-supervizare bi-direcțională.
+ fundamentată pe un mecanism de pseudo-supervizare bi-direcțională 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+.
  Premisa este că,
- pentru fiecare imagine augmentată <~It> ,
+ pentru fiecare imagine augmentată 
+\begin_inset Formula $\tilde{I_{t}}$
+\end_inset
+
+ ,
  structura geometrică a scenei rămâne neschimbată,
- astfel încât predicția de adâncime a versiunii neaugmentate ::Dt::
- poate acționa drept supervizor pentru estimarea ::tilda Dt::,
+ astfel încât predicția de adâncime a versiunii neaugmentate 
+\begin_inset Formula $D_{t}$
+\end_inset
+
+ poate acționa drept supervizor pentru estimarea 
+\begin_inset Formula $\tilde{D_{t}}$
+\end_inset
+
+,
  și invers,
  ori de câte ori unul dintre cele două conduce la o reproiecție fotometrică superioară.
  Această idee este formalizată prin construirea unor măști per-pixel,
- bazate pe minimizarea erorii fotometrice.
+ bazate pe minimizarea erorii fotometrice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2125,31 +3241,70 @@ Un principiu analog este introdus și în estimarea poziției camerei,
  însă experimentele indică un câștig marginal,
  astfel încât se păstrează doar o pseudo-supervizare unidirecțională,
  în care estimările pozționale ale imaginilor neaugmentate servesc drept referință pentru versiunile augmentate.
- Funcția finală de cost este compusă din costul fotometric clasic ::Lp::,
- costul pseudo-supervizat ::LPS::,
- costul de consistență pozțional și componenta de netezire.
+ Funcția finală de cost este compusă din costul fotometric clasic 
+\begin_inset Formula $L_{p}$
+\end_inset
+
+,
+ costul pseudo-supervizat 
+\begin_inset Formula $L_{PS}$
+\end_inset
+
+,
+ costul de consistență pozțional și componenta de netezire:
 \end_layout
 
 \begin_layout Standard
-𝐿=𝜇𝐿𝑝+𝜔𝐿𝑃𝑆+𝛽(𝐿𝑅+𝐿𝑡)+𝛾𝐿𝑠.
-\end_layout
+\begin_inset Formula $𝐿=𝜇𝐿_{p}+𝜔𝐿_{𝑃𝑆}+𝛽(𝐿_{𝑅}+𝐿_{𝑡})+𝛾𝐿𝑠$
+\end_inset
 
-\begin_layout Standard
-L=μLp+ωLPS+β(LR+Lt)+γLs.
+.
 \end_layout
 
 \begin_layout Standard
 Un element central al contribuției este utilizarea unei game extinse de augmentări meteorologice și fotometrice controlate,
- generate printr-o combinație de tehnici de simulare fizică (producerea ploii și a ceții),
- introducerea modelului generativ CoMoGAN pentru noapte,
+ generate printr-o combinație de tehnici de simulare fizică (producerea ploii și a ceții) 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "sakaridis2018semanticfoggysceneunderstanding"
+literal "false"
+
+\end_inset
+
+,
+ introducerea modelului generativ CoMoGAN
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pizzati2022comogancontinuousmodelguidedimagetoimage"
+literal "false"
+
+\end_inset
+
+ pentru noapte,
  amurg,
  tranziții de iluminare și coruperi fotometrice standard (lipsa clarității,
  zgomot gaussian,
  defocalizare,
- îngheț).
+ îngheț) 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "hendrycks2019benchmarkingneuralnetworkrobustness"
+literal "false"
+
+\end_inset
+
+.
  Aceste augmentări sunt aplicate în perechi (imagine curată / imagine degradată),
  permițând construcția costului pseudo-supervizat și reducând dependența modelului de parametri statici,
- precum poziția verticală a pixelului sau regularitatea texturilor.
+ precum poziția verticală a pixelului sau regularitatea texturilor 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+.
  Metoda introduce și două proceduri sintetice adiționale:
  vertical cropping (o permutare controlată a porțiunilor superioare ale imaginii pentru a reduce biasul față de poziția pixelului),
  și tile augmentation (o permutare a blocurilor imaginii,
@@ -2163,41 +3318,108 @@ Evaluările pe KITTI,
  Robust-Depth atinge performanțe similare sau superioare față de modelele anterioare pe date curate,
  dar depășește semnificativ metodele de ultimă generație în condiții adverse,
  cu îmbunătățiri notabile ale metricilor AbsRel,
- RMSE și δ-accuracy.
+ RMSE și δ-accuracy 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
  Prin integrarea coerentă a pseudo-supervizării bidirecționale cu un cadru complet de augmentare fizic,
- Robust-Depth extinde considerabil capacitatea modelelor auto-supervizate de a opera în scenarii meteorologice complexe,
+ Robust-Depth 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+ extinde considerabil capacitatea modelelor auto-supervizate de a opera în scenarii meteorologice complexe,
  depășind limitele impuse de antrenarea tradițională pe seturi idealizate.
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 3D Distillation:
- Improving Self-Supervised Monocular Depth Estimation on Reflective Surfaces [IND,
- CNN]
+ Improving Self-Supervised Monocular Depth Estimation on Reflective Surfaces 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Shi_2023_ICCV"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Modelul propus abordează dificultatea modelelor de estimare monoculară a adâncimii de a procesa corect suprafețele reflectorizante,
- precum podelele lucioase sau ecranele.
+Cercetarea abordează dificultatea modelelor de estimare monoculară a adâncimii de a procesa corect suprafețele reflectorizante,
+ precum podelele lucioase sau ecranele 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Shi_2023_ICCV"
+literal "false"
+
+\end_inset
+
+.
  În mod tradițional,
  aceste modele se bazează pe ipoteza constanței fotometrice,
- care presupune că un punct din spațiu își păstrează aspectul indiferent de unghiul din care este privit.
+ care presupune că un punct din spațiu își păstrează aspectul indiferent de unghiul din care este privit 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
  Totuși,
  suprafețele reflectorizante încalcă acest principiu deoarece aspectul lor depinde critic de punctul de vedere,
  generând adesea imagini virtuale ale surselor de lumină care par a fi la o distanță mult mai mare decât suprafața reală.
  Această eroare face ca rețelele neuronale să prezică o adâncime exagerată pentru zonele cu reflexii speculare,
  compromițând reconstrucția scenelor din mediul interior.
  Pentru a rezolva această deficiență,
- autorii propun un cadru de antrenare inovator numit 3D Distillation.
+ autorii propun un cadru de antrenare inovator numit 3D Distillation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Shi_2023_ICCV"
+literal "false"
+
+\end_inset
+
+.
  Ideea centrală pleacă de la observația că reflexiile speculare sunt dependente de vedere și că,
  într-un set de date video,
  există de obicei cadre în care aceleași suprafețe sunt vizibile fără a fi contaminate de reflexii puternice.
  Prin agregarea informațiilor din mai multe perspective,
  suprafețele reflectorizante pot fi reconstruite corect.
  Metodologia propusă utilizează un model supervizat pre-antrenat pentru a genera hărți de adâncime inițiale,
- care sunt apoi integrate într-o reprezentare 3D a scenei folosind tehnica TSDF-fusion pentru a crea un model de tip mesh.
- Din acest model se extrage o așa-numită „adâncime proiectată”,
+ care sunt apoi integrate într-o reprezentare tridimensională a scenei folosind tehnica TSDF-fusion 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "curlessL1996avolumetricmethodforbuilding"
+literal "false"
+
+\end_inset
+
+ pentru a crea un model de tip mesh.
+ Din acest model se extrage o așa-numită 
+\shape italic
+adâncime proiectată
+\shape default
+,
  care este mai precisă pe suprafețele lucioase,
- dar tinde să piardă detalii fine din cauza medierii volumetrice.
+ dar tinde să piardă detalii fine din cauza medierii volumetrice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Shi_2023_ICCV,curlessL1996avolumetricmethodforbuilding"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2209,10 +3431,26 @@ Contribuția majoră a lucrării este schema de fuziune a adâncimii ghidată de
  pe baza incertitudinii.
  Această abordare este independentă de arhitectura rețelei,
  fiind testată cu succes pe modele precum Monodepth2,
- HR-Depth și MonoViT.
+ HR-Depth și MonoViT 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Shi_2023_ICCV,lyu2020hrdepthhighresolutionselfsupervised,godard2019diggingselfsupervisedmonoculardepth,Zhao_2022"
+literal "false"
+
+\end_inset
+
+.
  Din punct de vedere al evaluării,
  studiul introduce seturi de date specializate,
- precum ScanNet-Reflection și ScanNet-NoReflection,
+ precum ScanNet-Reflection și ScanNet-NoReflection 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "dai2017scannetrichlyannotated3dreconstructions"
+literal "false"
+
+\end_inset
+
+,
  pentru a măsura performanța strict pe zonele problematice.
  Rezultatele demonstrează că modelele antrenate prin distilare 3D ating performanțe de tip state-of-the-art,
  depășind metodele anterioare de auto-învățare pe toate metricile standard de eroare și acuratețe.
@@ -2221,288 +3459,285 @@ Contribuția majoră a lucrării este schema de fuziune a adâncimii ghidată de
  Mai mult,
  s-a demonstrat că metoda are o capacitate excelentă de generalizare,
  oferind rezultate superioare și pe seturi de date noi,
- precum 7-Scenes,
+ precum 7-Scenes 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shotton2013scenecoordinateregression"
+literal "false"
+
+\end_inset
+
+,
  fără a fi nevoie de o reantrenare specifică pe acestea.
 \end_layout
 
-\begin_layout Section
-Self-Supervised Monocular Depth Estimation by Direction-aware Cumulative Convolution Network [GEN,
- CNN]
+\begin_layout Subsection
+Exploiting Pseudo Labels in a Self-Supervised Learning Framework for Improved Monocular Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Petrovai_2022_CVPR"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Dacă problematica suprafețelor reflectorizante a fost anterior remediată,
- această lucrare evidențiază importanța particularităților geometrice ale estimărilor.
- Autorii pornesc de la observația că estimarea adâncimii este o problemă puternic dependentă de contextul ambiental,
- iar reprezentările de tip convoluțional standard nu reușesc să exploateze eficient informația direcțională din imagine.
- Concret,
- aceștia demonstrează că predicția adâncimii este sensibilă la direcție.
- Datele pe direcția verticală,
- asociate variațiilor de adâncime și regiunilor de contact cu solul,
- joacă un rol diferit față de cele de pe direcția orizontală,
- care tind să conserve uniformitatea între obiecte.
- Această asimetrie direcțională este minimizată de convoluțiile clasice,
- care tratează echivalent toate direcțiile din câmpul receptiv,
- ducând la pierderea unor parametri geometrici semnificativi și la erori în unele cazuri particulare.
-\end_layout
+În această lucrare este prezentat SD-SSMDE 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Petrovai_2022_CVPR"
+literal "false"
 
-\begin_layout Standard
-Pentru a rezolva această problemă,
- lucrarea propune un nou cadru arhitectural,
- Direction-aware Cumulative Convolution Network (DaCCN),
- care introduce două contribuții metodologice majore la nivelul reprezentării caracteristicilor.
- Prima este legată de modulul direction-aware,
- care permite rețelei să învețe automat cum să ajusteze extracția de caracteristici în funcție de direcție.
- Acest lucru se realizează printr-o transformare afină care modifică densitatea de eșantionare și câmpul receptiv pe axele orizontală și verticală,
- permițând modelului să capteze mai multă informație acolo unde variațiile de adâncime sunt critice,
- favorizând astfel informația globală acolo unde este necesară consistența.
- A doua contribuție o reprezintă introducerea convoluției cumulative,
- o operație nouă de agregare a caracteristicilor care vizează explicit corelația dintre cameră și obiecte,
- adică acele zone din imagine care corespund spațiului fizic dintre punctul de vedere și obiectele din scenă.
- Spre deosebire de convoluțiile clasice,
- care agregă informația local într-un mod simetric,
- convoluția cumulativă acumulează informația pe o direcție dominantă,
- reflectând structura geometrică a scenei și permițând corectarea unor erori mari de estimare în cazuri dificile.
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Din punct de vedere al antrenării,
- metoda este una auto-supervizată,
- bazată pe eroarea fotometrică de reproiecție,
- fără a introduce pierderi sau metrici noi în sens formal.
- Evaluările experimentale pe benchmark-uri consacrate precum KITTI,
- Cityscapes și Make3D arată că DaCCN obține îmbunătățiri semnificative față de metodele anterioare,
- în special pe metrici sensibile la erori mari,
- ceea ce indică o capacitate crescută de a gestiona cazurile dificile și structurile geometrice complexe.DistD
-\end_layout
-
-\begin_layout Section
-Two-in-One Depth:
- Bridging the Gap Between Monocular and Binocular Self-supervised Depth Estimation [GEN,
- CNN]
-\end_layout
-
-\begin_layout Standard
-Lucrarea își propune să îmbunătățească modul în care este aplicată estimarea auto-supervizată a adâncimii,
- atât monocular cât și binocular,
- pornind de la faptul că,
- deși cele două metode urmăresc același obiectiv,
- ele sunt abordate prin modele separate.
- Această diferență conduce la o utilizare ineficientă a informației disponibile:
- modelele binoculare exploatează eficient constrângerile geometrice oferite de perechile stereo,
- dar își pierd complet utilitatea atunci când una dintre camere lipsește sau este indisponibilă,
- în timp ce modelele monoculare oferă flexibilitate sporită,
- însă cu acuratețe mai redusă.
- În plus,
- observații empirice arată că modelele monoculare pot depăși performanța celor binoculare în anumite zone restrânse,
- precum oculuziile,
- sugerând astfel existența unei complementarități nevalorificate între cele două paradigme.
-\end_layout
-
-\begin_layout Standard
-Pornind de la această motivație,
- autorii introduc TiO-Depth,
- un cadru unificat care integrează estimarea monoculară și binoculară într-o singură arhitectură coerentă.
- Modelul este construit sub forma unei arhitecturi de tip Siamese,
- în care fiecare ramură este capabilă să funcționeze independent ca estimator monocular de adâncime.
- În acest fel,
- estimarea adâncimii dintr-o singură imagine devine un caz particular al arhitecturii generale,
- nu o sarcină separată.
- Pentru a permite utilizarea informației stereo atunci când aceasta este disponibilă,
- rețeaua conține un mecanism de corelare a caracteristicilor monoculare extrase din cele două vederi.
- Acest mecanism,
- denumit Monocular Feature Matching,
- realizează o aliniere a caracteristicilor prin intermediul unui proces de tip 
-\series bold
-\color red
-atenție????
-\series default
-\color inherit
 ,
- evitând construirea explicită a volumelor de cost dense și reducâDistDnd astfel complexitatea computațională.
+ un cadru de antrenare în două etape,
+ fundamentat pe auto-distilare,
+ conceput pentru a atenua limitările structurale ale metodelor auto-supervizate clasice,
+ în special din perspectiva instabilității semnalului fotometric și a ambiguității de scară inerentă a predicției monoculare.
+ Abordările anterioare au vizat fie optimizări arhitecturale,
+ fie ale funcției de cost,
+ însă au păstrat dependența strictă față de costul fotometric 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ un parametru puternic,
+ dar neregulat,
+ afectat de suprafețe non-Lambertiene,
+ regiuni nedefinite din perspectiva texturii,
+ repetiții periodice și zone dinamice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth,chen2022frequencyawareselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ SD-SSMDE propune o soluție alternativă prin construcția unei supervizări robuste (de tip profesor-elev),
+ obținute prin generarea și filtrarea unor pseudo-etichete,
+ din care se poate deriva ulterior un model elev stabil și scalabil.
 \end_layout
 
 \begin_layout Standard
-Un element esențial al modelului îl reprezintă strategia de antrenare propusă,
- care nu se limitează la o optimizare simultană a celor două sarcini,
- ci urmează o schemă atent controlată,
- pe mai multe etape.
- Într-o primă fază,
- modelul este constrâns să învețe reprezentări monoculare stabile,
- apoi este ghidat să integreze informația binoculară,
- iar în etapa finală se aplică un mecanism de distilare a cunoștințelor,
- prin care predicțiile stereo,
- considerate mai fiabile din punct de vedere geometric,
- sunt utilizate pentru a rafina rezultatele monoculare.
- Această distilare este realizată adaptiv,
- ținând cont de structura scenei și de regiuni în care una dintre estimări este mai sigură decât cealaltă,
- ceea ce conduce la o îmbinare eficientă ale celor două perspective.
- Evaluările experimentale realizate pe seturi de date consacrate demonstrează că TiO-Depth reușește nu doar să unifice cele două tipuri de estimare,
- ci și să depășească performanțele modelelor specializate,
- atât în regim monocular,
- cât și binocular.
- Îmbunătățirile obținute sunt consistente și indică o capacitate sporită de generalizare,
- inclusiv în scenarii cross-dataset.
-\end_layout
+În prima etapă,
+ rețeaua profesor este antrenată auto-supervizat pe imagini de rezoluție ridicată,
+ utilizând un decodificator nou propus,
+ derivat din arhitectura Panoptic-DeepLab 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Cheng_2020_CVPR"
+literal "false"
 
-\begin_layout Section
-Self-Supervised Learning based Depth Estimation from Monocular Images [GEN,
- CNN]
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Problema estimării adâncimii monoculare se află la intersecția dintre percepția geometrică și învățarea vizuală,
- fiind caracterizată de ambiguități structurale și lipsa constrângerilor explicite.
- În acest context,
- lucrarea de față investighează îmbunătățiri ale modelelor auto-supervizate moderne pentru a depăși aceste limitări,
- abordând una dintre problemele centrale ale viziunii computerizate moderne,
- și anume estimarea adâncimii scenei pornind de la o singură imagine RGB,
- în absența etichetelor de tip ground truth.
- Motivația este construită pe limitările majore ale metodelor clasice și supervizate,
- care depind fie de senzori costisitori precum LiDAR,
- fie de seturi de date dificil de obținut și etichetat.
+,
+ care integrează un modul Atrous Spatial Pyramid Pooling 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2017deeplabsemanticimagesegmentation"
+literal "false"
+
+\end_inset
+
+ și convoluții separabile pe adâncime pentru captarea contextului multi-scară.
+ Predicția disparității 
+\begin_inset Formula $d_{t}$
+\end_inset
+
+ este obținută printr-o arhitectură codificator-decodificator cu eșantionare progresivă și fuziune de caracteristici la rezoluții intermediare 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Petrovai_2022_CVPR"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Pentru a aborda această problemă,
- lucrarea are ca punct de plecare modelul MonoDepth2,
- unul dintre principalele repere în estimarea auto-supervizată a adâncimii.
- Pe acest fundament,
- autorii propun o serie de îmbunătățiri arhitecturale și metodologice menite să sporească atât coerența geometrică,
- cât și capacitatea de generalizare a predicțiilor.
- Soluția se bazează pe o arhitectură de tip codificator-decodificator,
- în care un codificator convoluțional extrage caracteristici din imagine,
- iar un decodificator de tip U-Net generează harta de adâncime inversă.
- Antrenarea se realizează auto-supervizat,
- prin estimarea simultană a adâncimii și a mișcării camerei,
- folosind erori de reproiecție fotometrică și regularizări de tip smoothness ghidate de muchii.
+Ulterior,
+ rețeaua profesor este utilizată pentru a genera pseudo-etichete pentru întregul set de antrenare.
+ Deoarece adâncimea auto-supervizată este definită doar până la un factor de scară stabilit 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhou2017unsupervisedlearningdepthegomotion,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ autorii introduc un modul automat de recuperare a scalei,
+ bazat pe analiza normelelor locale ale punctelor 3D și identificarea planului solului 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Petrovai_2022_CVPR"
+literal "false"
+
+\end_inset
+
+.
+ Din estimarea repetată a înălțimii camerei se obține un factor de scalare λ,
+ aplicat pseudo-adâncimilor relative,
+ rezultând hărți de adâncime absolute,
+ coerente între cadre și comparabile cu valorile reale.
 \end_layout
 
 \begin_layout Standard
-Noutatea lucrării constă în integrarea unor module suplimentare,
- care adresează limitări specifice modelului de bază.
- În primul rând,
- informația semantică provenită dintr-un model de segmentare de tip Mask R-CNN este introdusă pentru a rafina harta de 
-\series bold
-\color red
-disparitate????
+Calitatea pseudo-etichetelor este îmbunătățită printr-un mecanism de filtrare bazat pe consistența geometrică 3D.
+ Fiecare punct este reproiectat între cadrele adiacente,
+ iar un pixel este păstrat doar dacă pozițiile 3D asociate sunt congruente,
+ cu scopul de a elimina predicțiile instabile și artefactele dinamice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Petrovai_2022_CVPR,wang2017learningdepthmonocularvideos"
+literal "false"
 
-\series default
-\color inherit
- în regiunile corespunzătoare obiectelor semnificative.
- Această strategie urmărește reducerea distorsiunilor semantice și creșterea coerenței globale a hărții de adâncime,
- în special în jurul contururilor obiectelor.
- În al doilea rând,
- autorii propun înlocuirea interpolării biliniare clasice din decodificator cu o tehnică de eșantionare bazată pe convoluții la nivel de pixel,
- inspirată din augmentarea imaginilor.
- Această alegere permite o propagare mai eficientă a caracteristicilor în timpul reconstrucției la rezoluție înaltă,
- reducând pierderea de detalii fine.
- O altă contribuție importantă este eliminarea dependenței de parametrii intrinseci cunoscuți ai camerei,
- prin introducerea unei rețele dedicate care învață acești parametri direct din date,
- făcând modelul aplicabil în scenarii realiste.
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Din punct de vedere al evaluării,
- lucrarea utilizează aceleași metrici consacrate din literatura de specialitate,
- precum erorile relative,
- RMSE și indicatorii de acuratețe pe praguri,
- fără a introduce metrici noi,
- dar demonstrând îmbunătățiri consistente ale acestora prin combinația propusă de tehnici.
- Rezultatele experimentale arată că extensiile aduse modelului de bază conduc la predicții mai stabile,
- mai coerente semantic și mai robuste la variații de condiții,
- inclusiv prin utilizarea augmentărilor de tip weather pentru generalizare.
-\end_layout
+În etapa a doua,
+ rețeaua elev este antrenată în regim supervizat folosind pseudo-etichetele filtrate.
+ Predicția adâncimii absolute se realizează printr-un cap de regresie,
+ iar funcția de cost adoptată este logaritmică și invariabilă de scară 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "eigen2014depthmappredictionsingle"
+literal "false"
 
-\begin_layout Section
-MonoDiffusion:
- Self-Supervised Monocular Depth Estimation Using Diffusion Model [GEN,
- Diff]
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Articolul propune o abordare inovativă pentru estimarea adâncimii din imagini monoculare,
- pornind de la ideea că procesul de predicție poate fi formulat mai eficient ca o rafinare iterativă decât ca o estimare directă într-un singur pas.
- Autorii argumentează că majoritatea metodelor auto-supervizate existente tratează adâncimea ca pe o ieșire deterministă,
- ceea ce limitează capacitatea modelelor de a corecta erorile progresiv și de a exploata structura probabilistică a soluțiilor posibile.
+Evaluările pe KITTI și Cityscapes demonstrează o reducere consistentă a erorilor AbsRel,
+ SqRel și RMSE,
+ precum și o creștere a acurateței δ,
+ depășind atât modelul profesor,
+ cât și metodele canonice precum Monodepth2 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ chiar și în condițiile antrenării exclusive pe secvențe monoculare,
+ fără date LiDAR sau modele semantice auxiliare.
+ Totodată,
+ SD-SSMDE prezervă eficiența la inferență,
+ întrucât complexitatea suplimentară este asociată doar procesului de antrenare în două etape.
 \end_layout
 
 \begin_layout Standard
-În acest context,
- lucrarea introduce MonoDiffusion,
- un cadru care integrează modele de difuzie în estimarea adâncimii monoculare,
- explorând în mod sistematic potențialul proceselor de reducere iterativă a zgomotelor într-un scenariu în care adâncimea reală nu este disponibilă în timpul antrenării.
- Ideea centrală este de a porni de la o distribuție aleatoare de adâncime și de a rafina progresiv această estimare prin pași succesivi de eliminare a zgomotului,
- pe baza informației vizuale.
- Principala dificultate în aplicarea modelelor de difuzie în acest context este lipsa adâncimii reale,
- necesară în definirea procesului de difuzie.
- Pentru a depăși această limitare,
- autorii introduc un mecanism original de pseudo difuzie,
- în care un model profesor,
- antrenat anterior în regim auto-superivizat,
- generează hărți de adâncime aproximative care sunt utilizate ca referință în procesul de adăugare controlată a zgomotului.
+Prin formalizarea unui mecanism robust de auto-distilare,
+ integrarea scalării absolute și filtrarea geometrică strictă,
+ SD-SSMDE 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Petrovai_2022_CVPR"
+literal "false"
+
+\end_inset
+
+ redefinește paradigma auto-supervizării în estimarea monoculară a adâncimii,
+ oferind un model conceptual și operațional superior pentru generarea de adâncimi dense,
+ fiabile și invariabile față de scară pe date reale.
 \end_layout
 
-\begin_layout Standard
-Mai mult decât atât,
- cadrul MonoDiffusion integrează și o strategie de distilare a cunoștințelor,
- prin care predicțiile modelului profesor sunt folosite pentru a ghida învățarea modelului elev în timpul etapelor de reducere a zgomotelor.
- Pentru a minimiza impactul erorilor inerente,
- este aplicat un filtru de verificare care elimină regiunile nesigure din supervizarea utilizată.
- O altă tehnică nou introdusă este mecanismul de mascare vizuală,
- inspirat din modelarea mascată a imaginilor,
- care constă în ascunderea aleatorie a unor părți din caracteristicile vizuale,
- cu scopul de a forța modelul să reconstruiască adâncimea corectă folosind informațiile rămase.
- Această strategie îmbunătățește capacitatea de generalizare și robustețea procesului de reducere a zgomotelor,
- în special în regiunile îndepărtate sau slab texturate.
-\end_layout
-
-\begin_layout Standard
-Din punct de vedere arhitectural,
- metoda păstrează un cadru de tip codificator-decodificator,
- iar complexitatea suplimentară este concentrată în procesul de antrenare,
- nu în inferență,
- similar abordărilor auto-supervizate clasice.
- Nu sunt introduse metrici de evaluare noi,
- însă performanța este analizată folosind indicatorii standard din literatură,
- demonstrând îmbunătățiri consistente față de metodele existente.
- Rezultatele experimentale arată că MonoDiffusion prezintă îmbunătățiri semnificative,
- atât din punct de vedere cantitativ,
- cât și calitativ,
- producând hărți de adâncime mai detaliate,
- cu contururi bine definite și structuri 3D coerente.
-\end_layout
-
-\begin_layout Section
+\begin_layout Subsection
 MonoProb:
- Self-Supervised Monocular Depth Estimation with Interpretable Uncertainty
+ Self-Supervised Monocular Depth Estimation with Interpretable Uncertainty 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "marsal2023monoprobselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-MonoProb se concentrează pe o problemă esențială pentru aplicarea practică a estimării adâncimii monoculare în sisteme critice,
+MonoProb 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "marsal2023monoprobselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+ se concentrează pe o problemă esențială pentru aplicarea practică a estimării adâncimii monoculare în sisteme critice,
  precum conducerea autonomă,
- și anume lipsa unei estimări explicite și interpretabile a incertitudinii asociate predicțiilor de adâncime.
- Deși metodele self-supervised au redus semnificativ dependența de date 
-\series bold
-\color red
-etichetate???
-\series default
-\color inherit
-,
+ și anume lipsa unei estimări explicite și interpretabile a 
+\shape italic
+incertitudinii
+\shape default
+ asociate predicțiilor de adâncime.
+ Deși metodele auto-supervizate au redus semnificativ dependența de date adnotate,
  acestea furnizează în mod obișnuit doar hărți de adâncime deterministe,
- fără a indica gradul de acuratețe a modelului în propriile predicții.
- Această limitare este problematică în scenarii reale,
+ fără a indica gradul de acuratețe a modelului în propriile predicții 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth,zhou2017unsupervisedlearningdepthegomotion"
+literal "false"
+
+\end_inset
+
+.
+ Această limitare poate fi problematică în scenarii reale,
  unde deciziile ulterioare trebuie să țină cont nu doar de valoarea adâncimii,
- ci și de fiabilitatea acesteia.
+ ci și de fiabilitatea acesteia 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kendall2017uncertaintiesneedbayesiandeep"
+literal "false"
+
+\end_inset
+
+.
  Autorii pornesc de la observația că multe metode existente de estimare a incertitudinii fie sunt costisitoare computațional,
  necesitând mai multe inferențe,
  fie produc măsuri dificil de interpretat,
- care nu reflectă direct eroarea așteptată asupra adâncimii.
+ care nu reflectă direct eroarea așteptată asupra adâncimii 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gal2016dropoutbayesianapproximationrepresenting,lakshminarayanan2017simplescalablepredictiveuncertainty"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 Pentru a rezolva această problemă,
- lucrarea propune o arhitectură auto-supervizată care reformulează estimarea adâncimii într-un cadru probabilistic.
+ lucrarea propune o arhitectură auto-supervizată care reformulează estimarea adâncimii într-un 
+\shape italic
+cadru probabilistic
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "marsal2023monoprobselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
  În loc să prezică o singură valoare scalară pentru fiecare pixel,
  modelul estimează parametrii unei distribuții de probabilitate a adâncimii,
  unde media este utilizată ca predicție de adâncime,
@@ -2518,7 +3753,11 @@ Pentru a rezolva această problemă,
 
 \begin_layout Standard
 Din punct de vedere metodologic,
- MonoProb introduce mai multe tehnici noi.
+ 
+\shape italic
+MonoProb
+\shape default
+ introduce mai multe tehnici originale.
  Una dintre acestea este utilizarea unei strategii de eșantionare controlată de distribuția de adâncime,
  pentru a aproxima eficient așteptarea necesară în calculul pierderii probabilistice,
  fără a compromite posibilitatea de antrenare prin propagare în spate.
@@ -2526,7 +3765,15 @@ Din punct de vedere metodologic,
  autorii propun o schemă originală de auto-distilare,
  în care un model profesor furnizează nu doar hărți de adâncime pseudo ground truth,
  ci distribuții complete de adâncime,
- iar modelul elev este antrenat să tindă spre acestea folosind divergența Kullback-Leibler.
+ iar modelul elev este antrenat să tindă spre acestea folosind divergența Kullback-Leibler 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kullback1951theanalsofmathematicalstatistics"
+literal "false"
+
+\end_inset
+
+.
  Această abordare îmbunătățește atât calitatea predicțiilor de adâncime,
  cât și acuratețea estimării incertitudinii.
 \end_layout
@@ -2537,266 +3784,32 @@ Rezultatele experimentale pe seturi de date standard demonstrează că MonoProb 
  cât și în ceea ce privește calitatea incertitudinii estimate.
 \end_layout
 
-\begin_layout Section
-SPIdepth:
- Strengthened Pose Information for Self-supervised Monocular Depth Estimation
+\begin_layout Subsection
+Mining Supervision for Dynamic Regions in Self-Supervised Monocular Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nguyen2024miningsupervisiondynamicregions"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Articolul se axează pe problema utilizării insuficiente și ineficiente a informației de poziție și orientare a camerei,
- cunoscută sub denumirea de pose.
- Deși majoritatea abordărilor existente tratează estimarea poziției ca pe o componentă auxiliară necesară doar pentru calculul costului fotometric,
- autorii susțin că această informație joacă un rol mai profund în înțelegerea structurii scenei și,
- implicit,
- în calitatea predicției adâncimii.
- Plecând de la această observație,
- lucrarea propune o schimbare de abordare:
- în loc să rafineze exclusiv rețeaua de adâncime,
- se concentrează pe întărirea rețelei de estimare a pose-ului ca mijloc principal de îmbunătățire a estimării adâncimii.
-\end_layout
 
-\begin_layout Standard
-Pentru a concretiza această idee,
- autorii introduc SPIdepth,
- un cadru self-supervised care extinde și îmbunătățește abordările bazate pe Self Query Layer (SQL),
- punând accent pe o rețea de pose mai expresivă și puternică.
- Arhitectura include două componente principale:
- o rețea de adâncime care extrage reprezentări vizuale multi-scară dintr-o singură imagine RGB și o rețea de pose îmbunătățită,
- utilizată în timpul antrenării pentru a estima cu acuratețe transformările relative dintre cadre.
- Spre deosebire de metodele clasice,
- care folosesc rețele de pose relativ simple,
- SPIdepth integrează modele pre-antrenate mai performante,
- capabile să surprindă relații geometrice complexe.
-\end_layout
+\shape italic
+Mining Supervision
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nguyen2024miningsupervisiondynamicregions"
+literal "false"
 
-\begin_layout Standard
-Tehnica centrală utilizată de SPIdepth este combinarea informației de pose îmbunătățite cu SQL,
- un mecanism care construiește volume de cost interne pentru a surprinde relații de distanță relativă între pixeli și regiuni ale imaginii.
- Prin consolidarea informației de mișcare și a celei structurale,
- modelul reușește să estimeze distribuții mai precise ale adâncimii,
- în special în zonele dificile,
- precum cele cu obiecte dinamice sau diferențe mari de scară.
- Antrenarea se realizează folosind costuri fotometrice consacrate,
- combinate cu regularizări de tip smoothness ghidate de muchii și strategii de auto-mascare.
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Din punct de vedere al evaluării,
- moidelul demonstrează îmbunătățiri consistente pe metricile standard utilizate în estimarea adâncimii,
- evidențiind atât o creștere a acurateții,
- cât și o generalizare superioară.
- Rezultatele experimentale arată că SPIdepth atinge și depășește modelele anterioare pe benchmark-uri consacrate,
- precum KITTI,
- Cityscapes și Make3D,
- inclusiv în scenariile de tip zero-shot.
- Un aspect remarcabil este faptul că performanțele ridicate sunt obținute folosind o singură imagine la inferență,
- fără a apela la secvențe video sau măști de mișcare,
- ceea ce subliniază eficiența și aplicabilitatea practică a metodei.
-\end_layout
-
-\begin_layout Section
-MonoIndoor++:Towards Better Practice of Self-Supervised Monocular Depth Estimation for Indoor Environments [IND,
- CNN]
-\end_layout
-
-\begin_layout Standard
-MonoIndoor++ se concentrează pe dificultățile specifice estimării adâncimii monoculare self-supervised în medii interioare.
- Autorii pornesc de la observația că metodele auto-supervizate existente,
- deși performante pe seturi de date precum KITTI,
- își pierd semnificativ din eficiență în interior,
- unde scenele prezintă variații mari ale intervalului de adâncime,
- mișcări accentuate de rotație ale camerei și structuri geometrice mult mai aglomerate.
- Aceste caracteristici fac dificilă atât învățarea unor indicii de adâncime consistente,
- cât și estimarea corectă a poziției relative a camerei,
- element esențial pentru supervizarea fotometrică.
- Problematica abordată este,
- așadar,
- identificarea și tratarea sistematică a cauzelor care limitează performanța estimării monoculare auto-supervizate în medii interioare,
- cu scopul de a obține predicții mai stabile,
- mai coerente și mai apropiate de cele furnizate de metodele supervizate.
-\end_layout
-
-\begin_layout Standard
-Pentru a rezolva aceste limitări,
- autorii propun MonoIndoor++,
- un model auto-supervizat conceput explicit pentru scene interioare,
- care introduce trei contribuții arhitecturale și metodologice majore.
- Prima este un modul de factorizare a adâncimii,
- care separă predicția adâncimii într-o componentă de adâncime relativă și un factor global de scară.
- Spre deosebire de abordările clasice,
- care impun implicit un interval fix de adâncime,
- acest modul permite modelului să se adapteze dinamic la variațiile mari de scară caracteristice mediilor interioare.
- Factorul global de scară este estimat printr-o rețea dedicată bazată pe transformere,
- capabilă să capteze informații globale din scenă și să indice valoarea maximă a adâncimii într-un mod explicit și flexibil.
-\end_layout
-
-\begin_layout Standard
-A doua contribuție constă în introducerea unui modul de estimare reziduală a poziției.
- În locul unei predicții directe într-o singură etapă a mișcării relative a camerei,
- MonoIndoor++ adoptă o strategie iterativă,
- în care o estimare inițială este rafinată prin estimări succesive ale unor corecții reziduale.
- Prin rafinarea progresivă a poziției se obțin transformări mai corecte între cadre,
- ceea ce conduce la o supervizare fotometrică mai fiabilă și,
- implicit,
- la o estimare a adâncimii mai precisă.
-\end_layout
-
-\begin_layout Standard
-Cea de-a treia contribuție este legată de integrarea explicită a informației de coordonate prin convoluții de tip CoordConv în rețeaua de estimare a poziției.
- Prin adăugarea coordonatelor spațiale ca intrări suplimentare,
- modelul surprinde indicii geometrice explicite care completează informația fotometrică,
- îmbunătățind capacitatea de inferență a relațiilor spațiale dintre cadre.
- Această tehnică se dovedește deosebit de utilă în scene indoor,
- unde structura geometrică este complexă și ambiguă.
-\end_layout
-
-\begin_layout Standard
-În ceea ce privește evaluarea,
- modelul demonstrează îmbunătățiri consistente și robuste pe multiple seturi de date indoor consacrate.
- Rezultatele arată că MonoIndoor++ reduce semnificativ diferența față de metodele supervizate și prezintă o capacitate superioară de generalizare.
-\end_layout
-
-\begin_layout Section
-FS-Depth:
- Focal-and-Scale Depth Estimation from a Single Image in Unseen Indoor Scene
-\end_layout
-
-\begin_layout Standard
-Autorii articolului pornesc de la observația că dificultatea estimării monoculare nu este cauzată exclusiv de ambiguitatea de scară,
- ci și de o ambiguitate suplimentară,
- legată de distanța focală a camerei.
- În practică,
- imaginile din mediul interior pot fi captate cu camere având configurații optice diferite și distanțe focale variabile,
- iar această diversitate perturbă relația dintre proiecția 2D și structura 3D a scenei.
- Modelele existente,
- antrenate de regulă pe seturi de date cu distanță focală fixă sau aproape constantă,
- ajung astfel să supraînvețe aceste condiții și să eșueze atunci când sunt aplicate pe scene noi,
- captate cu alte camere sau în contexte diferite.
-\end_layout
-
-\begin_layout Standard
-Pentru a rezolva această problemă,
- autorii propun FS-Depth,
- un model de estimare a adâncimii care integrează explicit atât informația de scară a scenei,
- cât și informația de distanță focală,
- într-un cadru unificat.
- Abordarea se bazează pe separarea clară a rolurilor dintre estimarea adâncimii relative și estimarea adâncimii absolute.
- Într-o primă etapă,
- este utilizată o rețea de estimare a adâncimii relative,
- pre-antrenată pe seturi de date multiple,
- cu scări și semantici variate,
- capabilă să surprindă structura geometrică a scenei într-o manieră independentă de variațiile de scară.
- Această rețea furnizează atât hărți de adâncime relativă,
- cât și caracteristici intermediare multi-scară,
- care descriu scenele la diferite niveluri de rezoluție.
-\end_layout
-
-\begin_layout Standard
-Noutatea modelului constă în modul de integrare a distanței focale în procesul de estimare.
- Deoarece distanța focală este o valoare scalară care nu poate fi introdusă direct ca intrare într-o rețea CNN standard,
- autorii propun un mecanism de codificare a acesteia sub forma unor caracteristici de distanță focală învățabile.
- Aceste caracteristici sunt generate printr-o matrice de codificare și apoi eșantionate la mai multe rezoluții,
- pentru a fi concatenate cu caracteristicile intermediare provenite din rețeaua de adâncime relativă.
- Prin această fuziune multi-scară,
- influența distanței focale este propagată în mod explicit în mai multe straturi ale rețelei,
- prevenind disiparea treptată a informației optice pe măsură ce datele avansează în arhitectură.
- Caracteristicile combinate sunt ulterior utilizate de o rețea de estimare a adâncimii absolute,
- care produce valori metrice de adâncime coerente.
-\end_layout
-
-\begin_layout Standard
-Pe lângă contribuțiile arhitecturale,
- articolul introduce și o tehnică nouă de augmentare a datelor,
- menită să compenseze lipsa diversității distanțelor focale din seturile de date publice.
- Această strategie se bazează pe proprietățile geometrice ale proiecției camerei și permite generarea de perechi corespunzătoare unor distanțe focale diferite,
- fără a altera consistența geometrică a scenei.
- Astfel,
- modelul este expus,
- în timpul antrenării,
- la o varietate mult mai largă de configurații optice,
- ceea ce îi îmbunătățește semnificativ capacitatea de generalizare.
-\end_layout
-
-\begin_layout Standard
-Evaluarea experimentală,
- realizată pe mai multe seturi de date din mediul interior,
- arată că FS-Depth obține îmbunătățiri consistente față de metodele de referință,
- atât din punct de vedere al acurateții adâncimii absolute,
- cât și al calității reconstrucției 3D,
- reducând deformările geometrice frecvent întâlnite la alte modele.
- În același timp,
- performanța pe setul de date de antrenare este menținută,
- demonstrând că integrarea distanței focale nu compromite acuratețea în scenarii cunoscute.
-\end_layout
-
-\begin_layout Section
-Fully Self-Supervised Depth Estimation from Defocus Clue [IND,
- CNN]
-\end_layout
-
-\begin_layout Standard
-Articolul propune o abordare complet auto-supervizată pentru estimarea adâncimii folosind exclusiv indicii de defocalizare dintr-un set redus de imagini captate la distanțe diferite de focalizare,
- numite focal stacks.
- Lucrarea pornește de la o problemă semnificativă a metodelor existente de tip depth-from-defocus,
- și anume dependența acestora de informații greu de obținut în scenarii reale,
- precum hărțile de adâncime ground truth sau imaginile all-in-focus.
- Deși defocalizarea este un indiciu fizic direct legat de geometria scenei și de parametrii camerei,
- majoritatea lucrărilor anterioare fie folosesc supervizare explicită,
- fie presupun existența unei imagini ideal focalizate,
- care în practică nu poate fi capturată fidel cu sisteme optice reale.
- Această discrepanță între ipotezele teoretice și condițiile din lumea reală limitează aplicabilitatea metodelor DFD în contexte practice.
-\end_layout
-
-\begin_layout Standard
-Pentru a elimina aceste limitări,
- autorii introduc un cadru complet auto-supervizat care utilizează doar focal stacks,
- fără acces la adâncime sau imagini all-in-focus în timpul antrenării.
- Soluția propusă se bazează pe combinarea unei rețele neuronale cu un model optic realist,
- inspirat din ecuația lentilei subțiri.
- Componenta neuronală,
- denumită DAIF-Net,
- este concepută pentru a estima simultan două ieșiri:
- harta de adâncime și imaginea all-in-focus latentă,
- pornind de la un focal stack cu un număr arbitrar de imagini.
- Această rețea este construită pe o arhitectură de tip codificator-decodificator,
- iar fuziunea informației din mai multe planuri de focalizare se realizează prin mecanisme de pooling global care evidențiază regiunile cele mai clare din fiecare imagine.
-\end_layout
-
-\begin_layout Standard
-Inovația metodei constă în modul de supervizare.
- În loc să compare direct predicțiile cu valori de referință inexistente,
- cadrul utilizează un model optic fizic pentru a reconstrui focal stack-ul inițial din adâncimea și imaginea all-in-focus estimate.
- Acest model optic simulează procesul de formare a defocalizării prin calculul cercului de confuzie și prin convoluții PSF dependente de adâncime,
- permițând generarea unor imagini defocalizate consistente fizic.
- Ideea centrală este că o reconstrucție fidelă a focal stack-ului este posibilă doar dacă adâncimea și imaginea all-in-focus estimate sunt corecte,
- ceea ce transformă problema într-una bine constrânsă din punct de vedere fizic.
- Pentru a stabiliza antrenarea,
- autorii introduc tehnici suplimentare precum regularizarea clarității imaginilor all-in-focus,
- obținută prin măsuri de tip Laplacian,
- și o regularizare de netezire a adâncimii ghidată de muchii,
- care aliniază discontinuitățile de adâncime cu structura imaginii.
-\end_layout
-
-\begin_layout Standard
-Metoda nu introduce metrici noi de evaluare,
- dar utilizează indicatorii standard pentru a demonstra eficiența abordării.
- Rezultatele experimentale pe seturi de date precum DefocusNet,
- sau nyuV2 arată că metoda propusă este comparabilă,
- iar în anumite scenarii apropiată,
- chiar competitivă cu metodele supervizate sau parțial supervizate de tip state of the art,
- în ciuda faptului că nu folosește nicio formă de ground truth.
- În special,
- performanța este solidă pentru obiecte apropiate și regiuni cu textură variată,
- unde indiciile de defocalizare sunt mai pronunțate.
-\end_layout
-
-\begin_layout Section
-Mining Supervision for Dynamic Regions in Self-Supervised Monocular Depth Estimation [OUT,
- CNN]
-\end_layout
-
-\begin_layout Standard
-„Mining Supervision” face referire la problema predicției eronate a adâncimii în regiuni dinamice.
+ face referire la problema predicției eronate a adâncimii în regiuni dinamice.
  Metodele clasice auto-supervizate se bazează pe reconstrucția fotometrică dintre cadre consecutive și presupun implicit o scenă rigidă,
  ipoteză care este încălcată în prezența obiectelor mobile.
  Această încălcare conduce la ambiguități fundamentale între adâncime și mișcare,
@@ -2805,7 +3818,15 @@ Mining Supervision for Dynamic Regions in Self-Supervised Monocular Depth Estima
  Ca rezultat,
  majoritatea abordărilor existente oferă estimări acceptabile pentru fundalul static,
  însă eșuează sistematic în regiunile dinamice,
- unde apar erori mari și inconsistențe de scară.
+ unde apar erori mari și inconsistențe de scară 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth,casser2018depthpredictionsensorsleveraging"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2828,7 +3849,19 @@ Rezolvarea ambiguității de scară dintre adâncimea estimată pentru obiectele
  adâncimea obiectelor mobile poate avea scări arbitrare și diferite chiar în interiorul aceluiași obiect.
  De aceea,
  autorii introduc un modul nou de aliniere a scării,
- denumit Depth Scale Alignment,
+ denumit 
+\shape italic
+Depth Scale Alignment
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nguyen2024miningsupervisiondynamicregions"
+literal "false"
+
+\end_inset
+
+,
  care învață să estimeze un factor de scalare pentru fiecare obiect,
  folosind drept referință regiunile statice din vecinătatea acestuia.
  Modulul este antrenat exclusiv pe obiecte statice,
@@ -2836,7 +3869,15 @@ Rezolvarea ambiguității de scară dintre adâncimea estimată pentru obiectele
  și apoi este generalizat pentru obiecte dinamice.
  Prin această aliniere,
  se obțin pseudo-etichete de adâncimi consistente la nivelul întregii imagini,
- care combină adâncimea fundalului static cu adâncimea obiectelor dinamice corect scalată.
+ care combină adâncimea fundalului static cu adâncimea obiectelor dinamice corect scalată 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nguyen2024miningsupervisiondynamicregions"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2846,8 +3887,676 @@ Aceste pseudo-etichete sunt ulterior utilizate pentru a antrena un model final d
  Metoda nu introduce metrici noi de evaluare,
  dar demonstrează îmbunătățiri substanțiale pe metricile standard utilizate în literatura de specialitate,
  în special pentru obiectele aflate în mișcare.
- Rezultatele experimentale pe seturile de date Cityscapes și KITTI arată că abordarea propusă atinge un nou nivel de performanță în estimarea adâncimii pentru regiuni dinamice,
+ Rezultatele experimentale pe seturile de date Cityscapes 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "cordts2016cityscapesdatasetsemanticurban"
+literal "false"
+
+\end_inset
+
+ și KITTI 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "geiger2013kittidataset"
+literal "false"
+
+\end_inset
+
+ arată că abordarea propusă atinge un nou nivel de performanță în estimarea adâncimii pentru regiuni dinamice,
  depășind în mod consistent metodele anterioare auto-supervizate și reducând semnificativ decalajul dintre predicțiile pentru fundal și cele pentru obiectele mobile.
+\end_layout
+
+\begin_layout Subsection
+From-Ground-To-Objects:
+ Coarse-to-Fine Self-supervised Monocular Depth Estimation of Dynamic Objects with Ground Contact Prior 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "moon2023fromgroundtoobjectscoarsetofineselfsupervisedmonocular"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+În lucrare,
+ este prezentat un cadru riguros pentru estimarea adâncimii,
+ concentrându-se în mod explicit asupra dificultăților introduse de obiectele dinamice din scenele de exterior.
+ Autorii pornesc de la principiul clasic al estimării adâncimii supervizate,
+ în care rețelele neuronale sunt antrenate să minimizeze erorile fotometrice dintre un cadru țintă și cadrele reproiectate din imagini stereo sau din secvențe video monoculare consecutive 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Această abordare presupune implicit că scena este rigidă,
+ adică toate elementele se mișcă exclusiv datorită mișcării camerei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "moon2023fromgroundtoobjectscoarsetofineselfsupervisedmonocular"
+literal "false"
+
+\end_inset
+
+.
+ În practică,
+ această ipoteză este încălcată frecvent de obiecte precum automobilele,
+ bicicletele sau pietonii,
+ care se deplasează independent 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "casser2018depthpredictionsensorsleveraging,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Lucrarea arată că,
+ în astfel de situații,
+ costul de reproiecție poate fi minimizat chiar și atunci când adâncimea obiectelor este estimată greșit,
+ ceea ce conduce la artefacte geometrice evidente,
+ precum obiecte care par să plutească deasupra solului sau să fie scufundate în acesta în reconstrucțiile tridimensionale 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "black1996therobustestimationofmultiplemotions"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Pentru a aborda această problemă,
+ autorii introduc un principiu geometric simplu,
+ dar puternic,
+ denumit 
+\shape italic
+ground contacting prior
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "moon2023fromgroundtoobjectscoarsetofineselfsupervisedmonocular"
+literal "false"
+
+\end_inset
+
+.
+ Acesta se bazează pe observația că majoritatea obiectelor clasificate ca dinamice în scenele de exterior sunt în contact cu solul și,
+ prin urmare,
+ au o adâncime similară cu cea a punctelor de sol pe care se sprijină 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "marr1976cooperativecomputationofstereodisparity"
+literal "false"
+
+\end_inset
+
+.
+ Această observație este exploatată pentru a furniza o formă de supervizare precisă,
+ fără a apela la adnotări externe sau la estimarea explicită a mișcării obiectelor.
+ Pe baza acestui aspect,
+ lucrarea propune o strategie de antrenare de la general la particular,
+ structurată în două etape distincte,
+ fiecare având un rol bine definit în procesul de învățare a adâncimii.
+\end_layout
+
+\begin_layout Standard
+În etapa de antrenare grosieră,
+ rețeaua este antrenată separat pe regiuni statice și cele aparținând obiectelor dinamice.
+ Regiunile corespunzătoare claselor dinamice sunt complet excluse din calculul costului de reproiecție,
+ pentru a evita învățarea unor relații eronate între adâncime și mișcare.
+ În schimb,
+ adâncimea acestor obiecte este ghidată printr-o funcție de cost nou introdusă,
+ denumită 
+\shape italic
+Ground-contacting-prior Disparity Smoothness Loss
+\shape default
+ (GDS-Loss) 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "moon2023fromgroundtoobjectscoarsetofineselfsupervisedmonocular"
+literal "false"
+
+\end_inset
+
+.
+ Această funcție de cost este o extensie a regularizării clasice de netezire a disparității 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2017unsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+,
+ dar este adaptată pentru a impune consistență verticală între obiectele dinamice și punctele de sol cu care acestea intră în contact.
+ Concret,
+ GDS-Loss 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "moon2023fromgroundtoobjectscoarsetofineselfsupervisedmonocular"
+literal "false"
+
+\end_inset
+
+ acordă o pondere mult mai mare gradientului vertical al disparității în regiunile obiectelor dinamice,
+ forțând astfel alinierea adâncimii acestora cu adâncimea solului.
+ În același timp,
+ influența marginilor de culoare este redusă în interiorul obiectelor,
+ pentru a preveni introducerea unor discontinuități artificiale ale adâncimii cauzate de textură.
+\end_layout
+
+\begin_layout Standard
+După finalizarea etapei grosiere,
+ rețeaua rezultată oferă estimări de adâncime consistente din punct de vedere geometric pentru obiectele dinamice,
+ dar poate produce predicții destul de uniforme pe suprafețele acestora.
+ Pentru a rezolva această limitare,
+ autorii introduc o etapă de antrenare fină,
+ în care rețeaua este rafinată pentru a surprinde detaliile de adâncime ale obiectelor.
+ În această fază,
+ costul de reproiecție este reintrodus pe întreaga imagine,
+ însă este controlat printr-un mecanism de regularizare suplimentar 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Acest mecanism utilizează o funcție de regularizare care constrânge noile predicții de adâncime să rămână consistente cu predicțiile fiabile obținute în etapa grosieră.
+ Regularizarea este ponderată adaptiv printr-un factor derivat dintr-un cost de volum,
+ care indică regiunile în care reproiecția este nesigură,
+ cum ar fi zonele corespunzătoare obiectelor aflate în mișcare 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "black1996therobustestimationofmultiplemotions"
+literal "false"
+
+\end_inset
+
+.
+ Astfel,
+ rețeaua este liberă să învețe detalii fine în regiunile statice,
+ dar este penalizată atunci când deviază excesiv în zonele dinamice.
+\end_layout
+
+\begin_layout Standard
+Lucrarea descrie în detaliu implementarea acestei strategii și arată că ea poate fi integrată fără modificări arhitecturale în modele existente de estimare a adâncimii,
+ precum Monodepth2,
+ HR-Depth,
+ CADepth sau MonoViT 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth,Zhao_2022,lyu2020hrdepthhighresolutionselfsupervised,yan2021channelwiseattentionbasednetworkselfsupervised"
+literal "false"
+
+\end_inset
+
+.
+ Evaluările experimentale realizate pe seturile de date Cityscapes 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "cordts2016cityscapesdatasetsemanticurban"
+literal "false"
+
+\end_inset
+
+ și KITTI 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "geiger2013kittidataset"
+literal "false"
+
+\end_inset
+
+ demonstrează că strategia de la general la particular bazată pe ground contacting prior îmbunătățește semnificativ calitatea estimării adâncimii,
+ în special în regiunile corespunzătoare obiectelor dinamice.
+ Analizele calitative evidențiază reconstrucții 3D coerente,
+ în care obiectele sunt corect poziționate pe sol,
+ iar studiile de ablație confirmă contribuția fiecărei componente propuse.
+\end_layout
+
+\begin_layout Section
+Metode care exploatează indici fizici alternativi
+\end_layout
+
+\begin_layout Subsection*
+Sinteză
+\end_layout
+
+\begin_layout Standard
+Această categorie se remarcă prin faptul că problematica estimării adâncimii din spațiul corespondențelor vizuale se transferă în spațiul procesului de formare a imaginii.
+ În loc să pornească de la presupunerea că diferențele dintre imagini pot fi explicate predominant prin mișcarea camerei și geometria scenei,
+ aceste modele tratează imaginea ca rezultat al unor mecanisme fizice măsurabile,
+ care codifică adâncimea în mod indirect,
+ dar sistematic.
+ Astfel,
+ estimarea adâncimii nu mai este formulată exclusiv ca o problemă de potrivire vizuală,
+ ci ca una de inversare de transformări optice sau fizice cunoscute.
+\end_layout
+
+\begin_layout Standard
+În acest caz,
+ supervizarea nu mai este extrasă din relația dintre cadre,
+ ci din coerența dintre predicții și un model fizic explicit.
+ Rețeaua nu este constrânsă să reproducă o imagine observată,
+ ci să genereze o structură tridimensională care,
+ odată trecută printr-un model de simulare,
+ explică observațiile disponibile.
+ Această schimbare subtilă elimină o serie de ambiguități caracteristice ipotezei fotometrice,
+ deoarece validitatea predicției este evaluată la nivel de proces,
+ nu doar la nivel de pixel.
+ Totodată,
+ adâncimea este corelată cu mărimi precum gradul de defocalizare sau comportamentul reflexiv al suprafețelor.
+ În plus,
+ utilizarea unor constrângeri fizice reduce spațiul soluțiilor posibile,
+ forțând rețeaua să învețe reprezentări compatibile cu realitatea fizică a capturii.
+\end_layout
+
+\begin_layout Standard
+Din acest motiv,
+ metodele care exploatează indici fizici alternativi redefinesc sursa de supervizare fără a încerca să îmbunătățească incremental cadrul auto-supervizat existent.
+ Prin corelarea adâncimii cu mecanismele fizice ale imaginii,
+ modelele oferă o perspectivă diferită asupra problemei și deschid posibilitatea unor sisteme de estimare puțin dependente de condițiile ideale asumate de modelele clasice.
+\end_layout
+
+\begin_layout Subsection
+Toward Practical Monocular Indoor Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wu2022practicalmonocularindoordepth"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Având în vedere limitările metodelor anterioare de a genera scene ample în spații interioare,
+ se propune un estimator de adâncime practic,
+ care învață din modelele predecesoare și produce un rezultat de acuratețe rezultată,
+ cu consum optim de resurse și viteză mare de procesare a datelor.
+ DistDepth 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wu2022practicalmonocularindoordepth"
+literal "false"
+
+\end_inset
+
+ învață caracteristicile mediului interior prin auto-supervizare,
+ reușind astfel să se detașeze de caracterisiticile generale ale spațiului:
+ elementele generale componente (cerul,
+ șoseaua,
+ linia perspectiva,
+ linia orizontului),
+ dar și distribuția celorlalte obiecte din jur (dispunerea acestora nu mai respectă un anumit tipar,
+ atât din perspectiva poziției,
+ cât și din perspectiva distanței).
+ Pentru o reprezentare structurată a adâncimii relative,
+ DistDepth utilizează estimatorul DPT 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ranftl2020robustmonoculardepthestimation,ranftl2021visiontransformersdenseprediction"
+literal "false"
+
+\end_inset
+
+ pentru a spori acuratețea rezultată din antrenarea auto-superivizată.
+ În același timp,
+ pentru a dezvolta domeniul estimării în spațiu interior,
+ autorii prezintă și setul de date UniSIN,
+ care are ca scop studiul diferențelor în antrenarea pe date simulate,
+ comparativ cu datele reale.
+\end_layout
+
+\begin_layout Standard
+Rezultatele practice confirmă performanța modelului.
+ Antrenarea este realizată pe Habitat simulator 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "savva2019habitatplatformembodiedai,szot2022habitat20traininghome"
+literal "false"
+
+\end_inset
+
+,
+ care inițializează preluarea imaginilor tridimensionale.
+ Totodată,
+ pentru crearea setului de date UniSIN se utilizează un sistem stereo de camere ce colectează secvențe de imagini din diferite spații interioare.
+ Pentru evaluare,
+ autorii au ales un apartament virtual atent realizat,
+ din care au captat 
+\begin_inset Formula $3500$
+\end_inset
+
+ de imagini,
+ care surprind obiecte de structuri,
+ particularități și poziții ale surselor de lumină diferite.
+ Din perspectiva metricilor standard (erorii medii,
+ erori pătratice),
+ modelul propus aduce corecții semnificative față de cele antrenate pe un cadru general,
+ oferind rezultate calitative pentru domeniul estimării adâncimii.
+ Prin urmare,
+ ținta a fost atinsă:
+ o arhitectură orientată pe spațiile interioare,
+ auto-antrenată pe simulări,
+ cu o generalitate semnificativă,
+ sensibilă la schimbările în timp real.
+\end_layout
+
+\begin_layout Subsection
+FS-Depth:
+ Focal-and-Scale Depth Estimation from a Single Image in Unseen Indoor Scene 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wei2023fsdepthfocalandscaledepthestimation"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Autorii articolului pornesc de la observația că dificultatea estimării monoculare nu este cauzată exclusiv de ambiguitatea de scară,
+ ci și de o ambiguitate suplimentară,
+ legată de distanța focală a camerei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wei2023fsdepthfocalandscaledepthestimation"
+literal "false"
+
+\end_inset
+
+.
+ În practică,
+ imaginile din mediul interior pot fi captate cu camere având configurații optice diferite și distanțe focale variabile,
+ iar această diversitate perturbă relația dintre proiecția 2D și structura 3D a scenei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zisserman2004multipleviewgeometry"
+literal "false"
+
+\end_inset
+
+.
+ Modelele existente,
+ antrenate de regulă pe seturi de date cu distanță focală fixă sau aproape constantă,
+ ajung astfel să supraînvețe aceste condiții și să eșueze atunci când sunt aplicate pe scene noi,
+ captate cu alte camere sau în contexte diferite 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "li2022monoindoortowardsbetterpracticeselfsupervised"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Pentru a rezolva această problemă,
+ autorii propun 
+\shape italic
+FS-Depth
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wei2023fsdepthfocalandscaledepthestimation"
+literal "false"
+
+\end_inset
+
+,
+ un model de estimare a adâncimii care integrează explicit atât informația de scară a scenei,
+ cât și informația de distanță focală,
+ într-un cadru unificat.
+ Abordarea se bazează pe separarea clară a rolurilor dintre estimarea adâncimii relative și estimarea adâncimii absolute.
+ Într-o primă etapă,
+ este utilizată o rețea de estimare a adâncimii relative,
+ pre-antrenată pe seturi de date multiple,
+ cu scări și semantici variate,
+ capabilă să surprindă structura geometrică a scenei într-o manieră independentă de variațiile de scară 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ranftl2020robustmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+.
+ Această rețea furnizează atât hărți de adâncime relativă,
+ cât și caracteristici intermediare multi-scară,
+ care descriu scenele la diferite niveluri de rezoluție.
+\end_layout
+
+\begin_layout Standard
+Noutatea modelului constă în modul de integrare a distanței focale în procesul de estimare.
+ Deoarece distanța focală este o valoare scalară care nu poate fi introdusă direct ca intrare într-o rețea CNN standard,
+ autorii propun un mecanism de codificare a acesteia sub forma unor caracteristici de distanță focală învățabile.
+ Aceste caracteristici sunt generate printr-o matrice de codificare și apoi eșantionate la mai multe rezoluții,
+ pentru a fi concatenate cu caracteristicile intermediare provenite din rețeaua de adâncime relativă 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wei2023fsdepthfocalandscaledepthestimation"
+literal "false"
+
+\end_inset
+
+.
+ Prin această fuziune multi-scară,
+ influența distanței focale este propagată în mod explicit în mai multe straturi ale rețelei,
+ prevenind disiparea treptată a informației optice pe măsură ce datele avansează în arhitectură.
+ Caracteristicile combinate sunt ulterior utilizate de o rețea de estimare a adâncimii absolute,
+ care produce valori metrice de adâncime coerente.
+\end_layout
+
+\begin_layout Standard
+Pe lângă contribuțiile arhitecturale,
+ articolul introduce și o tehnică nouă de augmentare a datelor,
+ menită să compenseze lipsa diversității distanțelor focale din seturile de date publice.
+ Această strategie se bazează pe proprietățile geometrice ale proiecției camerei și permite generarea de perechi corespunzătoare unor distanțe focale diferite,
+ fără a altera consistența geometrică a scenei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wei2023fsdepthfocalandscaledepthestimation,zisserman2004multipleviewgeometry"
+literal "false"
+
+\end_inset
+
+.
+ Astfel,
+ modelul este expus,
+ în timpul antrenării,
+ la o varietate mult mai largă de configurații optice,
+ ceea ce îi îmbunătățește semnificativ capacitatea de generalizare.
+\end_layout
+
+\begin_layout Standard
+Evaluarea experimentală,
+ realizată pe mai multe seturi de date din mediul interior,
+ arată că 
+\shape italic
+FS-Depth
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wei2023fsdepthfocalandscaledepthestimation"
+literal "false"
+
+\end_inset
+
+ obține îmbunătățiri consistente față de metodele de referință,
+ atât din punct de vedere al acurateții adâncimii absolute,
+ cât și al calității reconstrucției 3D,
+ reducând deformările geometrice frecvent întâlnite la alte modele.
+ În același timp,
+ performanța pe setul de date de antrenare este menținută,
+ demonstrând că integrarea distanței focale nu compromite acuratețea în scenarii cunoscute.
+\end_layout
+
+\begin_layout Subsection
+Fully Self-Supervised Depth Estimation from Defocus Clue 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "si2023fullyselfsuperviseddepthestimation"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Articolul propune o abordare complet auto-supervizată pentru estimarea adâncimii folosind exclusiv indicii de defocalizare dintr-un set redus de imagini captate la distanțe diferite de focalizare,
+ numite 
+\shape italic
+focal stacks
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "si2023fullyselfsuperviseddepthestimation"
+literal "false"
+
+\end_inset
+
+.
+ Lucrarea pornește de la o problemă semnificativă a metodelor existente de tip 
+\shape italic
+depth-from-defocus
+\shape default
+,
+ și anume dependența acestora de informații greu de obținut în scenarii reale,
+ precum hărțile de adâncime ground truth sau imaginile 
+\shape italic
+all-in-focus
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "maximov2020defocusnet"
+literal "false"
+
+\end_inset
+
+.
+ Deși defocalizarea este un indiciu fizic direct legat de geometria scenei și de parametrii camerei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "curlessL1996avolumetricmethodforbuilding"
+literal "false"
+
+\end_inset
+
+,
+ majoritatea lucrărilor anterioare fie folosesc supervizare explicită,
+ fie presupun existența unei imagini ideal focalizate,
+ care în practică nu poate fi capturată fidel cu sisteme optice reale.
+ Această discrepanță între ipotezele teoretice și condițiile din lumea reală limitează aplicabilitatea metodelor DFD în contexte practice.
+\end_layout
+
+\begin_layout Standard
+Pentru a elimina aceste limitări,
+ autorii introduc un cadru complet auto-supervizat care utilizează doar stive focale,
+ fără acces la adâncime sau imagini cu focus complet în timpul antrenării.
+ Soluția propusă se bazează pe combinarea unei rețele neuronale cu un model optic realist,
+ inspirat din ecuația lentilei subțiri 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "curlessL1996avolumetricmethodforbuilding"
+literal "false"
+
+\end_inset
+
+.
+ Componenta neuronală,
+ denumită
+\shape italic
+ DAIF-Net
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "si2023fullyselfsuperviseddepthestimation"
+literal "false"
+
+\end_inset
+
+,
+ este concepută pentru a estima simultan două ieșiri:
+ harta de adâncime și imaginea latentă,
+ pornind de la o stivă focală cu un număr arbitrar de imagini.
+ Această rețea este construită pe o arhitectură de tip codificator-decodificator,
+ iar fuziunea informației din mai multe planuri de focalizare se realizează prin mecanisme de eșantionare globală care evidențiază regiunile cele mai clare din fiecare imagine.
+\end_layout
+
+\begin_layout Standard
+Inovația metodei constă în modul de supervizare.
+ În loc să compare direct predicțiile cu valori de referință inexistente,
+ cadrul utilizează un model optic fizic pentru a reconstrui focal stack-ul inițial din adâncimea și imaginea all-in-focus estimate.
+ Acest model optic simulează procesul de formare a defocalizării prin calculul cercului de confuzie și prin 
+\shape italic
+convoluții PSF dependente de adâncime
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "curlessL1996avolumetricmethodforbuilding"
+literal "false"
+
+\end_inset
+
+,
+ permițând generarea unor imagini defocalizate consistente fizic.
+ Ideea centrală este că o reconstrucție fidelă a focal stack-ului este posibilă doar dacă adâncimea și imaginea în focus estimate sunt corecte,
+ ceea ce transformă problema într-una bine constrânsă din punct de vedere fizic.
+ Pentru a stabiliza antrenarea,
+ autorii introduc tehnici suplimentare precum regularizarea clarității imaginilor all-in-focus,
+ obținută prin măsuri de tip Laplacian,
+ și o regularizare de netezire a adâncimii ghidată de muchii,
+ care aliniază discontinuitățile de adâncime cu structura imaginii.
+\end_layout
+
+\begin_layout Standard
+Metoda nu introduce metrici noi de evaluare,
+ dar utilizează indicatorii standard pentru a demonstra eficiența abordării.
+ Rezultatele experimentale pe seturi de date precum DefocusNet 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "maximov2020defocusnet"
+literal "false"
+
+\end_inset
+
+,
+ sau nyuV2 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "silberman2012indoorsegmentation"
+literal "false"
+
+\end_inset
+
+ arată că metoda propusă este comparabilă,
+ iar în anumite scenarii apropiată,
+ chiar competitivă cu metodele supervizate sau parțial supervizate de tip state of the art,
+ în ciuda faptului că nu folosește nicio formă de ground truth.
+ În special,
+ performanța este solidă pentru obiecte apropiate și regiuni cu textură variată,
+ unde indiciile de defocalizare sunt mai pronunțate.
 \end_layout
 
 \begin_layout Chapter
@@ -2872,398 +4581,17 @@ Lorem ipsum dolor sit amet,
  sunt in culpa qui officia deserunt mollit anim id est laborum.
 \end_layout
 
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "1()"
-key "K. He et. al."
-literal "true"
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "references"
+options "bibtotoc,ieeetr"
+encoding "default"
 
 \end_inset
 
- K.
- He,
- X.
- Zhang,
- S.
- Ren,
- J.
- Sun.
- Deep Residual Learning for Image Recognition.
- 
-\emph on
-CVPR
-\emph default
-,
- 2016.
- (așa se citează o conferință)
-\end_layout
 
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "2()"
-key "C.M. Bishop"
-literal "true"
-
-\end_inset
-
- C.M.
- Bishop.
- 
-\emph on
-Neural Networks for Pattern Recognition
-\emph default
-.
- Oxford University Press,
- 1995.
- (așa se citează o carte)
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "3()"
-key "key-03"
-literal "true"
-
-\end_inset
-
- Y.
- Bengio,
- P.
- Simard,
- P.
- Frasconi.
- Learning long-term dependencies with gradient descent is difficult.
- 
-\emph on
-IEEE Transactions on Neural Networks
-\emph default
-,
- 5(2):157–166,
- 1994.
- (așa se citează un jurnal)
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "4()"
-key "O. Ronneberger et al."
-literal "true"
-
-\end_inset
-
- O.
- Ronneberger,
- P.
- Fischer,
- T.
- Brox.
- U-Net:
- Convolutional networks for biomedical image segmentation.
- MICCAI,
- 2015.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "5()"
-key "D. Eigen et al."
-literal "true"
-
-\end_inset
-
- D.
- Eigen,
- R.
- Fergus.
- Predicting depth,
- surface normals and semantic labels with common multi-scale convolutional architecture.
- ICCV,
- 2015.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "6()"
-key "D. P. Kingma et al."
-literal "true"
-
-\end_inset
-
- D.
- P.
- Kingma,
- J.
- Ba.
- Adam:
- A method fosr stochastic optimization.
- arXiv,
- 2016.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "7()"
-key "A. Dosovitskiy et al."
-literal "true"
-
-\end_inset
-
- A.
- Dosovitskiy,
- L.
- Beyer,
- A.
- Kolesnikov,
- D.
- Weissenborn,
- X.
- Zhai,
- T.
- Unterthiner,
- M.
- Dehghani,
- M.
- Minderer,
- G.
- Heigold,
- S.
- Gelly,
- J.
- Uszkoreit,
- N.
- Houlsby.
- An image is worth 
-\begin_inset Formula $16\times16$
-\end_inset
-
- words:
- Transformers for image recognition at scale.
- ICLR,
- 2021.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "8()"
-key "R. Ranftl et al."
-literal "true"
-
-\end_inset
-
- R.
- Ranftl,
- K.
- Lasinger,
- D.
- Hafner,
- K.
- Schindler,
- V.
- Koltun.
- Towards robust monocular depth estimation:
- Mixing datasets for zero-shot cross-dataset transfer.
- IEEE
-\shape italic
- Transactions on Pattern Analysis and Machine Intelligence
-\shape default
-,
- 2020.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "9()"
-key "H. Touvron et al."
-literal "true"
-
-\end_inset
-
- H.
- Touvron,
- M.
- Cord,
- M.
- Douze,
- F.
- Massa,
- A.
- Sablayrolles,
- H.
- Jégou.
- Training data-efficient image transformers & distillation through attention.
- PMLR International Conference on Machine Learning,
- 10347–10357,
- 2021.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "10()"
-key "A. Vaswani et al."
-literal "true"
-
-\end_inset
-
- A.
- Vaswani,
- N.
- Shazeer,
- N.
- Parmar,
- J.
- Uszkoreit,
- L.
- Jones,
- A.
- N.
- Gomez,
- Ł.
- Kaiser,
- I.
- Polosukhin.
- Attention is all you need.
- 
-\shape italic
-Advances in neural information processing systems
-\shape default
-,
- 5998–6008,
- 2017.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "11()"
-key "G. Lin et al."
-literal "true"
-
-\end_inset
-
- G.
- Lin,
- A.
- Milan,
- C.
- Shen,
- I.
- Reid.
- RefineNet:
- Multi-path refinement networks for high-resolution semantic segmentation.
- 
-\shape italic
-Proceedings of the IEE/CVF Conference on Computer Vision and Pattern Recognition
-\shape default
-,
- 11817–11825,
- 2017.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "12()"
-key "R. Rantfl et al. b"
-literal "true"
-
-\end_inset
-
- R.
- Rantfl,
- A.
- Bochkovskiy,
- V.
- Koltun.
- Vision transformers for dense prediction.
- ICCV,
- 2021.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "13()"
-key "S. Manolis"
-literal "true"
-
-\end_inset
-
- S.
- Manolis,
- A.
- Kadian,
- Oleksandr Maksymets,
- Yili Zhao,
- Erik Wijmans,
- Bhavana Jain,
- Julian Straub,
- Jia Liu,
- Vladlen Koltun,
- Jitendra Malik,
- et al.
- Habitat:
- A platform for embodied ai research.
- In CVPR,
- 2019.
- 
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "14()"
-key "A. Szot"
-literal "true"
-
-\end_inset
-
- A.
- Szot,
- A.
- Clegg,
- E.
- Undersander,
- E.
- Wijmans,
- Y.
- Zhao,
- J.
- Turner,
- N.
- Maestre,
- M.
- Mukadam,
- D.
- Chaplot,
- O.
- Maksymets,
- et al.
- Habitat 2.0:
- Training home assistants to rearrange their habitat.
- NeurIPS,
- 2021.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-label "15()"
-key "key-15"
-literal "true"
-
-\end_inset
-
-aa
 \end_layout
 
 \begin_layout Standard
