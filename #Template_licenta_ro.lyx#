@@ -4031,78 +4031,14 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-placement h
-alignment center
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename src/img/vggt.png
-	width 100text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Arhitectura generală 
-\shape italic
-VGGT
-\shape default
-.
- 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "wang2025vggtvisualgeometrygrounded"
-literal "false"
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:vggt"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Un aspect relevant este faptul că VGGT produce predicții supracomplete.
  De exemplu,
  harta de puncte 3D,
  harta de adâncime și parametrii camerei nu sunt complet independente:
  în principiu,
- unele pot fi deduse din celelalte prin relații geometrice 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "wang2025vggtvisualgeometrygrounded"
-literal "false"
-
-\end_inset
-
-.
+ unele pot fi deduse din celelalte prin relații geometrice [1].
  Totuși,
- autorii arată că antrenarea modelului pentru a prezice simultan aceste ieșiri îmbunătățește performanța generală.
+ autorii arată că antrenarea modelului pentru a prezice simultan aceste ieșiri îmbunătățește performanța generală [1].
  Această observație sugerează că sarcinile geometrice se pot sprijini reciproc:
  învățarea adâncimii poate ajuta estimarea camerei,
  estimarea camerei poate ajuta reconstrucția punctelor 3D,
@@ -4111,42 +4047,10 @@ literal "false"
 
 \begin_layout Standard
 Din punctul de vedere al optimizării,
- modelul este antrenat cu 
-\shape italic
-AdamW
-\shape default
- 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "loshchilov2019decoupledweightdecayregularization"
-literal "false"
-
-\end_inset
-
-,
- pentru de 
-\begin_inset Formula $160.000$
-\end_inset
-
- de iterații,
- folosind un scheduler cosinusoidal al ratei de învățare și augmentări vizuale precum c
-\shape italic
-olor jittering,
- Gaussian blur
-\shape default
- și 
-\shape italic
-grayscale augmentation
-\shape default
- 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "wang2025vggtvisualgeometrygrounded"
-literal "false"
-
-\end_inset
-
-.
+ modelul este antrenat cu AdamW,
+ timp de 160.000 de iterații,
+ folosind un scheduler cosinusoidal al ratei de învățare și augmentări vizuale precum color jittering,
+ Gaussian blur și grayscale augmentation [1].
 \end_layout
 
 \begin_layout Section
@@ -6552,112 +6456,8 @@ literal "false"
 Metoda propusă
 \end_layout
 
-\begin_layout Section
-Explorări experimentale și variante arhitecturale testate
-\end_layout
-
-\begin_layout Standard
-Dezvoltarea soluției propuse nu a pornit direct de la o arhitectură finală,
- ci a fost rezultatul unui proces experimental amplu,
- iterativ.
- Înainte de stabilirea configurației finale,
- au fost realizate peste 100 de teste,
- în care au fost analizate mai multe variante arhitecturale,
- strategii de antrenare și modificări ale componentelor de bază ale sistemului.
- Aceste experimente au avut rolul de a identifica limitele modelelor existente și de a observa care direcții pot aduce îmbunătățiri reale în estimarea monoculară auto-supervizată a adâncimii.
-\end_layout
-
-\begin_layout Standard
-Punctul de plecare a fost arhitectura de bază MonoDepth2,
- în configurația sa cea mai redusă,
- aleasă datorită simplității,
- stabilității și costului computațional mai mic.
- Această variantă a fost folosită ca model de referință,
- deoarece permite compararea directă a modificărilor introduse ulterior.
- Prin raportarea fiecărei încercări la această arhitectură de bază,
- a fost posibilă observarea efectului real al fiecărei componente adăugate sau înlocuite.
-\end_layout
-
-\begin_layout Standard
-Prima direcție experimentală a constat în integrarea unor mecanisme de tip HyenaPixel,
- cu scopul de a îmbunătăți capacitatea modelului de a captura dependențe spațiale mai largi.
- Motivația acestei alegeri a fost legată de limitarea arhitecturilor convoluționale clasice,
- care tind să extragă eficient informații locale,
- dar pot avea dificultăți în modelarea contextului global al scenei.
- Cu toate acestea,
- rezultatele obținute nu au fost suficient de stabile sau de convingătoare pentru a justifica păstrarea acestei variante în configurația finală.
-\end_layout
-
-\begin_layout Standard
-Ulterior,
- a fost analizată posibilitatea îmbunătățirii rețelei de estimare a poziției camerei.
- În acest sens,
- au fost realizate teste în care VGGT a fost introdus ca rețea de pose,
- pornind de la ipoteza că o estimare mai precisă a mișcării relative dintre cadre ar putea conduce la o supervizare fotometrică mai corectă și,
- implicit,
- la hărți de adâncime mai bune.
- Deși direcția a fost relevantă din punct de vedere conceptual,
- integrarea sa nu a produs îmbunătățiri suficient de consistente în raport cu complexitatea adăugată.
-\end_layout
-
-\begin_layout Standard
-O altă direcție investigată a fost introducerea unor componente bazate pe polinoame Chebyshev,
- în încercarea de a obține o reprezentare mai flexibilă și mai stabilă a anumitor transformări interne ale modelului.
- Această variantă a fost motivată de capacitatea polinoamelor Chebyshev de a aproxima funcții într-un mod eficient și controlat.
- În practică însă,
- rezultatele nu au indicat un avantaj clar față de configurația de bază,
- iar integrarea a introdus dificultăți suplimentare de stabilizare.
-\end_layout
-
-\begin_layout Standard
-De asemenea,
- au fost testate variante bazate pe DINOv2,
- având în vedere calitatea reprezentărilor vizuale extrase de acest tip de model preantrenat.
- Scopul a fost de a verifica dacă folosirea unor caracteristici vizuale mai bogate poate îmbunătăți estimarea adâncimii,
- în special în zone cu textură slabă,
- contururi fine sau obiecte aflate la distanță.
- Totuși,
- utilizarea acestor reprezentări a ridicat probleme legate de integrarea cu pierderea fotometrică auto-supervizată și de echilibrul dintre detaliile locale și contextul global.
-\end_layout
-
-\begin_layout Standard
-Pe lângă aceste direcții principale,
- au fost explorate și alte variante arhitecturale.
- Au fost testate configurații cu encoder ResNet mai adânc,
- în încercarea de a obține caracteristici vizuale mai expresive.
- De asemenea,
- au fost evaluate variante cu EfficientNet ca backbone,
- pentru a analiza raportul dintre performanță și eficiență computațională.
- O altă direcție a constat în integrarea unor blocuri de atenție ușoară în decoder,
- cu scopul de a rafina hărțile de adâncime în zonele cu margini fine.
- Au fost analizate și variante cu mecanisme de tip ConvNeXt,
- pentru a verifica dacă o arhitectură convoluțională modernizată poate oferi un echilibru mai bun între local și global.
- În plus,
- au fost realizate teste cu mecanisme de rafinare multi-scară,
- pentru a îmbunătăți coerența predicțiilor între nivelurile diferite ale decoderului.
-\end_layout
-
-\begin_layout Standard
-Rezultatele acestor teste nu au condus întotdeauna la îmbunătățiri directe.
- În multe cazuri,
- modificările au crescut complexitatea modelului fără a produce o reducere semnificativă a erorilor sau au afectat stabilitatea procesului de antrenare.
- Totuși,
- aceste rezultate negative au avut o valoare importantă în procesul de cercetare,
- deoarece au permis eliminarea unor direcții mai puțin eficiente și au contribuit la înțelegerea mai clară a constrângerilor specifice estimării monoculare auto-supervizate.
-\end_layout
-
-\begin_layout Standard
-Prin urmare,
- contribuția experimentală a lucrării nu constă doar în varianta finală a modelului,
- ci și în procesul sistematic de explorare a mai multor soluții posibile.
- Cele peste 100 de teste realizate au evidențiat faptul că îmbunătățirea estimării adâncimii nu depinde doar de adăugarea unor componente arhitecturale mai complexe,
- ci de integrarea lor coerentă în cadrul geometric și fotometric al metodei auto-supervizate.
- Această observație a ghidat alegerea configurației finale și a permis formularea unei soluții mai echilibrate din punct de vedere al performanței,
- stabilității și costului computațional.
-\end_layout
-
 \begin_layout Chapter
-Concluzii
+cluzii
 \begin_inset CommandInset label
 LatexCommand label
 name "chap:Concluzii"

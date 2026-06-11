@@ -14,8 +14,8 @@
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
 %\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}{}}
 \fancyhead[LE,LO]{\scriptsize Universitatea Politehnica Timi\textcommabelow{s}oara 
-\\ Calculatoare \textcommabelow{s}i Tehnologia Informa\textcommabelow{t}iei, 2025 
-\\ Prenume1-Prenume2 NUME
+\\ Calculatoare \textcommabelow{s}i Tehnologia Informa\textcommabelow{t}iei, 2026 
+\\ Indi BO\textcommabelow{T}OC
 \\ Titlu}
 \fancyhead[RE,RO]{\includegraphics[scale=0.25]{logo_UPT.jpg}}
 
@@ -293,7 +293,7 @@ TOT TITLU
 \series bold
 \size large
 Candidat:
- Prenume1-Prenume2 NUME
+ Indi BOȚOC
 \begin_inset Newline newline
 \end_inset
 
@@ -591,7 +591,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Logo UPT.
+Logo UPT
+\begin_inset Newline newline
+\end_inset
+
+aaa.
  
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -1549,45 +1553,6 @@ Deși aceste abordări au demonstrat fezabilitatea estimării adâncimii fără 
  aspecte care au motivat dezvoltarea acestui vast domeniu de cercetare.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename src/img/monodepth-schema_suprapusa.png
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Digging Into Self-Supervised Monocular Depth Estimation 
 \begin_inset CommandInset citation
@@ -1692,6 +1657,58 @@ literal "false"
  la antrenarea monoculară au fost folosite secvențe de trei cadre,
  în timp ce rețeaua pozițonală este o adaptare a ResNet18,
  pentru a accepta perechi de imagini (deci șase canale) la intrare și a prezice o singură poziție relativă cu șase grade de libertate.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/monodepth-schema_suprapusa.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura rețelei de adâncime (a) și de poziție (b) a MonoDepth.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:godard2019digging"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1843,6 +1860,58 @@ literal "false"
  unde potrivirea tradițională devine dificilă.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/depthformer-schema.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Integrarea arhitecturilor de tip Transformer în DepthFormer.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "guizilini2022multiframeselfsuperviseddepthtransformers"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:guizillini2022depthformer"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Self-Supervised Monocular Depth Estimation by Direction-aware Cumulative Convolution Network 
 \begin_inset CommandInset citation
@@ -1911,7 +1980,7 @@ literal "false"
 \end_inset
 
 ,
- care introduce două contribuții metodologice majore la nivelul reprezentării caracteristicilor.
+ care introduce două contribuții majore la nivelul reprezentării caracteristicilor.
  Prima este legată de modulul 
 \shape italic
 direction-aware
@@ -2131,7 +2200,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Din punct de vedere al evaluării,
+În ceea ce privește evaluarea,
  lucrarea utilizează aceleași metrici consacrate din literatura de specialitate,
  precum erorile relative,
  RMSE și indicatorii de acuratețe pe praguri 
@@ -2309,6 +2378,58 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/monodiffusion.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura generală a MonoDiffusion.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "shao2023monodiffusionselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:monodiffusion"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Din punct de vedere arhitectural,
  metoda păstrează un cadru de tip 
 \shape italic
@@ -2334,6 +2455,699 @@ literal "false"
  cât și calitativ,
  producând hărți de adâncime mai detaliate,
  cu contururi bine definite și structuri 3D coerente.
+\end_layout
+
+\begin_layout Subsection
+MambaDepth:
+ Enhancing Long-range Dependency for Self-Supervised Fine-Structured Monocular Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grigore2024mambadepthenhancinglongrangedependency"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+În cazul arhitecturii 
+\shape italic
+MambaDepth
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grigore2024mambadepthenhancinglongrangedependency"
+literal "false"
+
+\end_inset
+
+,
+ autorii încearcă să îmbunătățească modul în care modelul înțelege relațiile spațiale dintre zone îndepărtate ale imaginii.
+ Punctul de plecare al studiului este reprezentat de rețelele convoluționale,
+ care sunt eficiente în extragerea detaliilor locale,
+ însă pot avea dificultăți în modelarea relațiilor globale din imagine.
+ Totodată,
+ modelele bazate pe atenție și arhitecturi de tip Transformer pot surprinde mai bine contextul global,
+ dar acest lucru vine de obicei cu un cost computațional mai mare,
+ în special pentru imagini de rezoluții ridicate 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "vaswani2023attentionneed"
+literal "false"
+
+\end_inset
+
+.
+ 
+\shape italic
+MambaDepth
+\shape default
+ încearcă să găsească un echilibru între aceste două direcții,
+ folosind blocuri Mamba,
+ care provin din categoria modelelor selective de stare spațială 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gu2024mambalineartimesequencemodeling"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Un aspect important al lucrării este introducerea modelelor de stare spațială în estimarea adâncimii monoculare auto-supervizate.
+ Aceste modele au la bază ideea că o intrare poate fi transformată într-o ieșire prin intermediul unei stări latente.
+ În forma clasică,
+ relația poate fi descrisă prin ecuația de stare 
+\begin_inset Formula $x'(t)=Ax(t)+Bu(t)$
+\end_inset
+
+ și ecuația de ieșire 
+\begin_inset Formula $y(t)=Cx(t)+Du(t)$
+\end_inset
+
+.
+ În cazul Mamba,
+ aceste componente devin selective,
+ adică se pot adapta în funcție de datele de intrare 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gu2024mambalineartimesequencemodeling"
+literal "false"
+
+\end_inset
+
+.
+ Această proprietate este utilă în cazul imaginilor,
+ unde nu toate regiunile au aceeași relevanță pentru estimarea adâncimii.
+\end_layout
+
+\begin_layout Standard
+Din punctul de vedere al antrenării,
+ MambaDepth se bazează pe principiile folosite și în metode precum MonoDepth2 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Deoarece nu se folosesc etichete reale de adâncime,
+ modelul învață prin reconstrucția unor cadre video adiacente.
+ Concret,
+ rețeaua estimează adâncimea scenei și mișcarea camerei,
+ apoi încearcă să reproiecteze un cadru în altul.
+ Diferența dintre imaginea reconstruită și imaginea reală devine semnalul de învățare.
+ Această strategie este eficientă,
+ dar și limitată,
+ deoarece presupune că schimbările dintre cadre pot fi explicate în mare parte prin mișcarea camerei și prin structura 3D a scenei.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/mambadepth.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura generală a 
+\shape italic
+MambaDepth
+\shape default
+.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grigore2024mambadepthenhancinglongrangedependency"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mambadepth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Arhitectura MambaDepth este construită sub forma unei structuri de tip encoder-decoder,
+ asemănătoare cu U-Net 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grigore2024mambadepthenhancinglongrangedependency,ronneberger2015unetconvolutionalnetworksbiomedical"
+literal "false"
+
+\end_inset
+
+.
+ Imaginea este împărțită inițial în zone,
+ iar apoi este proiectată într-un spațiu de caracteristici.
+ Encoderul reduce treptat rezoluția spațială și crește numărul de canale,
+ în timp ce decoderul reconstruiește harta de adâncime la o rezoluție mai mare.
+ Conexiunile de salt contribuie la păstrarea detaliilor fine,
+ ceea ce este important în zone precum marginile obiectelor,
+ contururile clădirilor,
+ mașinile sau alte structuri înguste din imagine.
+\end_layout
+
+\begin_layout Standard
+Blocul principal al arhitecturii este modulul MD,
+ care combină prelucrări locale cu o scanare selectivă bidimensională 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grigore2024mambadepthenhancinglongrangedependency"
+literal "false"
+
+\end_inset
+
+.
+ O ramură procesează datele prin transformări liniare și activare SiLU 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "elfwing2017sigmoidweightedlinearunitsneural"
+literal "false"
+
+\end_inset
+
+,
+ iar cealaltă folosește convoluții separabile pe adâncime și scanări pe mai multe direcții.
+ Această prelucrare multidirecțională ajută modelul să înțeleagă mai bine relațiile spațiale din imagine.
+ Ideea este potrivită pentru estimarea adâncimii,
+ deoarece distanța unui obiect nu depinde doar de aspectul său local,
+ ci și de poziția acestuia în raport cu drumul,
+ clădirile,
+ linia orizontului sau alte elemente din scenă.
+ Modelul folosește și auto-mascare pentru a reduce influența zonelor problematice,
+ cum ar fi obiectele care se mișcă independent față de cameră,
+ funcția de cost combinând eroarea fotometrică și indicele SSIM 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nilsson2020understandingssim"
+literal "false"
+
+\end_inset
+
+.
+ În plus,
+ este folosită o regularizare de netezire ghidată de imagine,
+ pentru ca harta de adâncime să fie mai stabilă în regiunile omogene.
+\end_layout
+
+\begin_layout Standard
+Rezultatele experimentale raportate pe setul de date KITTI arată că MambaDepth obține performanțe competitive în comparație cu alte metode recente 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grigore2024mambadepthenhancinglongrangedependency"
+literal "false"
+
+\end_inset
+
+.
+ Autorii folosesc split-ul Eigen 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "eigen2014depthmappredictionsingle"
+literal "false"
+
+\end_inset
+
+,
+ iar la rezoluția de 
+\begin_inset Formula $640\times192$
+\end_inset
+
+,
+ modelul obține o eroare 
+\begin_inset Formula $AbsRel$
+\end_inset
+
+ de 
+\begin_inset Formula $0.097$
+\end_inset
+
+,
+ ceea ce indică o estimare bună a adâncimii 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grigore2024mambadepthenhancinglongrangedependency"
+literal "false"
+
+\end_inset
+
+.
+ De asemenea,
+ autorii arată că modelul produce hărți de adâncime cu detalii mai clare,
+ în special în zonele cu structuri fine.
+\end_layout
+
+\begin_layout Subsection
+HyenaPixel:
+ Global Image Context with Convolutions 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+HyenaPixel propune o direcție arhitecturală relevantă pentru problemele în care este necesară modelarea contextului global al imaginii,
+ dar fără costul ridicat asociat mecanismelor clasice de atenție 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Deși articolul nu este dedicat exclusiv estimării monoculare auto-supervizate a adâncimii,
+ ideile sale sunt importante pentru acest domeniu,
+ deoarece una dintre limitele modelelor convoluționale folosite în estimarea adâncimii este dificultatea de a corela regiuni îndepărtate ale imaginii.
+ Într-o scenă rutieră,
+ de exemplu,
+ adâncimea unui obiect nu este determinată doar de textura sau conturul său local,
+ ci și de poziția sa față de drum,
+ orizont,
+ clădiri,
+ alte vehicule și structura generală a scenei.
+\end_layout
+
+\begin_layout Standard
+Un câmp receptiv efectiv mai mare poate îmbunătăți performanța în sarcinile de vedere artificială 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Rețelele convoluționale clasice sunt foarte eficiente în extragerea informației locale,
+ însă sunt limitate de dimensiunea nucleelor de convoluție și de profunzimea necesară pentru ca informația să circule între regiuni îndepărtate ale imaginii.
+ Pe de altă parte,
+ mecanismele de atenție oferă în mod natural acces la context global,
+ dar au o complexitate mare,
+ comparativ cu numărul de pixeli sau tokenii procesați 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel,poli2023hyenahierarchylargerconvolutional"
+literal "false"
+
+\end_inset
+
+.
+ Această problemă devine importantă mai ales în sarcinile dense,
+ unde imaginea trebuie procesată la rezoluție relativ mare,
+ iar detaliile spațiale nu pot fi comprimate excesiv fără pierderi vizibile.
+\end_layout
+
+\begin_layout Standard
+HyenaPixel pornește de la operatorul 
+\shape italic
+Hyena
+\shape default
+,
+ propus inițial pentru modelarea secvențelor lungi în limbaj natural 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "poli2023hyenahierarchylargerconvolutional"
+literal "false"
+
+\end_inset
+
+.
+ Hyena a fost introdus ca o alternativă sub-cuadratică la atenție,
+ combinând convoluții lungi parametrizate implicit cu mecanisme de tip gating controlate de date 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "poli2023hyenahierarchylargerconvolutional"
+literal "false"
+
+\end_inset
+
+.
+ Ideea centrală este că dependențele pe distanțe mari pot fi modelate eficient fără a calcula explicit atenția între toate perechile de tokeni.
+ În HyenaPixel,
+ această idee este adaptată pentru imagini,
+ ceea ce presupune trecerea de la secvențe cauzale unidimensionale la date bidimensionale și bidirecționale 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Contribuția principală a lucrării constă în extinderea operatorului Hyena către spațiul vizual bidimensional.
+ Autorii propun două direcții:
+ o variantă bidirecțională a operatorului Hyena și o variantă specifică imaginilor,
+ numită HyenaPixel 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Aceasta din urmă folosește convoluții cu nuclee foarte mari,
+ scalate chiar dincolo de dimensiunea hărții de caracteristici,
+ ajungând până la 
+\begin_inset Formula $191\times191\text{{px}}$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Scopul nu este doar creșterea artificială a dimensiunii filtrului,
+ ci maximizarea câmpului receptiv efectiv,
+ astfel încât modelul să poată integra informații din zone largi ale imaginii fără să recurgă la costul atenției dense.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere arhitectural,
+ HyenaPixel este integrat în cadrul MetaFormer,
+ o structură generală în care diferite mecanisme de amestecare a tokenilor pot fi înlocuite și evaluate comparabil 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Această alegere este importantă deoarece permite analizarea contribuției operatorului HyenaPixel fără ca rezultatele să fie dependente exclusiv de o arhitectură particulară.
+ Practic,
+ autorii investighează dacă un mecanism bazat pe convoluții lungi poate îndeplini o parte din rolul pe care îl are atenția în arhitecturile vizuale moderne.
+\end_layout
+
+\begin_layout Standard
+Un aspect important este diferența dintre convoluțiile clasice și mecanismul propus.
+ Într-o convoluție obișnuită,
+ fiecare pixel sau element al hărții de caracteristici este actualizat folosind o vecinătate locală fixă.
+ Chiar dacă se folosesc mai multe straturi,
+ informația globală ajunge să fie integrată treptat,
+ nu direct.
+ În HyenaPixel,
+ folosirea unor filtre foarte mari permite modelului să acceseze o zonă mult mai extinsă a imaginii într-un mod mai eficient 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Acest lucru este relevant pentru estimarea adâncimii,
+ deoarece relațiile de scară,
+ perspectivă și poziționare sunt adesea distribuite pe întreaga scenă.
+\end_layout
+
+\begin_layout Standard
+Rezultatele raportate de autori arată că HyenaPixel și varianta bidirecțională Hyena obțin performanțe competitive pe ImageNet-1k,
+ fără date suplimentare de antrenare 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Pentru estimarea monoculară auto-supervizată a adâncimii,
+ relevanța HyenaPixel trebuie înțeleasă mai ales la nivel de ipoteză arhitecturală.
+ Modele precum MonoDepth2 au demonstrat că o arhitectură de tip codificator-decodificator,
+ antrenată prin reconstrucție fotometrică,
+ poate învăța hărți de adâncime fără etichete directe 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Totuși,
+ aceste modele depind puternic de calitatea caracteristicilor extrase de encoder.
+ Dacă encoderul surprinde mai ales detalii locale,
+ modelul poate avea dificultăți în zone în care estimarea adâncimii cere context global:
+ suprafețe uniforme,
+ drumuri lungi,
+ obiecte îndepărtate,
+ margini slab definite sau regiuni în care textura nu oferă indicii clare.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/hyenapixel.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Operatorul HyenaPixel (
+\begin_inset Formula $H_{px}$
+\end_inset
+
+) integrat în cadrul de lucru MetaFormer.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel,poli2023hyenahierarchylargerconvolutional"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:hyenapixel"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+În acest sens,
+ integrarea unui mecanism de tip HyenaPixel într-un cadru inspirat de MonoDepth2 poate fi justificată prin nevoia de a extinde capacitatea encoderului de a modela relații spațiale pe distanțe mari.
+ În estimarea adâncimii,
+ contextul global poate ajuta modelul să înțeleagă mai bine organizarea scenei.
+ De exemplu,
+ poziția unui autoturism în raport cu linia drumului și cu alte obiecte poate oferi indicii importante despre distanța sa.
+ La fel,
+ continuitatea suprafeței drumului,
+ dispunerea clădirilor sau poziția orizontului pot contribui la o estimare mai coerentă a adâncimii.
+\end_layout
+
+\begin_layout Standard
+O posibilă dificultate este legată de echilibrul dintre contextul global și detaliile locale.
+ Pentru o hartă de adâncime de calitate,
+ modelul trebuie să producă predicții coerente la nivel global,
+ dar și să păstreze contururi precise la nivel local.
+ Dacă informația globală domină prea mult,
+ există riscul ca marginile obiectelor să devină mai neclare sau ca predicțiile să fie excesiv netezite.
+ Pe de altă parte,
+ dacă modelul rămâne prea local,
+ pot apărea erori în regiunile slab texturate sau în zonele unde indicii de perspectivă sunt distribuiți pe suprafețe mari.
+ Din acest motiv,
+ integrarea HyenaPixel trebuie analizată atent în raport cu poziția sa în arhitectură:
+ în encoder,
+ în decoder,
+ în conexiunile de tip skip sau ca modul auxiliar de rafinare.
+\end_layout
+
+\begin_layout Subsection
+Self-Supervised Monocular Depth Estimation Using Hybrid CNN-VMamba Architecture 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhao2025selfsupervisedmonocularcnnvmamba"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Modelul propune o arhitectură hibridă pentru estimarea monoculară a adâncimii,
+ combinând rețelele convoluționale cu blocuri de tip VMamba.
+ Convoluțiile sunt potrivite pentru extragerea detaliilor locale,
+ cum ar fi marginile,
+ texturile și contururile obiectelor,
+ în timp ce blocurile VMamba 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "liu2024vmambavisualstatespace"
+literal "false"
+
+\end_inset
+
+ pot ajuta la modelarea relațiilor spațiale mai largi din imagine.
+ Această direcție este importantă deoarece estimarea adâncimii dintr-o singură imagine nu depinde doar de detalii izolate.
+\end_layout
+
+\begin_layout Standard
+Pentru ca modelul să estimeze corect distanțele,
+ el trebuie să înțeleagă și contextul general al scenei:
+ poziția obiectelor,
+ perspectiva,
+ structura drumului sau a camerei,
+ dar și relațiile dintre elementele apropiate și cele aflate mai departe.
+ Modelele bazate doar pe rețele de convoluție pot pierde uneori acest context global,
+ iar modelele bazate pe atenție pot deveni costisitoare din punct de vedere computațional.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere arhitectural,
+ una dintre componentele importante ale modelului este mecanismul de scanare încrucișată bidirecțională,
+ specific blocurilor VMamba 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "liu2024vmambavisualstatespace"
+literal "false"
+
+\end_inset
+
+.
+ Acesta permite parcurgerea informației vizuale pe mai multe direcții,
+ nu doar într-o singură secvență liniară.
+ În acest fel,
+ modelul poate integra mai bine informații din regiuni diferite ale imaginii.
+ Pentru o sarcină precum estimarea adâncimii,
+ acest lucru este util,
+ deoarece anumite indicii vizuale devin relevante doar atunci când sunt puse în relație cu restul scenei.
+\end_layout
+
+\begin_layout Standard
+Rolul straturilor convoluționale rămâne însă foarte important.
+ În primele etape ale encoderului,
+ acestea ajută la extragerea caracteristicilor vizuale de bază,
+ precum muchii,
+ schimbări de textură și forme locale.
+ Aceste informații sunt esențiale pentru păstrarea detaliilor fine în harta de adâncime.
+ De exemplu,
+ marginile obiectelor,
+ colțurile mobilierului,
+ contururile clădirilor sau limitele dintre drum și trotuar pot fi pierdute dacă modelul se bazează prea mult pe informație globală și prea puțin pe detaliile locale.
+\end_layout
+
+\begin_layout Standard
+Antrenarea modelului urmează paradigma auto-supervizată,
+ în care nu sunt necesare hărți reale de adâncime pentru fiecare imagine.
+ În locul acestora,
+ modelul folosește relația dintre cadre video succesive.
+ Practic,
+ rețeaua estimează adâncimea și mișcarea camerei,
+ apoi încearcă să reconstruiască o imagine din alta.
+ Diferența dintre imaginea reconstruită și imaginea originală este folosită ca semnal de învățare.
+ Funcția de cost combină de obicei eroarea L1 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ding2017l1normerrorfunctionrobustness"
+literal "false"
+
+\end_inset
+
+ cu indicele SSIM 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nilsson2020understandingssim"
+literal "false"
+
+\end_inset
+
+,
+ pentru a evalua atât diferențele la nivel de pixeli,
+ cât și asemănarea structurală dintre imagini.
+\end_layout
+
+\begin_layout Standard
+Rezultatele raportate pe seturi de date precum KITTI și Cityscapes sugerează că arhitectura hibridă poate obține performanțe competitive 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "geiger2013kittidataset,cordts2016cityscapesdatasetsemanticurban"
+literal "false"
+
+\end_inset
+
+.
+ Combinația dintre CNN și VMamba pare să ajute modelul să păstreze detaliile locale,
+ dar și să înțeleagă mai bine structura generală a scenei.
+ Acest lucru se poate observa mai ales în hărțile de adâncime,
+ unde contururile obiectelor și tranzițiile dintre planuri pot fi mai clare.
 \end_layout
 
 \begin_layout Section
@@ -2394,9 +3208,9 @@ literal "false"
 
 \end_inset
 
- în sistemele de asistență la condus sau în domeniul roboticii.
+ în sistemele de conducere asistată sau în domeniul roboticii.
  Prin această lucrare,
- autorii demonstrează adaptatea transformerilor pentru estimarea monoculară și auto-supervizată a adâncimii prin compararea rezultatelor tehnologiei inovate cu modele corespondente bazate pe rețele de convoluție,
+ autorii demonstrează adaptatea acestor arhitecturi pentru estimarea monoculară și auto-supervizată a adâncimii prin compararea rezultatelor produse cu modele corespondente bazate pe rețele de convoluție,
  introducând și o metodă ce prezice simultan distanța focală a camerei și punctul central direct din imagini.
  De asemenea,
  este analizat impactul alegerii arhitecturii asupra performanței și a robusteței modelului,
@@ -2417,7 +3231,7 @@ literal "false"
 
 \end_inset
 
- cu o DeiT-Base 
+ cu modelul DeiT-Base 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "touvron2021trainingdataefficientimagetransformers"
@@ -2427,7 +3241,11 @@ literal "false"
 
  folosit drept codificator.
  Acesta prezintă cinci componente în rețeaua densă:
- modulul integrat (face parte din codificator,
+ 
+\shape italic
+modulul integrat
+\shape default
+ (face parte din codificator,
  preia o iamgine 
 \begin_inset Formula $I\in\mathbb{R}^{height\times width\times3}$
 \end_inset
@@ -2438,7 +3256,11 @@ literal "false"
 
 ),
  apoi blocul Transformer (de asemenea parte din codificator,
- conține 12 straturi care prelucrează ieșirea din Embed folosind module de atenție de tip multi-head 
+ conține 
+\begin_inset Formula $12$
+\end_inset
+
+ straturi care prelucrează ieșirea folosind module de atenție de tip multi-head 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "vaswani2023attentionneed"
@@ -2449,7 +3271,11 @@ literal "false"
 ),
  urmat de patru module de reasamblare (fac parte din decodificator,
  fiind responsabile de extragerea caracteristicilor),
- patru module de fuziune bazate pe RefineNet 
+ patru 
+\shape italic
+module de fuziune
+\shape default
+ bazate pe RefineNet 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "lin2016refinenetmultipathrefinementnetworks"
@@ -2457,7 +3283,11 @@ literal "false"
 
 \end_inset
 
-) și patru module head (câte unul în continuarea fiecărui modul fuziune,
+) și patru 
+\shape italic
+module head
+\shape default
+ (câte unul în continuarea fiecărui modul fuziune,
  practic,
  sunt convoluții care estimează adâncimea prin metodele clasice auto-supervizate).
  Totodată,
@@ -2497,7 +3327,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Articolul se axează pe problema utilizării insuficiente și ineficiente a informației de poziție și orientare a camerei,
+Articolul abordează problema utilizării insuficiente și ineficiente a informației de poziție și orientare a camerei,
  cunoscută sub denumirea de 
 \shape italic
 pose
@@ -2544,7 +3374,11 @@ literal "false"
 \end_inset
 
 ,
- un cadru auto-supervizat care extinde și îmbunătățește abordările bazate pe Self Query Layer (SQL) 
+ un cadru auto-supervizat care extinde și îmbunătățește abordările bazate pe 
+\shape italic
+Self Query Layer (SQL)
+\shape default
+ 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "guizilini2022multiframeselfsuperviseddepthtransformers"
@@ -2553,17 +3387,9 @@ literal "false"
 \end_inset
 
 ,
- punând accent pe o rețea de 
-\shape italic
-pose
-\shape default
- mai expresivă și puternică.
+ punând accent pe o rețea pozițională mai expresivă și puternică.
  Arhitectura include două componente principale:
- o rețea de adâncime care extrage reprezentări vizuale multi-scară dintr-o singură imagine color și o rețea de 
-\shape italic
-pose
-\shape default
- îmbunătățită,
+ o rețea de adâncime care extrage reprezentări vizuale multi-scară dintr-o singură imagine color și o rețea pozițională îmbunătățită,
  utilizată în timpul antrenării pentru a estima cu acuratețe transformările relative dintre cadre.
  Spre deosebire de metodele clasice 
 \begin_inset CommandInset citation
@@ -2580,11 +3406,59 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Tehnica centrală utilizată de SPIdepth este combinarea informației de 
-\shape italic
-pose
-\shape default
- îmbunătățite cu SQL 
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/spidepth.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura SPIdepth.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lavreniuk2024spidepthstrengthenedposeinformation"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:spidepth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tehnica centrală utilizată de SPIdepth este combinarea informației de poziție îmbunătățite cu SQL 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "guizilini2022multiframeselfsuperviseddepthtransformers"
@@ -2593,13 +3467,17 @@ literal "false"
 \end_inset
 
 ,
- un mecanism care construiește volume de cost interne pentru a surprinde relații de distanță relativă între pixeli și regiuni ale imaginii.
+ un mecanism care construiește funcții de cost interne pentru a surprinde relații de distanță relativă între pixeli și regiuni ale imaginii.
  Prin consolidarea informației de mișcare și a celei structurale,
  modelul reușește să estimeze distribuții mai precise ale adâncimii,
  în special în zonele dificile,
  precum cele cu obiecte dinamice sau diferențe mari de scară.
  Antrenarea se realizează folosind costuri fotometrice consacrate,
- combinate cu regularizări de tip smoothness ghidate de muchii și strategii de auto-mascare.
+ combinate cu regularizări de tip 
+\shape italic
+smoothness
+\shape default
+ ghidate de muchii și strategii de auto-mascare.
 \end_layout
 
 \begin_layout Standard
@@ -2858,14 +3736,66 @@ literal "false"
  identificarea și tratarea sistematică a cauzelor care limitează performanța estimării monoculare auto-supervizate în medii interioare,
  cu scopul de a obține predicții mai stabile,
  mai coerente și mai apropiate de cele furnizate de metodele supervizate.
-\end_layout
-
-\begin_layout Standard
-Pentru a rezolva aceste limitări,
+ Pentru a rezolva aceste limitări,
  autorii propun MonoIndoor++,
  un model auto-supervizat conceput explicit pentru scene interioare,
  care introduce trei contribuții arhitecturale și metodologice majore.
- Prima este un modul de factorizare a adâncimii,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/monoindoor.png
+	width 75text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estimarea reziduală și succesivă a poziției.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "li2022monoindoortowardsbetterpracticeselfsupervised"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:monoindoor"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Prima este un modul de factorizare a adâncimii,
  care separă predicția adâncimii într-o componentă de adâncime relativă și un factor global de scară.
  Spre deosebire de abordările clasice,
  care impun implicit un interval fix de adâncime,
@@ -2945,6 +3875,273 @@ MonoIndoor++
 \begin_inset CommandInset citation
 LatexCommand citep
 key "li2022monoindoortowardsbetterpracticeselfsupervised,dai2017scannetrichlyannotated3dreconstructions"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+VGGT:
+ Visual Geometry Grounded Transformer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Visual Geometry Grounded Transformer
+\shape default
+ introduce un model de mari dimensiuni pentru reconstrucția geometrică 3D din imagini 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+.
+ Spre deosebire de metodele clasice de geometrie vizuală,
+ care folosesc etape separate de potrivire a punctelor,
+ estimare a camerelor,
+ triangulare și optimizare prin bundle adjustment,
+ VGGT încearcă să estimeze direct principalele atribute 3D ale unei scene într-un singur forward pass 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded,triggs2000bundle"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Problema abordată de autori (reconstrucția structurii 3D a unei scene pornind de la una sau mai multe imagini) a fost tratată prin metode de tip Structure-from-Motion și Multi-View Stereo,
+ în care geometria este reconstruită printr-un lanț de pași succesivi 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "triggs2000bundle,schonberger2016structurefrommotion"
+literal "false"
+
+\end_inset
+
+.
+ Aceste metode sunt riguroase și interpretabile,
+ dar pot deveni lente,
+ sensibile la erori de potrivire și dependente de optimizări iterative costisitoare.
+ VGGT propune o direcție diferită:
+ în loc să proiecteze manual fiecare etapă a reconstrucției,
+ autorii antrenează o rețea neuronală mare să învețe direct relațiile dintre imagini,
+ camere,
+ adâncime și puncte 3D 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Din punct de vedere conceptual,
+ VGGT poate fi înțeles ca o încercare de a transforma reconstrucția 3D într-o problemă de inferență feed-forward.
+ Modelul primește la intrare una,
+ câteva sau chiar sute de imagini ale aceleiași scene și produce simultan mai multe ieșiri geometrice:
+ parametrii camerelor,
+ hărți de adâncime,
+ hărți dense de puncte 3D și caracteristici pentru urmărirea punctelor în spațiu 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+.
+ Această formulare este importantă deoarece unește într-un singur model sarcini care,
+ în mod tradițional,
+ erau rezolvate separat.
+\end_layout
+
+\begin_layout Standard
+Arhitectura VGGT este construită în jurul unui Transformer mare,
+ cu aproximativ 
+\begin_inset Formula $1,2$
+\end_inset
+
+ miliarde de parametri 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+.
+ Autorii subliniază că modelul nu folosește foarte multe biasuri geometrice explicite,
+ ci se bazează mai degrabă pe capacitatea Transformerului de a învăța reprezentări complexe dintr-un volum mare de date 3D adnotate 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+.
+ Această alegere este interesantă,
+ deoarece arată o schimbare de paradigmă:
+ în locul unei arhitecturi puternic proiectate pe baza regulilor geometriei clasice,
+ VGGT folosește o arhitectură relativ generală,
+ antrenată pe date diverse,
+ pentru a învăța implicit regularitățile geometrice ale lumii vizuale.
+\end_layout
+
+\begin_layout Standard
+Ieșirile modelului sunt organizate pe mai multe capete de predicție.
+ Un cap dedicat estimează parametrii camerei,
+ adică atât parametrii extrinseci,
+ cât și o parte din parametrii intrinseci.
+ În formularea autorilor,
+ camera este reprezentată prin rotație,
+ translație și câmp vizual,
+ punctul principal fiind presupus în centrul imaginii.
+ Pentru ieșirile dense,
+ modelul folosește un cap de tip DPT,
+ prin care sunt generate hărțile de adâncime,
+ hărțile de puncte 3D și caracteristicile pentru urmărirea punctelor 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded,ranftl2021visiontransformersdenseprediction"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/vggt.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura generală 
+\shape italic
+VGGT
+\shape default
+.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:vggt"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Un aspect relevant este faptul că VGGT produce predicții supracomplete.
+ De exemplu,
+ harta de puncte 3D,
+ harta de adâncime și parametrii camerei nu sunt complet independente:
+ în principiu,
+ unele pot fi deduse din celelalte prin relații geometrice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
+literal "false"
+
+\end_inset
+
+.
+ Totuși,
+ autorii arată că antrenarea modelului pentru a prezice simultan aceste ieșiri îmbunătățește performanța generală.
+ Această observație sugerează că sarcinile geometrice se pot sprijini reciproc:
+ învățarea adâncimii poate ajuta estimarea camerei,
+ estimarea camerei poate ajuta reconstrucția punctelor 3D,
+ iar reprezentările comune pot deveni mai robuste atunci când sunt constrânse de mai multe obiective compatibile.
+\end_layout
+
+\begin_layout Standard
+Din punctul de vedere al optimizării,
+ modelul este antrenat cu 
+\shape italic
+AdamW
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "loshchilov2019decoupledweightdecayregularization"
+literal "false"
+
+\end_inset
+
+,
+ pentru de 
+\begin_inset Formula $160.000$
+\end_inset
+
+ de iterații,
+ folosind un scheduler cosinusoidal al ratei de învățare și augmentări vizuale precum c
+\shape italic
+olor jittering,
+ Gaussian blur
+\shape default
+ și 
+\shape italic
+grayscale augmentation
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wang2025vggtvisualgeometrygrounded"
 literal "false"
 
 \end_inset
@@ -3054,6 +4251,78 @@ literal "false"
 \end_inset
 
  a diferențelor orizontale și verticale.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/autoblur.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sumarul metodei propuse.
+ Cele două abordări demonstrate în lucrare,
+ 
+\shape italic
+Ambiguity-Masking
+\shape default
+ și 
+\shape italic
+Auto-Blur 
+\shape default
+sunt utilizate pentru a extrage ambiguitățile,
+ atât din imaginea inițială (
+\begin_inset Formula $I_{t}$
+\end_inset
+
+),
+ cât și din imaginea reconstituită (
+\begin_inset Formula $I_{t+n}$
+\end_inset
+
+).
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "chen2022frequencyawareselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:autoblur"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3237,7 +4506,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Un principiu analog este introdus și în estimarea poziției camerei,
+Un principiu similar este introdus și în estimarea poziției camerei,
  însă experimentele indică un câștig marginal,
  astfel încât se păstrează doar o pseudo-supervizare unidirecțională,
  în care estimările pozționale ale imaginilor neaugmentate servesc drept referință pentru versiunile augmentate.
@@ -3255,10 +4524,14 @@ Un principiu analog este introdus și în estimarea poziției camerei,
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $𝐿=𝜇𝐿_{p}+𝜔𝐿_{𝑃𝑆}+𝛽(𝐿_{𝑅}+𝐿_{𝑡})+𝛾𝐿𝑠$
+\begin_inset Formula 
+\begin{equation}
+𝐿=𝜇𝐿_{p}+𝜔𝐿_{𝑃𝑆}+𝛽(𝐿_{𝑅}+𝐿_{𝑡})+𝛾𝐿𝑠.\label{eq:componenta_netezire}
+\end{equation}
+
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Standard
@@ -3294,7 +4567,7 @@ literal "false"
 \end_inset
 
 .
- Aceste augmentări sunt aplicate în perechi (imagine curată / imagine degradată),
+ Aceste augmentări sunt aplicate în perechi (imagine curată - imagine degradată),
  permițând construcția costului pseudo-supervizat și reducând dependența modelului de parametri statici,
  precum poziția verticală a pixelului sau regularitatea texturilor 
 \begin_inset CommandInset citation
@@ -3309,6 +4582,61 @@ literal "false"
  vertical cropping (o permutare controlată a porțiunilor superioare ale imaginii pentru a reduce biasul față de poziția pixelului),
  și tile augmentation (o permutare a blocurilor imaginii,
  destinată să sporească echivarianța rețelei față de aranjamente spațiale neobișnuite).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/letstalkabouttheweather.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Imaginea originală (mijloc-sus) și imaginea augmentată (mijloc-jos) sunt încărcate în cele două rețele:
+ cea pozițională și cea de adâncime.
+ Funcția de cost de supervizare conține termeni care sporesc corespondența dintre ieșirile celor două rețele,
+ pentru fiecare dintre cele două imagini.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "saunders2023selfsupervisedmonoculardepthestimation"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:letstalkabouttheweather"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3396,7 +4724,11 @@ literal "false"
  Prin agregarea informațiilor din mai multe perspective,
  suprafețele reflectorizante pot fi reconstruite corect.
  Metodologia propusă utilizează un model supervizat pre-antrenat pentru a genera hărți de adâncime inițiale,
- care sunt apoi integrate într-o reprezentare tridimensională a scenei folosind tehnica TSDF-fusion 
+ care sunt apoi integrate într-o reprezentare tridimensională a scenei folosind tehnica 
+\shape italic
+TSDF-fusion
+\shape default
+ 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "curlessL1996avolumetricmethodforbuilding"
@@ -3752,6 +5084,58 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/monoprob.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estimatorul de adâncime utilizat în arhitectura MonoProb.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "marsal2023monoprobselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:monoprob"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Din punct de vedere metodologic,
  
 \shape italic
@@ -4089,6 +5473,72 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/coarsetofine.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Strategia 
+\shape italic
+de la grosier la rafinat
+\shape default
+.
+ Se remarcă trecerea de la costul mascat de reproiecție(
+\begin_inset Formula $L_{rep}^{m}$
+\end_inset
+
+) la cel nemascat din etapa de rafinare (
+\begin_inset Formula $L_{rep}$
+\end_inset
+
+),
+ cu scopul asigurării consistenței predicției adâncimii în rețeaua auto-supervizată.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "moon2023fromgroundtoobjectscoarsetofineselfsupervisedmonocular"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:coarsetofine"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Lucrarea descrie în detaliu implementarea acestei strategii și arată că ea poate fi integrată fără modificări arhitecturale în modele existente de estimare a adâncimii,
  precum Monodepth2,
  HR-Depth,
@@ -4125,7 +5575,7 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-Metode care exploatează indici fizici alternativi
+Metode care exploatează parametri fizici alternativi
 \end_layout
 
 \begin_layout Subsection*
@@ -4217,6 +5667,62 @@ literal "false"
  autorii prezintă și setul de date UniSIN,
  care are ca scop studiul diferențelor în antrenarea pe date simulate,
  comparativ cu datele reale.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/distdepth.png
+	width 75text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura simplificată a 
+\shape italic
+DistDepth
+\shape default
+.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wu2022practicalmonocularindoordepth"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:distdepth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4360,6 +5866,63 @@ literal "false"
  prevenind disiparea treptată a informației optice pe măsură ce datele avansează în arhitectură.
  Caracteristicile combinate sunt ulterior utilizate de o rețea de estimare a adâncimii absolute,
  care produce valori metrice de adâncime coerente.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+alignment center
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename src/img/fsdepth.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arhitectura 
+\shape italic
+FSDepth
+\shape default
+,
+ cu cele patru componente evidențiate.
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wei2023fsdepthfocalandscaledepthestimation"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fsdepth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4559,8 +6122,542 @@ literal "false"
  unde indiciile de defocalizare sunt mai pronunțate.
 \end_layout
 
+\begin_layout Subsection
+Camera Height Doesn’t Change:
+ Unsupervised Training for Metric Monocular Road-Scene Depth Estimation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Lucrarea introduce un cadru de antrenare nesupervizată numit 
+\shape italic
+FUMET
+\shape default
+,
+ destinat estimării monoculare metrice a adâncimii în scene rutiere 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Problema centrală abordată este una foarte importantă în estimarea adâncimii dintr-o singură imagine:
+ modelele monoculare auto-supervizate pot învăța structura relativă a scenei,
+ însă nu pot determina în mod natural scara absolută a adâncimii;
+ ele pot estima că un obiect este mai aproape sau mai departe decât altul,
+ dar nu pot spune cu precizie la ce distanță se află acestea față de cameră.
+ Această ambiguitate de scară limitează utilizarea directă a acestor metode în aplicații reale,
+ precum conducerea autonomă,
+ sistemele ADAS 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "joseph2021autonomous"
+literal "false"
+
+\end_inset
+
+ sau robotica mobilă 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Autorii pornesc de la observația că estimarea monoculară a adâncimii este esențială pentru multe sarcini de percepție vizuală,
+ inclusiv detecția 3D a obiectelor,
+ planificarea mișcării și segmentarea drumului 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Metodele supervizate au obținut rezultate foarte bune,
+ dar depind de date de referință obținute,
+ de regulă,
+ cu senzori LiDAR 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "li2020lidar"
+literal "false"
+
+\end_inset
+
+.
+ Acest lucru face ca procesul de colectare și etichetare a datelor să fie costisitor și greu de extins.
+ În schimb,
+ metodele auto-supervizate pot folosi secvențe video obișnuite,
+ însă rămân afectate de lipsa scării metrice absolute 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+În mod tradițional,
+ pentru a rezolva problema scării,
+ unele metode au introdus forme slabe de supervizare,
+ cum ar fi viteza vehiculului,
+ date GPS,
+ informații primite de la accelerometre sau înălțimea camerei față de sol 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Aceste informații pot ajuta modelul să recupereze scara reală a scenei,
+ dar introduc o nouă dependență:
+ sistemul nu mai poate fi antrenat doar cu imagini RGB obișnuite.
+ Prin urmare,
+ nu mai pot fi folosite ușor videoclipuri rutiere colectate din surse diverse,
+ cum ar fi camere de bord obișnuite sau videoclipuri disponibile public.
+ FUMET încearcă să elimine această limitare,
+ propunând o formă de supervizare a scării care nu are nevoie de senzori suplimentari 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Ideea principală a lucrării este surprinsă chiar în titlu:
+ înălțimea camerei nu se schimbă în interiorul unei secvențe video capturate cu aceeași cameră montată pe același vehicul 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Dacă modelul poate estima o valoare a înălțimii camerei pentru fiecare cadru,
+ atunci această valoare ar trebui să rămână constantă de-a lungul întregii secvențe.
+ Autorii transformă această proprietate fizică simplă într-un semnal de supervizare.
+ Astfel,
+ în loc să impună direct adâncimea reală sau să folosească măsurători externe,
+ metoda impune consistența înălțimii camerei între cadre 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Pentru a putea obține o estimare metrică a înălțimii camerei,
+ FUMET folosește mașinile din imagine ca surse indirecte de scară 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Mașinile sunt potrivite pentru această sarcină deoarece au dimensiuni reale relativ bine definite și pot fi întâlnite frecvent în scenele rutiere.
+ Autorii introduc un modul numit 
+\shape italic
+Learned Size Prior
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+,
+ care estimează dimensiunile vehiculelor din imagine pe baza aspectului lor vizual 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Acest modul nu se bazează pe adnotări manuale pentru setul de date țintă,
+ ci este antrenat pe un set mare de imagini de vehicule,
+ folosind informații despre dimensiunile 3D ale acestora și augmentări variate pentru a crește robustețea.
+\end_layout
+
+\begin_layout Standard
+Pentru a transforma această înălțime relativă într-o valoare metrică,
+ FUMET folosește informația provenită de la vehiculele detectate în imagine 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Modulul 
+\shape italic
+Silhouette Projector
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+ estimează înălțimea siluetei unui obiect în spațiul 3D reconstruit pe baza hărții de adâncime.
+ Această înălțime estimată este comparată cu dimensiunea reală prezisă de Learned Size Prior 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Diferența dintre cele două permite calculul unui factor de scară pentru cadrul respectiv.
+ Prin aplicarea acestui factor asupra înălțimii relative a camerei,
+ se obține o estimare metrică a înălțimii camerei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Un element important este că această estimare nu este folosită izolat pentru fiecare cadru.
+ În schimb,
+ autorii agregă estimările de înălțime ale camerei pe întreaga secvență video 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Deoarece înălțimea camerei ar trebui să fie constantă,
+ valorile estimate din cadre diferite sunt consolidate printr-o operație de mediană.
+ La finalul fiecărei epoci de antrenare,
+ această valoare este actualizată folosind o medie mobilă ponderată,
+ ceea ce stabilizează semnalul de supervizare în timp [1].
+ Această strategie este importantă,
+ deoarece estimările individuale pot fi zgomotoase,
+ mai ales atunci când imaginea conține puține mașini vizibile,
+ obiecte parțial ocluzionate sau regiuni de drum dificil de segmentat.
+\end_layout
+
+\begin_layout Standard
+Funcția de cost introdusă de FUMET are mai multe componente.
+ Componenta principală este
+\shape italic
+ camera height loss
+\shape default
+,
+ care penalizează diferența dintre înălțimea camerei estimată din harta de adâncime și pseudo-eticheta metrică obținută prin agregare temporală 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Aceasta are rolul de a forța rețeaua să producă hărți de adâncime la scară metrică.
+ În loc ca modelul să învețe doar o structură relativă,
+ el este ghidat să alinieze întreaga scenă la o dimensiune fizică stabilă:
+ înălțimea camerei față de sol.
+\end_layout
+
+\begin_layout Standard
+Pe lângă această componentă,
+ autorii introduc și un cost geometric auxiliar numit auxiliary 
+\shape italic
+rough geometric loss
+\shape default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Aceasta urmărește să reducă erorile în regiunile care conțin obiecte,
+ în special mașini aflate la distanță.
+ Autorii observă că,
+ în zonele slab texturate sau în regiunile îndepărtate,
+ harta de adâncime poate face ca obiectele să pară „înclinate” spre suprafața drumului.
+ Acest lucru afectează estimarea înălțimii siluetei și,
+ implicit,
+ calculul scării.
+ Totuși,
+ acest cost auxiliar nu este perfect.
+ El se bazează pe o aproximare relativ simplificată a obiectului,
+ presupunând că acesta poate fi reprezentat într-o anumită măsură ca un plan paralel cu imaginea.
+ Din acest motiv,
+ autorii nu îl folosesc cu aceeași importanță pe tot parcursul antrenării.
+ La început,
+ când estimările de adâncime sunt încă instabile,
+ costul auxiliar ajută modelul să învețe o scară aproximativă.
+ Pe măsură ce antrenarea avansează,
+ importanța costului scade,
+ iar coeficientul costului bazat pe înălțimea camerei crește 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Această tranziție progresivă stabilizează procesul de învățare.
+\end_layout
+
+\begin_layout Standard
+FUMET păstrează și componentele clasice ale estimării monoculare auto-supervizate,
+ cum ar fi costul de reconstrucție fotometric și regularizarea de netezire ghidată de muchii.
+ Autorii folosesc și auto-masking,
+ pentru a reduce influența pixelilor staționari sau a situațiilor în care reproiecția produce semnale greșite 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Rezultatele arată că FUMET permite mai multor arhitecturi să învețe corect scara metrică.
+ Chiar și folosind o arhitectură relativ simplă,
+ precum MonoDepth2 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ metoda obține rezultate competitive sau superioare față de metode slab supervizate care folosesc informații externe precum GPS,
+ viteză,
+ gravitație sau înălțimea camerei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Autorii testează și o variantă offline a metodei.
+ În acest caz,
+ un model MonoDepth2 este mai întâi antrenat fără FUMET,
+ apoi hărțile de adâncime produse sunt folosite pentru a calcula pseudo-etichete fixe ale înălțimii camerei 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange,godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+.
+ Aceste pseudo-etichete pot fi folosite ulterior pentru antrenare.
+ Rezultatele arată că varianta offline poate fi ușor mai stabilă decât optimizarea online,
+ iar o strategie de fine-tuning,
+ în care pseudo-eticheta este inițial fixată și apoi optimizată,
+ obține cea mai bună performanță 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+ Acest rezultat sugerează că estimarea înălțimii camerei este suficient de precisă pentru a fi folosită ca pseudo-supervizare stabilă.
+\end_layout
+
+\begin_layout Standard
+Un alt element analizat separat este modulul LSP.
+ Autorii îl compară cu un prior fix de înălțime a mașinii și cu un model de detecție 3D a obiectelor,
+ evaluând eroarea relativă absolută pentru estimarea dimensiunilor vehiculelor .
+ Rezultatele arată că LSP generalizează mai bine,
+ în special pe Cityscapes,
+ unde modelul comparat suferă din cauza diferenței de domeniu față de KITTI 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange,geiger2013kittidataset,cordts2016cityscapesdatasetsemanticurban"
+literal "false"
+
+\end_inset
+
+.
+ De asemenea,
+ autorii observă că estimarea simultană a înălțimii,
+ lățimii și lungimii mașinii îmbunătățește predicția dimensiunilor,
+ deoarece modelul învață o reprezentare mai completă a formei vehiculului 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "kinoshita2024cameraheightdoesntchange"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Chapter
-Concluzii
+Metoda propusă
+\end_layout
+
+\begin_layout Section
+Explorări experimentale și variante arhitecturale testate
+\end_layout
+
+\begin_layout Standard
+Dezvoltarea soluției propuse nu a pornit direct de la o arhitectură finală,
+ ci a fost rezultatul unui proces experimental amplu,
+ iterativ.
+ Înainte de stabilirea configurației finale,
+ au fost realizate peste 100 de teste,
+ în care au fost analizate mai multe variante arhitecturale,
+ strategii de antrenare și modificări ale componentelor de bază ale sistemului.
+ Aceste experimente au avut rolul de a identifica limitele modelelor existente și de a observa care direcții pot aduce îmbunătățiri reale în estimarea monoculară auto-supervizată a adâncimii.
+\end_layout
+
+\begin_layout Standard
+Punctul de plecare a fost arhitectura de bază MonoDepth2,
+ în configurația sa cea mai redusă,
+ aleasă datorită simplității,
+ stabilității și costului computațional mai mic.
+ Această variantă a fost folosită ca model de referință,
+ deoarece permite compararea directă a modificărilor introduse ulterior.
+ Prin raportarea fiecărei încercări la această arhitectură de bază,
+ a fost posibilă observarea efectului real al fiecărei componente adăugate sau înlocuite.
+\end_layout
+
+\begin_layout Standard
+Prima direcție experimentală a constat în integrarea unor mecanisme de tip HyenaPixel,
+ cu scopul de a îmbunătăți capacitatea modelului de a captura dependențe spațiale mai largi.
+ Motivația acestei alegeri a fost legată de limitarea arhitecturilor convoluționale clasice,
+ care tind să extragă eficient informații locale,
+ dar pot avea dificultăți în modelarea contextului global al scenei.
+ Cu toate acestea,
+ rezultatele obținute nu au fost suficient de stabile sau de convingătoare pentru a justifica păstrarea acestei variante în configurația finală.
+\end_layout
+
+\begin_layout Standard
+Ulterior,
+ a fost analizată posibilitatea îmbunătățirii rețelei de estimare a poziției camerei.
+ În acest sens,
+ au fost realizate teste în care VGGT a fost introdus ca rețea de pose,
+ pornind de la ipoteza că o estimare mai precisă a mișcării relative dintre cadre ar putea conduce la o supervizare fotometrică mai corectă și,
+ implicit,
+ la hărți de adâncime mai bune.
+ Deși direcția a fost relevantă din punct de vedere conceptual,
+ integrarea sa nu a produs îmbunătățiri suficient de consistente în raport cu complexitatea adăugată.
+\end_layout
+
+\begin_layout Standard
+O altă direcție investigată a fost introducerea unor componente bazate pe polinoame Chebyshev,
+ în încercarea de a obține o reprezentare mai flexibilă și mai stabilă a anumitor transformări interne ale modelului.
+ Această variantă a fost motivată de capacitatea polinoamelor Chebyshev de a aproxima funcții într-un mod eficient și controlat.
+ În practică însă,
+ rezultatele nu au indicat un avantaj clar față de configurația de bază,
+ iar integrarea a introdus dificultăți suplimentare de stabilizare.
+\end_layout
+
+\begin_layout Standard
+De asemenea,
+ au fost testate variante bazate pe DINOv2,
+ având în vedere calitatea reprezentărilor vizuale extrase de acest tip de model preantrenat.
+ Scopul a fost de a verifica dacă folosirea unor caracteristici vizuale mai bogate poate îmbunătăți estimarea adâncimii,
+ în special în zone cu textură slabă,
+ contururi fine sau obiecte aflate la distanță.
+ Totuși,
+ utilizarea acestor reprezentări a ridicat probleme legate de integrarea cu pierderea fotometrică auto-supervizată și de echilibrul dintre detaliile locale și contextul global.
+\end_layout
+
+\begin_layout Standard
+Pe lângă aceste direcții principale,
+ au fost explorate și alte variante arhitecturale.
+ Au fost testate configurații cu encoder ResNet mai adânc,
+ în încercarea de a obține caracteristici vizuale mai expresive.
+ De asemenea,
+ au fost evaluate variante cu EfficientNet ca backbone,
+ pentru a analiza raportul dintre performanță și eficiență computațională.
+ O altă direcție a constat în integrarea unor blocuri de atenție ușoară în decoder,
+ cu scopul de a rafina hărțile de adâncime în zonele cu margini fine.
+ Au fost analizate și variante cu mecanisme de tip ConvNeXt,
+ pentru a verifica dacă o arhitectură convoluțională modernizată poate oferi un echilibru mai bun între local și global.
+ În plus,
+ au fost realizate teste cu mecanisme de rafinare multi-scară,
+ pentru a îmbunătăți coerența predicțiilor între nivelurile diferite ale decoderului.
+\end_layout
+
+\begin_layout Standard
+Rezultatele acestor teste nu au condus întotdeauna la îmbunătățiri directe.
+ În multe cazuri,
+ modificările au crescut complexitatea modelului fără a produce o reducere semnificativă a erorilor sau au afectat stabilitatea procesului de antrenare.
+ Totuși,
+ aceste rezultate negative au avut o valoare importantă în procesul de cercetare,
+ deoarece au permis eliminarea unor direcții mai puțin eficiente și au contribuit la înțelegerea mai clară a constrângerilor specifice estimării monoculare auto-supervizate.
+\end_layout
+
+\begin_layout Standard
+Prin urmare,
+ contribuția experimentală a lucrării nu constă doar în varianta finală a modelului,
+ ci și în procesul sistematic de explorare a mai multor soluții posibile.
+ Cele peste 100 de teste realizate au evidențiat faptul că îmbunătățirea estimării adâncimii nu depinde doar de adăugarea unor componente arhitecturale mai complexe,
+ ci de integrarea lor coerentă în cadrul geometric și fotometric al metodei auto-supervizate.
+ Această observație a ghidat alegerea configurației finale și a permis formularea unei soluții mai echilibrate din punct de vedere al performanței,
+ stabilității și costului computațional.
+\end_layout
+
+\begin_layout Chapter
+cluzii
 \begin_inset CommandInset label
 LatexCommand label
 name "chap:Concluzii"
