@@ -254,13 +254,14 @@ status open
 \family roman
 \series bold
 \size huge
-TITLU
+HYENA DEPTH:
 \begin_inset Newline linebreak
 \end_inset
 
-TOT TITLU
+MODEL DE ESTIMARE MONOCULARĂ,
+ AUTO-SUPERVIZATĂ A ADÂNCIMII
 \size giant
- 
+
 \begin_inset Newline newline
 \end_inset
 
@@ -6656,6 +6657,633 @@ Prin urmare,
  stabilității și costului computațional.
 \end_layout
 
+\begin_layout Section
+Modelul final propus
+\end_layout
+
+\begin_layout Standard
+Metoda propusă în această lucrare,
+ denumită 
+\series bold
+HyenaDepth
+\series default
+,
+ extinde cadrul de estimare monoculară auto-supervizată a adâncimii introdus de MonoDepth2 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "godard2019diggingselfsupervisedmonoculardepth"
+literal "false"
+
+\end_inset
+
+,
+ păstrând mecanismul său geometric de antrenare,
+ dar modificând substanțial rețeaua responsabilă de estimarea adâncimii.
+ Pe această bază a fost construită o configurație nouă,
+ în care accentul nu este pus doar pe creșterea capacității modelului,
+ ci pe rezolvarea unor probleme observate în mod repetat în timpul experimentelor:
+ câmpul receptiv limitat al encoderelor convoluționale,
+ propagarea instabilă a activărilor în adâncime,
+ pierderea detaliilor spațiale în decoder și deplasarea progresivă a distribuției activărilor înaintea predicției finale de disparitate.
+\end_layout
+
+\begin_layout Standard
+HyenaDepth reunește patru intervenții complementare.
+ Encoderul convoluțional clasic este înlocuit cu un encoder ierarhic bazat pe HyenaPixel,
+ conexiunile reziduale sunt extinse printr-un mecanism de mixare inspirat de Hyper-Connections 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhu2025hyperconnections"
+literal "false"
+
+\end_inset
+
+ și de varianta constrânsă mHC 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "xie2026mhcmanifoldconstrainedhyperconnections"
+literal "false"
+
+\end_inset
+
+,
+ decoderul utilizează o operație de hiperscalare,
+ iar activările sunt normalizate înaintea stratului final de disparitate pentru eliminarea componentei continue spațiale.
+ Componentele urmăresc niveluri diferite ale procesării:
+ encoderul este responsabil pentru integrarea contextului local și global,
+ conexiunile reziduale controlează circulația informației între blocuri,
+ decoderul reconstruiește detaliile spațiale,
+ iar normalizarea finală stabilizează intervalul valorilor prezise.
+\end_layout
+
+\begin_layout Standard
+Prima componentă este encoderul HyenaPixel,
+ derivat din operatorul Hyena 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "poli2023hyenahierarchylargerconvolutional"
+literal "false"
+
+\end_inset
+
+ și adaptat pentru procesarea bidimensională a imaginilor 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Operatorul Hyena a fost propus inițial ca alternativă la mecanismul de atenție,
+ având ca obiectiv modelarea dependențelor pe distanțe mari prin combinarea convoluțiilor lungi cu mecanisme de control al semnalului dependente de date.
+ Din acest motiv,
+ Hyena urmărește un efect asemănător,
+ dar realizează agregarea contextului prin filtre convoluționale lungi,
+ a căror aplicare poate fi calculată mai eficient 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "poli2023hyenahierarchylargerconvolutional"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Adaptarea HyenaPixel păstrează această idee,
+ dar o transpune din domeniul secvențelor unidimensionale în cel al hărților de caracteristici bidimensionale.
+ La nivelul unui bloc HyenaPixel,
+ harta de caracteristici este mai întâi proiectată și procesată prin convoluții locale,
+ după care este împărțită în trei componente,
+ denumite prin analogie 
+\begin_inset Formula $q$
+\end_inset
+
+,
+ 
+\begin_inset Formula $k$
+\end_inset
+
+ și 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ Componentele 
+\begin_inset Formula $q$
+\end_inset
+
+ și 
+\begin_inset Formula $k$
+\end_inset
+
+ sunt combinate prin înmulțire element cu element,
+ iar rezultatul este normalizat și procesat cu ajutorul unui filtru global.
+ Ieșirea obținută este apoi modulată prin componenta 
+\begin_inset Formula $v$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+ Deși notația amintește de mecanismul query-key-value al atenției,
+ operația nu calculează o matrice completă de similaritate între toți pixelii.
+ Relațiile spațiale sunt introduse prin convoluția globală și prin mecanismul de control al activărilor.
+\end_layout
+
+\begin_layout Standard
+Filtrul global HyenaPixel este generat implicit dintr-o codificare pozițională bidimensională,
+ prelucrată printr-o rețea neuronală de mici dimensiuni.
+ Această parametrizare permite construirea unor nuclee foarte mari fără ca numărul parametrilor să crească direct proporțional cu aria filtrului.
+ Filtrul include și o fereastră de atenuare dependentă de distanța față de centrul său,
+ ceea ce introduce o preferință spațială,
+ astfel încât pozițiile apropiate pot primi o influență mai puternică,
+ fără ca regiunile îndepărtate să fie excluse complet 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "spravil2024hyenapixel"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Aplicarea acestui filtru se realizează prin convoluție bidimensională calculată cu Transformata Fourier Rapidă (TFR).
+ Conform teoremei convoluției,
+ convoluția dintre două semnale în domeniul spațial este echivalentă cu înmulțirea lor element cu element în domeniul frecvențelor.
+ Pentru o hartă de caracteristici 
+\begin_inset Formula $X$
+\end_inset
+
+ și un filtru 
+\begin_inset Formula $K$
+\end_inset
+
+,
+ operația poate fi exprimată conceptual astfel:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+Y=\mathcal{F}^{-1}\left(\mathcal{F}(X)\odot\mathcal{F}(K)\right),\label{eq:convolutia-calculat-in-domeniul-frecventelor}
+\end{equation}
+
+\end_inset
+
+unde 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\nospellcheck default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ reprezintă transformata Fourier bidimensională,
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mathcal{F}^{-1}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\nospellcheck default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ transformata inversă,
+ iar 
+\begin_inset Formula $\varodot$
+\end_inset
+
+ reprezintă înmulțirea element cu element a coeficienților complecși.
+\end_layout
+
+\begin_layout Standard
+În practică,
+ harta de caracteristici și filtrul sunt mai întâi completate cu zerouri până la o dimensiune compatibilă.
+ În HyenaPixel,
+ pentru o hartă cu dimensiunile spațiale 
+\begin_inset Formula $L_{x}\times L_{Y}$
+\end_inset
+
+,
+ intrările convoluției TFR sunt bordate până la aproximativ 
+\begin_inset Formula $2L_{x-1}\times2L_{y-1}$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "schonberger2016structurefrommotion"
+literal "false"
+
+\end_inset
+
+.
+ Această bordare este necesară deoarece TFR calculează în mod natural o convoluție circulară.
+ Fără spațiu suplimentar,
+ valorile aflate la marginea dreaptă a imaginii s-ar putea combina artificial cu cele de la marginea stângă,
+ iar partea superioară cu partea inferioară.
+ Bordarea cu zerouri permite extragerea porțiunii corespunzătoare unei convoluții liniare obișnuite,
+ fără această întoarcere circulară nedorită.
+\end_layout
+
+\begin_layout Standard
+Avantajul FFT devine vizibil în cazul filtrelor foarte mari.
+ Pentru o convoluție spațială directă,
+ costul crește aproximativ proporțional cu numărul pixelilor și cu numărul elementelor nucleului.
+ Un filtru global ar deveni astfel foarte costisitor.
+ Prin FFT,
+ complexitatea asimptotică a operației HyenaPixel este aproximativ
+\begin_inset Formula $\mathcal{O}\left(L_{x}L_{y}log(L_{x}L_{y})\right),$
+\end_inset
+
+ceea ce permite utilizarea unor filtre care acoperă o parte foarte mare sau chiar întreaga hartă de caracteristici [3].
+ Această proprietate este relevantă pentru estimarea adâncimii,
+ deoarece distanța unui obiect nu poate fi dedusă întotdeauna numai din textura sa locală.
+ Poziția față de linia orizontului,
+ structura drumului,
+ dimensiunea aparentă a obiectelor și relațiile dintre diferitele regiuni ale scenei oferă indicii distribuite pe arii extinse ale imaginii.
+\end_layout
+
+\begin_layout Standard
+Encoderul are o organizare ierarhică,
+ în care rezoluția spațială este redusă progresiv,
+ iar numărul de canale crește.
+ Primele niveluri păstrează informații precum muchiile,
+ texturile și contururile,
+ în timp ce nivelurile mai profunde construiesc reprezentări cu un câmp receptiv mai larg.
+ Ponderile inițiale ale encoderului provin din preantrenarea pe ImageNet-1k,
+ ceea ce oferă un punct de pornire mai stabil decât inițializarea complet aleatoare.
+ Preantrenarea nu furnizează direct informație geometrică sau hărți de adâncime,
+ dar pune la dispoziție caracteristici vizuale generale,
+ care pot fi adaptate ulterior prin semnalul auto-supervizat.
+\end_layout
+
+\begin_layout Standard
+A doua componentă a arhitecturii privește modul în care informația este transmisă între blocurile encoderului.
+ Într-o conexiune reziduală obișnuită,
+ ieșirea unui strat este exprimată prin relația
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+x_{l+1}=x_{l}+F_{l}(x_{l}),\label{eq:formula-iesire}
+\end{equation}
+
+\end_inset
+
+unde 
+\begin_inset Formula $x_{l}$
+\end_inset
+
+ reprezintă semnalul care ocolește blocul,
+ iar 
+\begin_inset Formula $F_{l}$
+\end_inset
+
+reprezintă transformarea învățată.
+ Această structură oferă o cale directă pentru activări și gradienți,
+ facilitând antrenarea rețelelor adânci.
+ Totuși,
+ fiecare bloc lucrează în continuare cu un singur flux rezidual,
+ iar contribuția căii directe și a transformării interne este stabilită printr-o regulă fixă de adunare.
+\end_layout
+
+\begin_layout Standard
+Hyper-Connections generalizează acest mecanism prin extinderea fluxului rezidual într-un număr de fluxuri paralele 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "zhu2025hyperconnections"
+literal "false"
+
+\end_inset
+
+.
+ În loc ca fiecare bloc să primească un singur tensor și să returneze un singur tensor,
+ informația este păstrată în mai multe benzi reziduale.
+ O mapare de intrare combină aceste benzi pentru a forma intrarea blocului,
+ o mapare de ieșire distribuie rezultatul blocului înapoi către fluxurile paralele,
+ iar o mapare reziduală controlează schimbul direct de informație dintre aceste fluxuri.
+ Aceste transformări sunt denumite,
+ în mod obișnuit,
+ mapare prealabilă,
+ mapare ulterioară și mapare reziduală.
+\end_layout
+
+\begin_layout Standard
+Prin urmare,
+ blocul nu mai este limitat la regula fixă 
+\begin_inset Formula $x+F(x)$
+\end_inset
+
+,
+ ci poate învăța ce combinații ale reprezentărilor anterioare trebuie să fie păstrate și ce combinații trebuie să treacă prin transformarea curentă.
+ Fluxurile paralele pot conserva tipuri diferite de informație,
+ de exemplu detalii locale,
+ răspunsuri globale sau reprezentări provenite de la niveluri diferite de adâncime.
+ Totuși,
+ atunci când coeficienții de mixare sunt complet neconstrânși,
+ aplicarea repetată a matricelor reziduale poate amplifica excesiv anumite componente și poate atenua altele.
+ În rețele adânci,
+ acest comportament poate conduce la activări instabile și la propagarea neuniformă a gradientului.
+\end_layout
+
+\begin_layout Standard
+Varianta Manifold-Constrained Hyper-Connections,
+ prescurtată mHC,
+ abordează această problemă prin constrângerea matricelor de mixare reziduală la mulțimea matricelor dublu stocastice 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "xie2026mhcmanifoldconstrainedhyperconnections"
+literal "false"
+
+\end_inset
+
+.
+ El descrie o matrice cu elemente nenegative,
+ în care suma fiecărui rând și suma fiecărei coloane sunt egale cu unu.
+ Mulțimea acestor matrice formează politopul Birkhoff 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "birkhoff1946three"
+literal "false"
+
+\end_inset
+
+.
+ În mHC,
+ proiecția către această mulțime este realizată prin normalizări succesive de tip Sinkhorn-Knopp,
+ care ajustează alternativ rândurile și coloanele până când acestea respectă aproximativ constrângerile impuse 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "xie2026mhcmanifoldconstrainedhyperconnections"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Ca urmare,
+ fiecare flux de ieșire devine o combinație convexă a fluxurilor de intrare.
+ Niciun coeficient nu este negativ,
+ iar suma contribuțiilor este controlată.
+ Această proprietate limitează amplificarea necontrolată a semnalului și conservă mai bine valoarea sa medie între fluxuri.
+ În HyenaDepth,
+ principiul mHC este utilizat pentru ca reprezentările produse de blocurile encoderului să poată fi combinate flexibil,
+ dar într-un spațiu de transformări controlat numeric.
+ Rolul conexiunilor nu este doar acela de a adăuga o cale alternativă pentru gradient,
+ ci și de a regla modul în care caracteristicile locale și globale sunt menținute de-a lungul encoderului.
+\end_layout
+
+\begin_layout Standard
+A treia componentă este decoderul de adâncime cu hiperscalare.
+ Decoderul păstrează organizarea generală de tip U-Net
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ronneberger2015unetconvolutionalnetworksbiomedical"
+literal "false"
+
+\end_inset
+
+,
+ combinând caracteristicile profunde cu informațiile furnizate prin conexiunile de ocolire ale encoderului.
+ Diferența principală față de varianta standard MonoDepth2 apare în operația prin care hărțile de caracteristici sunt aduse la o rezoluție mai mare.
+ Interpolarea de tip nearest-neighbour atribuie fiecărui pixel nou valoarea celui mai apropiat pixel din harta de rezoluție redusă.
+ Operația este rapidă și stabilă,
+ dar produce regiuni constante,
+ cu aspect de bloc,
+ și nu ia în considerare conținutul imaginii originale.
+\end_layout
+
+\begin_layout Standard
+În HyenaDepth,
+ această operație este înlocuită de un modul guidedUpsampler,
+ inspirat de principiile FeatUp 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "fu2024featupmodelagnosticframeworkfeatures"
+literal "false"
+
+\end_inset
+
+.
+ FeatUp pornește de la observația că reprezentările profunde au o rezoluție redusă deoarece encoderul agregă progresiv informația pe regiuni largi.
+ În timp ce această agregare este utilă pentru înțelegerea semantică,
+ ea elimină poziționarea precisă a marginilor și a structurilor fine.
+ Pentru a recupera detaliile pierdute,
+ procesul de scalare este ghidat de un semnal de rezoluție înaltă,
+ derivat din imaginea RGB 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "fu2024featupmodelagnosticframeworkfeatures"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+În loc să copieze mecanic valorile din harta de rezoluție redusă,
+ GuidedUpsampler 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "song2023guidedlinearupsampling"
+literal "false"
+
+\end_inset
+
+ calculează contribuțiile vecinilor în funcție de conținutul local.
+ Pixelii apropiați spațial și asemănători din punct de vedere vizual pot avea ponderi mai mari,
+ în timp ce pixelii separați de o margine puternică pot avea o influență redusă.
+ Astfel,
+ operația se apropie conceptual de o filtrare bilaterală învățată,
+ în care atât distanța spațială,
+ cât și diferențele de aspect contribuie la interpolare.
+ Caracteristicile profunde furnizează informația despre structura și adâncimea scenei,
+ iar imaginea de ghidare oferă poziționarea de rezoluție înaltă a marginilor.
+\end_layout
+
+\begin_layout Standard
+Pentru estimarea adâncimii,
+ această proprietate este relevantă în jurul obiectelor înguste,
+ al vehiculelor,
+ al stâlpilor,
+ al indicatoarelor și al limitelor dintre drum,
+ trotuar și clădiri.
+ O interpolare independentă de imagine poate muta sau netezi excesiv aceste contururi.
+ În schimb,
+ scalarea ghidată poate alinia mai bine tranzițiile de adâncime cu structurile vizibile în imagine.
+ Totuși,
+ ghidarea RGB trebuie interpretată ca un indiciu,
+ nu ca o regulă absolută,
+ deoarece nu orice schimbare de culoare corespunde unei schimbări de adâncime,
+ iar unele discontinuități geometrice pot apărea între suprafețe cu aspect similar.
+\end_layout
+
+\begin_layout Standard
+Ultima intervenție urmărește eliminarea driftului componentei continue spațiale înaintea stratului final de disparitate.
+ În procesarea semnalelor,
+ această componentă corespunde frecvenței spațiale zero și poate fi interpretată ca valoarea medie a unei hărți de activare.
+ Dacă o hartă de caracteristici conține un offset pozitiv comun tuturor pozițiilor,
+ această componentă nu descrie contururi,
+ texturi sau variații geometrice,
+ ci deplasează în ansamblu distribuția activărilor.
+\end_layout
+
+\begin_layout Standard
+În decoderul bazat pe activări ELU,
+ valorile pozitive sunt transmise liniar,
+ în timp ce valorile negative sunt limitate inferior printr-o funcție exponențială 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "clevert2016fastaccuratedeepnetwork"
+literal "false"
+
+\end_inset
+
+.
+ În combinație cu adunările reziduale și cu propagarea prin mai multe niveluri ale decoderului,
+ acest comportament poate conduce la acumularea unei medii pozitive.
+ Chiar dacă variațiile spațiale utile sunt păstrate,
+ întreaga hartă de activare se poate deplasa progresiv către valori mai mari.
+\end_layout
+
+\begin_layout Standard
+Stratul final al modelului transformă activările decoderului în logituri de disparitate,
+ care sunt ulterior trecute prin funcția sigmoid.
+ Dacă logiturile primesc un offset pozitiv prea mare,
+ sigmoidul se apropie de valoarea unu și intră într-o zonă de saturație.
+ În această regiune,
+ variații mari ale intrării produc modificări foarte mici ale ieșirii,
+ iar derivata sigmoidului devine redusă.
+ Consecința este comprimarea intervalului efectiv al predicțiilor și slăbirea gradientului care ajunge la straturile anterioare.
+\end_layout
+
+\begin_layout Standard
+Pentru a limita acest fenomen,
+ HyenaDepth recentrează activările înaintea stratului final de disparitate.
+ Pentru o hartă 
+\begin_inset Formula $Z$
+\end_inset
+
+,
+ cu canalul 
+\begin_inset Formula $c$
+\end_inset
+
+ și dimensiunile spațiale 
+\begin_inset Formula $H\times W$
+\end_inset
+
+,
+ eliminarea componentei medii poate fi exprimată astfel:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\widetilde{Z}_{c,h,w}=Z_{c,h,w}-\frac{1}{HW}\sum_{i=1}^{H}\sum_{j=1}^{W}Z_{c,i,j}\label{eq:formula-componentei-medii}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Operația elimină media spațială a fiecărui canal,
+ dar păstrează diferențele dintre poziții.
+ Cu alte cuvinte,
+ nu elimină structura geometriei prezise,
+ ci împiedică un offset comun să domine intrarea stratului final.
+ Predicția disparității este astfel determinată mai mult de variațiile spațiale relevante și mai puțin de acumularea unei componente pozitive globale.
+\end_layout
+
+\begin_layout Standard
+Ansamblul intervențiilor propuse urmărește consolidarea estimării monoculare auto-supervizate a adâncimii printr-o abordare care acordă aceeași importanță reprezentării contextului vizual,
+ stabilității procesului de învățare și păstrării detaliilor spațiale.
+ Utilizarea convoluțiilor globale calculate eficient în domeniul frecvențelor permite extinderea câmpului receptiv fără costul ridicat asociat mecanismelor de atenție completă,
+ în timp ce mixarea reziduală constrânsă oferă un control mai riguros asupra propagării activărilor și gradientului în profunzimea rețelei.
+ În același timp,
+ reconstrucția ghidată de informația vizuală de rezoluție înaltă urmărește reducerea pierderilor de detaliu care apar frecvent în procesul de scalare în sus,
+ iar recentrarea activărilor înaintea predicției finale contribuie la evitarea saturării și la păstrarea sensibilității modelului față de variațiile locale ale disparității.
+ Relevanța acestor tehnici nu rezultă doar din noutatea lor individuală,
+ ci din capacitatea lor de a răspunde unor dificultăți concrete întâlnite în estimarea densă a adâncimii:
+ integrarea relațiilor spațiale aflate la distanță,
+ menținerea unui flux informațional stabil,
+ delimitarea mai precisă a obiectelor și controlul distribuției valorilor prezise.
+ Prin această orientare,
+ metoda urmărește obținerea unor hărți de adâncime mai coerente la nivel global,
+ dar și mai fidele la nivelul structurilor fine,
+ fără a sacrifica stabilitatea antrenării sau eficiența computațională.
+ Valoarea abordării constă,
+ astfel,
+ în echilibrul dintre capacitatea de reprezentare,
+ precizia reconstrucției și robustețea numerică,
+ toate fiind esențiale pentru dezvoltarea unor sisteme auto-supervizate care să poată funcționa în scene vizuale complexe și variate.
+\end_layout
+
 \begin_layout Chapter
 Concluzii
 \begin_inset CommandInset label
@@ -6668,14 +7296,7 @@ name "chap:Concluzii"
 \end_layout
 
 \begin_layout Standard
-Lorem ipsum dolor sit amet,
- consectetur adipiscing elit,
- sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
- Ut enim ad minim veniam,
- quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
- Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
- Excepteur sint occaecat cupidatat non proident,
- sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum.
 \end_layout
 
 \begin_layout Standard
