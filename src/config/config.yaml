@@ -1,0 +1,109 @@
+# models
+# -----------
+# depth models
+model_name: "hyena" 
+monodepth2:
+  encoder_weights_path: "weights/monodepth2/mono_640x192/encoder.pth"
+  decoder_weights_path: "weights/monodepth2/mono_640x192/depth.pth"
+  num_layers: 18 # choices=[18, 50]
+  pretrained: True
+  scales: [0, 1, 2, 3] 
+litemono:
+  model_type: "lite-mono" # choices=["lite-mono", "lite-mono-8m"]
+  encoder_weights_path: "weights/litemono/encoder.pth"
+  decoder_weights_path: "weights/litemono/depth.pth"
+  scales: [0, 1, 2]
+diffnet:
+  encoder_weights_path: "weights/diffnet/encoder.pth"
+  decoder_weights_path: "weights/diffnet/depth.pth"
+  scales: [0, 1, 2, 3]
+monovit:
+  encoder_weights_path: "weights/monovit/encoder.pth"
+  decoder_weights_path: "weights/monovit/depth.pth"
+cadepth:
+  num_layers: 50
+  encoder_weights_path: "weights/cadepth/encoder.pth"
+  decoder_weights_path: "weights/cadepth/depth.pth"
+hyena:
+  pretrained: True # load ImageNet-1k pretrained backbone weights
+  scales: [0, 1, 2, 3]
+  encoder_weights_path: null
+  decoder_weights_path: null
+  weights_path: "tensorboard/train/hyena/20260609-155812/models/weights_epoch_19/depth_model.pth"
+  decoder_upsample: "naf" # how the decoder upsamples feature maps by 2x at each stage; choices: ["nearest", "naf"]
+  disp_upsample: "naf" # how the trainer upsamples each scale's predicted disparity to full resolution for the reprojection loss; choices: ["bilinear", "bicubic", "naf"]
+  naf:
+    dim: 256 # image-encoder / attention embedding dim. 
+    heads_attn: 2 # neighbourhood-attention heads (decoder feature widths must be divisible by this)
+    heads_rope: 4 # RoPE heads in the image encoder
+    kernel_size: 3 # neighbourhood window 
+    img_layers: 2 # conv layers in the image encoder
+# pose models
+resnet_pose_cnn:
+  weights_path: null
+  num_layers: 18
+  pretrained: True
+  num_input_images: 2
+  num_input_features: 1 
+  num_frames_to_predict_for: 2
+simple_pose_cnn:
+  weights_path: null
+
+
+# misc
+# -----------
+data_path: '/data/backup_gpu2/home/ionut/JEPADepth/data/kitti/kitti_data'
+htmls_path: 'htmls'
+tensorboard_path: 'tensorboard'
+image_path_inference: 'src/inference/input_images/img1.jpg'
+                     # I can also give an entire folder with images, not just one image!
+                     # choices: ['src/inference/input_images/img1.jpg',
+                     #           'src/inference/input_images']
+num_workers: 8
+im_sz: [192, 640] # [320, 1024], [192, 640] -> H W
+bs: 12
+
+
+# training
+# -----------
+num_epochs: 20 # number of epochs for training.
+training_split: "eigen_zhou" # which training split to use;  choices=["eigen_zhou", "eigen_full", "benchmark"]
+learning_rate: 0.0001 # 1e-4
+scheduler_step_size: 15 # step size of the scheduler used for training.
+scheduler_gamma: 0.1 # multiplicative factor of learning rate decay in scheduler.
+weight_decay: 0.01 # 1e-2
+clip_grad_norm: null # if set, clips gradient norm to this value. If null, no clipping is performed.
+use_stereo_training: False # if set, uses stereo pair for training.
+frame_ids_training: [0, -1, 1] # frames to use for training (current, previous and next); choices: [0, -1, 1], [0, 1]
+pose_model_input: "pairs" # how many images the pose network gets; choices=["pairs", "all"]
+load_pretrained_depth_model: False # if set, uses pretrained encoder and depth decoder for training (both of them!).
+load_pretrained_pose_model: False # if set, uses pretrained PoseNet for training.
+train_from_png: False # if set, trains from raw KITTI png files (instead of jpgs).
+save_frequency: 1 # number of epochs between each save.
+log_frequency: 10 # number of batches between each tensorboard log.
+separate_plots: False # if set, logs each input and warped image separately (instead of concatenating them into a single image).
+use_fixed_vis_samples: False  # If True, use same images for all tensorboard logs.
+num_tensorboard_samples: 4 # Number of samples to visualize in tensorboard.
+pose_model_type: resnet_pose_cnn # choices=["simple_pose_cnn", "resnet_pose_cnn"]
+disparity_smoothness_weight: 0.001 # 1e-3
+use_ssim: True # if set, uses SSIM in the loss. 
+monodepthv1_multiscale: False # if set, uses Monodepthv1 multiscale. 
+disable_automasking: False # if set, doesn't do auto-masking.
+use_average_reprojection: False # if set, uses average reprojection loss; otherwise use minimum reprojection loss as described in "Diging into Self-Supervised MDE"
+loss_scales: [0, 1, 2, 3] # scales used in the loss; choices: [0]; [0, 1, 2, 3]
+min_depth: 0.1 # 0.01, 0.1
+max_depth: 100.0 # 80.0, 100.0
+
+
+# evaluation
+# -----------
+evaluation_split: eigen # choices=["eigen", "eigen_benchmark", "benchmark"]
+evaluation_mode: mono # choices=["mono", "stereo"]
+evaluation_post_process: False # if set will perform the flipping post processing from the original Monodepth paper (https://arxiv.org/pdf/1609.03677, pg.5, bottom-right).
+prediction_depth_scale_factor: 1 # if set multiplies predictions by this number.
+numpy_disparities_to_evaluate: null # optional path to a .npy disparities file to evaluate.
+evaluate_eigen_to_benchmark: False # if set assume we are loading eigen results from .npy but we want to evaluate using the new benchmark.
+disable_median_scaling: False # if set disables median scaling in evaluation.
+html_max_samples: 3  # Number of sample images to include in HTML evaluation reports.
+make3d_dataset_path: '/data/backup_gpu2/home/ionut/JEPADepth/data/make3d' # path to Make3D dataset for evaluation.
+cityscapes_dataset_path: '/data/backup_gpu2/home/ionut/JEPADepth/data/cityscapes' # path to Cityscapes dataset for evaluation.
