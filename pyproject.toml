@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "HyenaDepth"
+dynamic = ["version"]
+authors = [
+    { name = "Indi Botoc", email = "indi.botoc@student.upt.ro" }
+]
+
+description = "HyenaDepth: Some title I need to think."
+readme = "README.md"
+requires-python = ">=3.8"
+
+dependencies = [
+    TODO: add here
+]
+
+[project.optional-dependencies]
+dev = [
+    TODO: add here
+]
+
+[tool.setuptools.packages.find]
+include = ["src"]
+exclude = ["notebooks"]
